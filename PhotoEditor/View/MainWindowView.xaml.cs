@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -18,11 +19,12 @@ namespace PhotoEditor.View
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindowView : Window
+    public partial class MainWindowView
     {
         public MainWindowView()
         {
             InitializeComponent();
+
         }
     }
 }
