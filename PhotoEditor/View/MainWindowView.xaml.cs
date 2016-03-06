@@ -26,5 +26,7 @@ namespace PhotoEditor.View
             InitializeComponent();
 
         }
+
+       
     }
 }
