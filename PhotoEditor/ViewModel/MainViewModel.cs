@@ -14,37 +14,14 @@ namespace PhotoEditor.ViewModel
 {
     class MainViewModel
     {
+        static ModelClassImage m = new ModelClassImage();
+        FileDialogClass fileDial = new FileDialogClass();
+        Command ClickOpenCommand = new Command(arg => fileDial.OpenFile());
+        
         public MainViewModel()
         {
-
+            
         }
-
-        public class FileDialogClass : INotifyPropertyChanged
-        {
-            public event PropertyChangedEventHandler PropertyChanged;
-            OpenFileDialog dialog = new OpenFileDialog();
-            ModelClassImage m = new ModelClassImage();
-
-            private void OpenFile(object sender, RoutedEventArgs e)
-            {
-                // Исходная директория
-                dialog.InitialDirectory = Environment.CurrentDirectory;
-                dialog.Filter = "Image files |*.jpg;*.png;*.bmp";
-                if (dialog.ShowDialog().Value)
-                {
-                    try
-                    {
-                        m.ImageSource = dialog.FileName;
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Ошибка загрузки данных");
-                    }
-                }
-            }
-        }
-
-
 
         public class Command : ICommand
         {
@@ -93,6 +70,33 @@ namespace PhotoEditor.ViewModel
             }
 
             #endregion
+
+            
+        }
+
+
+        public class FileDialogClass
+        {
+            //public event PropertyChangedEventHandler PropertyChanged;
+            OpenFileDialog dialog = new OpenFileDialog();
+
+            public void OpenFile()
+            {
+                // Исходная директория
+                dialog.InitialDirectory = Environment.CurrentDirectory;
+                dialog.Filter = "Image files |*.jpg;*.png;*.bmp";
+                if (dialog.ShowDialog().Value)
+                {
+                    try
+                    {
+                        m.ImageSource = dialog.FileName;
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Ошибка загрузки данных");
+                    }
+                }
+            }
+        }
     }
-}
 }
