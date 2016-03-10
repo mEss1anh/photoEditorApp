@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PhotoEditor.View;
+using PhotoEditor.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,14 @@ namespace PhotoEditor
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            var mw = new MainWindowView
+            {
+                DataContext = new MainViewModel()
+            };
+
+            mw.Show();
+        }
     }
 }

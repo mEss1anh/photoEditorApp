@@ -17,7 +17,8 @@ namespace PhotoEditor.ViewModel
     {
         static ModelClassImage m;
         FileDialogClass fileDial;
-        Command ClickOpenCommand;
+        public ICommand ClickOpenCommand { get; set; }
+       //public Command ClickOpenCommand;
         public MainViewModel()
         {
             m = new ModelClassImage();
@@ -28,17 +29,20 @@ namespace PhotoEditor.ViewModel
         public class FileDialogClass
         {
             //public event PropertyChangedEventHandler PropertyChanged;
-            OpenFileDialog dialog;
+           
             public FileDialogClass()
             {
-                dialog = new OpenFileDialog();
+                //dialog = new OpenFileDialog();
             }
 
 
             public void OpenFile()
             {
+                OpenFileDialog dialog = new OpenFileDialog();
                 // Исходная директория
                 dialog.InitialDirectory = Environment.CurrentDirectory;
+
+
                 dialog.Filter = "Image files |*.jpg;*.png;*.bmp";
                 if (dialog.ShowDialog().Value)
                 {
@@ -55,56 +59,6 @@ namespace PhotoEditor.ViewModel
         }
     }
 
-    
-
-    public class Command : ICommand
-    {
-        #region Constructor
-
-        public Command(Action<object> action)
-        {
-            ExecuteDelegate = action;
-        }
-
-        #endregion
 
 
-        #region Properties
-
-        public Predicate<object> CanExecuteDelegate { get; set; }
-        public Action<object> ExecuteDelegate { get; set; }
-
-        #endregion
-
-
-        #region ICommand Members
-
-        public bool CanExecute(object parameter)
-        {
-            if (CanExecuteDelegate != null)
-            {
-                return CanExecuteDelegate(parameter);
-            }
-
-            return true;
-        }
-
-        public event EventHandler CanExecuteChanged
-        {
-            add { CommandManager.RequerySuggested += value; }
-            remove { CommandManager.RequerySuggested -= value; }
-        }
-
-        public void Execute(object parameter)
-        {
-            if (ExecuteDelegate != null)
-            {
-                ExecuteDelegate(parameter);
-            }
-        }
-
-        #endregion
-
-
-    }
 }
