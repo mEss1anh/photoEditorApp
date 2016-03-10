@@ -24,9 +24,8 @@ namespace PhotoEditor.View
         public MainWindowView()
         {
             InitializeComponent();
-
         }
 
-       
+   
     }
 }
