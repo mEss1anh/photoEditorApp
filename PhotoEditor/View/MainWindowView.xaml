@@ -11,7 +11,7 @@
         <ribbon:Ribbon  DockPanel.Dock="Top" Background="Gainsboro">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu SmallImageSource="../Images/21735-NTFIQX.jpg">
-                    <RibbonApplicationMenuItem Name="Open" Header="Open" Click="Open_Click"/>
+                    <RibbonApplicationMenuItem Name="Open" Header="Open"/>
                     <RibbonApplicationMenuItem Name="Save" Header="Save"/>
                     <RibbonApplicationMenuItem Name="Smth1" Header="Smth1"/>
                     <RibbonApplicationMenuItem Name="Smth2" Header="Smth2"/>
