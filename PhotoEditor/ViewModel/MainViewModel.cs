@@ -29,12 +29,12 @@ namespace PhotoEditor.ViewModel
             {
                 // Исходная директория
                 dialog.InitialDirectory = Environment.CurrentDirectory;
-                dialog.Filter = "XML files (*.xml)|*.xml";
+                dialog.Filter = "Image files |*.jpg;*.png;*.bmp";
                 if (dialog.ShowDialog().Value)
                 {
                     try
                     {
-                        
+                        m.ImageSource = dialog.FileName;
                     }
                     catch
                     {
