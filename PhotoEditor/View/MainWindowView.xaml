@@ -30,8 +30,10 @@
                 </RibbonGroup>
             </RibbonTab>
             <RibbonTab Name="Extra" Header="Extra" Margin="0,3,0,-3">
-
             </RibbonTab>
         </ribbon:Ribbon>
+        <StackPanel>
+            
+        </StackPanel>
     </DockPanel>
 </Window>
