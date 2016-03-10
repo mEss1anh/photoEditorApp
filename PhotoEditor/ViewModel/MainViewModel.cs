@@ -18,7 +18,7 @@ namespace PhotoEditor.ViewModel
         static ModelClassImage m;
         FileDialogClass fileDial;
         public ICommand ClickOpenCommand { get; set; }
-       //public Command ClickOpenCommand;
+       //public Command ClickOpenCommand;.
         public MainViewModel()
         {
             m = new ModelClassImage();
