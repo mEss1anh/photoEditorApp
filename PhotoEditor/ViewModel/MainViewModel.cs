@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Drawing;
 
 namespace PhotoEditor.ViewModel
 {
@@ -16,15 +17,21 @@ namespace PhotoEditor.ViewModel
     class MainViewModel
     {
         static ModelClassImage m;
+
         FileDialogClass fileDial;
-        public ICommand ClickOpenCommand { get; set; }
-       //public Command ClickOpenCommand;.
+
+        static Image OpenedImage;
+        public ICommand ClickOpenCommand { get; set;}
+        
+
         public MainViewModel()
         {
             m = new ModelClassImage();
             fileDial = new FileDialogClass();
             ClickOpenCommand = new Command(arg => fileDial.OpenFile());
         }
+
+     
 
         public class FileDialogClass
         {
@@ -39,7 +46,7 @@ namespace PhotoEditor.ViewModel
             public void OpenFile()
             {
                 OpenFileDialog dialog = new OpenFileDialog();
-                // Исходная директория
+               
                 dialog.InitialDirectory = Environment.CurrentDirectory;
 
 
@@ -55,6 +62,9 @@ namespace PhotoEditor.ViewModel
                         MessageBox.Show("Ошибка загрузки данных");
                     }
                 }
+                //?
+                OpenedImage = new Bitmap(m.ImageSource, true);
+
             }
         }
     }
