@@ -31,7 +31,10 @@ namespace PhotoEditor.Model
             set { }
         }
 
-
+        public ModelClassImage(string imgsource)
+        {
+            ImageSource = imgsource;
+        }
 
 
     }

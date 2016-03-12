@@ -16,17 +16,18 @@ namespace PhotoEditor.ViewModel
 
     class MainViewModel
     {
-        static ModelClassImage m;
+      //  static ModelClassImage m;
 
         FileDialogClass fileDial;
 
-        static Image OpenedImage;
+        
+       // public ModelClassImage OpenedImage { get; set; }
         public ICommand ClickOpenCommand { get; set;}
         
 
         public MainViewModel()
         {
-            m = new ModelClassImage();
+            //m = new ModelClassImage();
             fileDial = new FileDialogClass();
             ClickOpenCommand = new Command(arg => fileDial.OpenFile());
         }
@@ -41,7 +42,18 @@ namespace PhotoEditor.ViewModel
             {
                 //dialog = new OpenFileDialog();
             }
+           // static ModelClassImage OpenedImage;
+             private ModelClassImage _openedImage;
 
+            public ModelClassImage OpenedImage
+            {
+                get { return _openedImage; }
+                set
+                {
+                    _openedImage = value;
+                    //OnPropertyChanged("O");
+                }
+            }
 
             public void OpenFile()
             {
@@ -55,7 +67,7 @@ namespace PhotoEditor.ViewModel
                 {
                     try
                     {
-                        m.ImageSource = dialog.FileName;
+                        OpenedImage = new ModelClassImage(dialog.FileName);
                     }
                     catch
                     {
@@ -63,7 +75,7 @@ namespace PhotoEditor.ViewModel
                     }
                 }
                 //?
-                OpenedImage = new Bitmap(m.ImageSource, true);
+               // OpenedImage = new Bitmap(m.ImageSource, true);
 
             }
         }

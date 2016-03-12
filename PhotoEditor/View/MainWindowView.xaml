@@ -33,7 +33,8 @@
             </RibbonTab>
         </ribbon:Ribbon>
         <StackPanel>
-            
+            <Image x:Name="image" Height="163" Width="142" Source="{Binding Path = OpenedImage}"/>
+
         </StackPanel>
     </DockPanel>
 </Window>
