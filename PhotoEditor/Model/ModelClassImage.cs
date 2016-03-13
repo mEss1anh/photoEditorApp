@@ -13,30 +13,17 @@ namespace PhotoEditor.Model
     class ModelClassImage 
     {
         
-        public ModelClassImage(string imageSource)
+        public ModelClassImage(string _imageSource, string _extension)
         {
-            ImageSource = imageSource;
+            ImageSource = _imageSource;
+            Extension = _extension;
         }
 
         public string ImageSource { get; set; }
         
-        //private string _imageSource;
-
-        //public string ImageSource
-        //{
-        //    get { return _imageSource; }
-        //    set
-        //    {
-        //        if (_imageSource != value)
-        //        {
-        //            _imageSource = value;
-        //            OnPropertyChanged("ImageSource");
-        //        }
-        //    }
-    
-
-
         public Image IMG { get; set; }
+
+        public string Extension { get; set; }
 
         public double IMGWidth
         {

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Drawing;
+using System.IO;
 
 namespace PhotoEditor.ViewModel
 {
@@ -42,16 +43,18 @@ namespace PhotoEditor.ViewModel
                 }
             }
         }
-            FileDialogClass fileDial;
+            //FileDialogClass fileDial;
 
         public ICommand ClickOpenCommand { get; set; }
+        public ICommand ClickSaveCommand { get; set; }
         //static ModelClassImage OpenedImage;
 
         public MainViewModel()
         {
             //m = new ModelClassImage();
-            fileDial = new FileDialogClass();
+            //fileDial = new FileDialogClass();
             ClickOpenCommand = new Command(arg => OpenFile());
+            ClickSaveCommand = new Command(arg => SaveFile());
         }
 
         public void OpenFile()
@@ -65,7 +68,7 @@ namespace PhotoEditor.ViewModel
             {
                 try
                 {
-                    OpenedImage = new ModelClassImage(dialog.FileName);
+                    OpenedImage = new ModelClassImage(dialog.FileName, Path.GetExtension(dialog.FileName));
                 }
                 catch
                 {
@@ -74,17 +77,25 @@ namespace PhotoEditor.ViewModel
             }
         }
 
-        public class FileDialogClass
+
+        public void SaveFile()
         {
-            //public event PropertyChangedEventHandler PropertyChanged;
-
-            public FileDialogClass()
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.FileName = "My image";
+            dlg.Filter = "Image files |*.jpg;*.png;*.bmp";
+            bool? result = dlg.ShowDialog();
+            if (result == true)
             {
-                //dialog = new OpenFileDialog();
+                string ext = System.IO.Path.GetExtension(sfd.FileName);
+                switch (ext)
+                {
+                    case ".jpg":
+                        format = ImageFormat.Jpeg;
+                        break;
+                    case ".bmp":
+                        format = ImageFormat.Bmp;
+                        break;
+                }
             }
-
-
-            
-        }
     }
 }
