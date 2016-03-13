@@ -14,23 +14,65 @@ using System.Drawing;
 namespace PhotoEditor.ViewModel
 {
 
-    class MainViewModel
+    class MainViewModel : INotifyPropertyChanged
     {
-        static ModelClassImage m;
+        // static ModelClassImage m;
 
-        FileDialogClass fileDial;
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        private ModelClassImage _openedImage;
+
+        public ModelClassImage OpenedImage
+        {
+            get { return _openedImage; }
+            set
+            {
+                if (_openedImage != value)
+                {
+                    _openedImage = value;
+                    OnPropertyChanged("OpenedImage");
+                }
+            }
+        }
+            FileDialogClass fileDial;
 
         public ICommand ClickOpenCommand { get; set; }
-        static ModelClassImage OpenedImage;
+        //static ModelClassImage OpenedImage;
 
         public MainViewModel()
         {
             //m = new ModelClassImage();
             fileDial = new FileDialogClass();
-            ClickOpenCommand = new Command(arg => fileDial.OpenFile());
+            ClickOpenCommand = new Command(arg => OpenFile());
         }
 
+        public void OpenFile()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
 
+            dialog.InitialDirectory = Environment.CurrentDirectory;
+
+            dialog.Filter = "Image files |*.jpg;*.png;*.bmp";
+            if (dialog.ShowDialog().Value)
+            {
+                try
+                {
+                    OpenedImage = new ModelClassImage(dialog.FileName);
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка загрузки данных");
+                }
+            }
+        }
 
         public class FileDialogClass
         {
@@ -42,25 +84,7 @@ namespace PhotoEditor.ViewModel
             }
 
 
-            public void OpenFile()
-            {
-                OpenFileDialog dialog = new OpenFileDialog();
-
-                dialog.InitialDirectory = Environment.CurrentDirectory;
-
-                dialog.Filter = "Image files |*.jpg;*.png;*.bmp";
-                if (dialog.ShowDialog().Value)
-                {
-                    try
-                    {
-                       OpenedImage = new ModelClassImage(dialog.FileName);
-                    }
-                    catch
-                    {
-                        MessageBox.Show("Ошибка загрузки данных");
-                    }
-                }
-            }
+            
         }
     }
 }

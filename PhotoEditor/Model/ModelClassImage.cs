@@ -10,37 +10,30 @@ using System.ComponentModel;
 
 namespace PhotoEditor.Model
 {
-    class ModelClassImage : INotifyPropertyChanged
+    class ModelClassImage 
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
+        
         public ModelClassImage(string imageSource)
         {
             ImageSource = imageSource;
         }
 
-        private string _imageSource;
+        public string ImageSource { get; set; }
+        
+        //private string _imageSource;
 
-        public string ImageSource
-        {
-            get { return _imageSource; }
-            set
-            {
-                if (_imageSource != value)
-                {
-                    _imageSource = value;
-                    OnPropertyChanged("ImageSource");
-                }
-            }
-        }
+        //public string ImageSource
+        //{
+        //    get { return _imageSource; }
+        //    set
+        //    {
+        //        if (_imageSource != value)
+        //        {
+        //            _imageSource = value;
+        //            OnPropertyChanged("ImageSource");
+        //        }
+        //    }
+    
 
 
         public Image IMG { get; set; }
