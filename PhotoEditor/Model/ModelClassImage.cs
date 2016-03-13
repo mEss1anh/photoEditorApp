@@ -13,10 +13,11 @@ namespace PhotoEditor.Model
     class ModelClassImage 
     {
         
-        public ModelClassImage(string _imageSource, string _extension)
+        public ModelClassImage(string _imageSource, string _extension, Image _img)
         {
             ImageSource = _imageSource;
             Extension = _extension;
+            IMG = _img;
         }
 
         public string ImageSource { get; set; }

@@ -33,8 +33,9 @@
             </RibbonTab>
         </ribbon:Ribbon>
         <StackPanel>
-            <Image x:Name="image" Height="103" Width="142" Source="{Binding OpenedImage.ImageSource}"/>
-            <TextBlock x:Name="textBlock" Height="25"  Text="{Binding Path =OpenedImage.ImageSource }" Width="137" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image x:Name="image" Height="103" Width="142" Source="{Binding OpenedImage.ImageSource}" Stretch="None"/>
+
+            <TextBlock x:Name="textBlock" Height="25"  Text="{Binding OpenedImage.ImageSource}" Width="137" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         </StackPanel>
     </DockPanel>

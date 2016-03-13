@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Drawing;
 using System.IO;
+using System.Drawing.Imaging;
 
 namespace PhotoEditor.ViewModel
 {
@@ -43,7 +44,7 @@ namespace PhotoEditor.ViewModel
                 }
             }
         }
-            //FileDialogClass fileDial;
+        //FileDialogClass fileDial;
 
         public ICommand ClickOpenCommand { get; set; }
         public ICommand ClickSaveCommand { get; set; }
@@ -68,7 +69,8 @@ namespace PhotoEditor.ViewModel
             {
                 try
                 {
-                    OpenedImage = new ModelClassImage(dialog.FileName, Path.GetExtension(dialog.FileName));
+                    OpenedImage = new ModelClassImage(dialog.FileName, Path.GetExtension(dialog.FileName),
+                        new Bitmap(dialog.FileName));
                 }
                 catch
                 {
@@ -81,12 +83,13 @@ namespace PhotoEditor.ViewModel
         public void SaveFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
+            ImageFormat format = ImageFormat.Png;
             dlg.FileName = "My image";
             dlg.Filter = "Image files |*.jpg;*.png;*.bmp";
             bool? result = dlg.ShowDialog();
             if (result == true)
             {
-                string ext = System.IO.Path.GetExtension(sfd.FileName);
+                string ext = OpenedImage.Extension;
                 switch (ext)
                 {
                     case ".jpg":
@@ -95,7 +98,12 @@ namespace PhotoEditor.ViewModel
                     case ".bmp":
                         format = ImageFormat.Bmp;
                         break;
+                    case ".png":
+                        format = ImageFormat.Png;
+                        break;
                 }
+                OpenedImage.IMG.Save(dlg.FileName, format);
             }
+        }
     }
 }
