@@ -67,11 +67,12 @@ namespace PhotoEditor.ViewModel
 
             dialog.InitialDirectory = Environment.CurrentDirectory;
 
-            dialog.Filter = "Image files |*.jpg;*.png;*.bmp";
+            dialog.Filter = "Image files (*.jpg;*.png;*.bmp)| *.jpg;*.png;*.bmp";
             if (dialog.ShowDialog().Value)
             {
                 try
                 {
+                    var imageFormat = new Bitmap(dialog.FileName).RawFormat;
                     OpenedImage = new ModelClassImage(dialog.FileName, Path.GetExtension(dialog.FileName),
                         new Bitmap(dialog.FileName));
                 }
@@ -86,9 +87,9 @@ namespace PhotoEditor.ViewModel
         public void SaveFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
-            ImageFormat format = ImageFormat.Png;
+            ImageFormat format = ImageFormat.Jpeg;
             dlg.FileName = "My image";
-            dlg.Filter = "Image files |*.jpg;*.png;*.bmp";
+            dlg.Filter = "JPEG (*.jpg)|*.jpg|PNG(*.png)|*.png|BitMap(*.bmp)|*.bmp";
             bool? result = dlg.ShowDialog();
             if (result == true)
             {
@@ -97,15 +98,17 @@ namespace PhotoEditor.ViewModel
                 {
                     case ".jpg":
                         format = ImageFormat.Jpeg;
+                        OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Jpeg);
                         break;
                     case ".bmp":
                         format = ImageFormat.Bmp;
+                        OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Bmp);
                         break;
                     case ".png":
                         format = ImageFormat.Png;
+                        OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Png);
                         break;
                 }
-                OpenedImage.IMG.Save(dlg.FileName, format);
             }
         }
 

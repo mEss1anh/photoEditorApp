@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 //using System.MarshalByRefObject;
 using System.Drawing;
 using System.ComponentModel;
+using System.Drawing.Imaging;
 
 namespace PhotoEditor.Model
 {
