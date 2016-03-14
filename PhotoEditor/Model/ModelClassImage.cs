@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.ComponentModel;
 using System.Drawing.Imaging;
+using System.Windows.Media.Imaging;
 
 namespace PhotoEditor.Model
 {
@@ -27,16 +28,41 @@ namespace PhotoEditor.Model
 
         #endregion
 
-        public ModelClassImage(string _imageSource, string _extension, Image _img)
+        public ModelClassImage(string _imageSource, string _extension, Bitmap _img)
         {
             ImageSource = _imageSource;
             Extension = _extension;
-            IMG = _img;
+            IMG = new Bitmap(_imageSource);
         }
 
-        public string ImageSource { get; set; }
-        
-        public Image IMG { get; set; }
+        private string _imageSource;
+        public string ImageSource
+        {
+            get { return _imageSource; }
+            set
+            {
+                if (_imageSource != value)
+                {
+                    _imageSource = value;
+                    OnPropertyChanged("ImageSource");
+                }
+            }
+        }
+
+        private Bitmap _img;
+        public Bitmap IMG
+        {
+            get { return _img; }
+            set
+            {
+                if (_img != value)
+                {
+                    _img = value;
+                    OnPropertyChanged("IMG");
+                }
+
+            }
+        }
 
         public string Extension { get; set; }
 
@@ -66,6 +92,5 @@ namespace PhotoEditor.Model
                 }
             }
         }
-
     }
 }

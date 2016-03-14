@@ -91,24 +91,22 @@ namespace PhotoEditor.ViewModel
             dlg.FileName = "My image";
             dlg.Filter = "JPEG (*.jpg)|*.jpg|PNG(*.png)|*.png|BitMap(*.bmp)|*.bmp";
             bool? result = dlg.ShowDialog();
+            Bitmap img = new Bitmap(OpenedImage.ImageSource);
             if (result == true)
             {
                 string ext = OpenedImage.Extension;
                 switch (ext)
                 {
-                    case ".jpg":
-                        format = ImageFormat.Jpeg;
-                        OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Jpeg);
+                    case ".jpg":  
+                        img.Save(dlg.FileName, ImageFormat.Jpeg);
                         break;
                     case ".bmp":
-                        format = ImageFormat.Bmp;
-                        OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Bmp);
+                        img.Save(dlg.FileName, ImageFormat.Bmp);
                         break;
                     case ".png":
-                        format = ImageFormat.Png;
-                        OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Png);
+                        img.Save(dlg.FileName, ImageFormat.Png);
                         break;
-                }
+                }   
             }
         }
 
