@@ -112,7 +112,7 @@ namespace PhotoEditor.ViewModel
 
         public void RotateRight()
         {
-            OpenedImage.IMG.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            OpenedImage.Angle = 90;
         }
     }
 }

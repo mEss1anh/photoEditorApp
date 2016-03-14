@@ -37,5 +37,7 @@ namespace PhotoEditor.Model
             get { return IMG.Height; }
             set { }
         }
+
+        public double Angle { get; set; }
     }
 }
