@@ -6,11 +6,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoEditor"
         mc:Ignorable="d"
-        Title="VDeditor" Height="350" Width="525">
+        Title="VDeditor" Height="550" Width="550" WindowState="Maximized">
     <DockPanel>
         <ribbon:Ribbon  DockPanel.Dock="Top" Background="Gainsboro">
             <Ribbon.ApplicationMenu>
-                <RibbonApplicationMenu SmallImageSource="../Images/21735-NTFIQX.jpg">
+                <RibbonApplicationMenu SmallImageSource="../Images/21735-NTFIQX.jpg" Background="Black">
                     <RibbonApplicationMenuItem Name="Open" Header="Open"  Command="{Binding ClickOpenCommand}"/>
                     <RibbonApplicationMenuItem Name="Save" Header="Save"  Command="{Binding ClickSaveCommand}"/>
                     <RibbonApplicationMenuItem Name="Smth1" Header="Smth1"/>
@@ -32,11 +32,14 @@
             <RibbonTab Name="Extra" Header="Extra" Margin="0,3,0,-3">
             </RibbonTab>
         </ribbon:Ribbon>
-        <StackPanel>
-            <Image x:Name="image" Height="103" Width="142" Source="{Binding OpenedImage.ImageSource}" Stretch="None"/>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+            <Grid ScrollViewer.CanContentScroll="True">
 
-            <TextBlock x:Name="textBlock" Height="25"  Text="{Binding OpenedImage.ImageSource}" Width="137" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <Image x:Name="image" Source="{Binding OpenedImage.ImageSource}" Stretch="None" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True"/>
 
-        </StackPanel>
+            <!-- <TextBlock x:Name="textBlock" Height="25"  Text="{Binding OpenedImage.ImageSource}" Width="137" HorizontalAlignment="Left" VerticalAlignment="Top"/> -->
+
+        </Grid>
+        </ScrollViewer>
     </DockPanel>
 </ribbon:RibbonWindow>
