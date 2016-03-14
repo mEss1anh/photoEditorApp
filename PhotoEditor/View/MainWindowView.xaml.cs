@@ -27,7 +27,7 @@ namespace PhotoEditor.View
         public MainWindowView()
         {
             InitializeComponent();
-            this.DataContext = _viewModel;
+            DataContext = _viewModel;
         }
     }
 }

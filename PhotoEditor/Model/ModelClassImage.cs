@@ -10,15 +10,27 @@ using System.ComponentModel;
 
 namespace PhotoEditor.Model
 {
-    class ModelClassImage 
+    class ModelClassImage : INotifyPropertyChanged
     {
-        
+        #region Implement INotyfyPropertyChanged members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+
         public ModelClassImage(string _imageSource, string _extension, Image _img)
         {
             ImageSource = _imageSource;
             Extension = _extension;
             IMG = _img;
-            Angle = Angle;
         }
 
         public string ImageSource { get; set; }
@@ -39,6 +51,20 @@ namespace PhotoEditor.Model
             set { }
         }
 
-        public double Angle { get; set; }
+        private double _angle;
+
+        public double Angle
+        {
+            get { return _angle; }
+            set
+            {
+                if (_angle != value)
+                {
+                    _angle = value;
+                    OnPropertyChanged("Angle");
+                }
+            }
+        }
+
     }
 }

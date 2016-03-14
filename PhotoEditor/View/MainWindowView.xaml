@@ -40,7 +40,7 @@
                     <TransformGroup>
                         <ScaleTransform/>
                         <SkewTransform/>
-                        <RotateTransform Angle="{Binding OpenedImage.Angle}"/>
+                        <RotateTransform Angle="{Binding OpenedImage.Angle, Mode=TwoWay}"/>
                         <TranslateTransform/>
                     </TransformGroup>
                 </Grid.RenderTransform>
