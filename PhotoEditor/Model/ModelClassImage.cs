@@ -37,6 +37,5 @@ namespace PhotoEditor.Model
             get { return IMG.Height; }
             set { }
         }
-
     }
 }

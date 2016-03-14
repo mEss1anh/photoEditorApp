@@ -21,7 +21,7 @@
             <RibbonTab Name="Main" Header="Main">
                 <RibbonGroup Name="Group1" Header="Basic tools" Margin="0,1" Width="173">
                     <RibbonButton Name="B1" Label="Undo" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <RibbonButton Name="B2" Label="Do smth" Margin="50,20,-104,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="B2" Label="Rotate right" Margin="50,20,-104,-38" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}"/>
                     <RibbonButton Name="B3" Label="Do smth" Margin="106,20,-160,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </RibbonGroup>
                 <RibbonGroup Name="Group2" Header="Special" Margin="0,1" Width="118">
@@ -29,8 +29,7 @@
                     <RibbonButton Name="B5" Label="Do smth" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </RibbonGroup>
             </RibbonTab>
-            <RibbonTab Name="Extra" Header="Extra" Margin="0,3,0,-3">
-            </RibbonTab>
+            <RibbonTab Name="Extra" Header="Extra" Margin="0,-4,0,4"/>
         </ribbon:Ribbon>
         <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
             <Grid ScrollViewer.CanContentScroll="True">

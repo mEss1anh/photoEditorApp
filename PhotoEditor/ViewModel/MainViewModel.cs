@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Windows.Media.Imaging;
 
 namespace PhotoEditor.ViewModel
 {
@@ -48,6 +49,7 @@ namespace PhotoEditor.ViewModel
 
         public ICommand ClickOpenCommand { get; set; }
         public ICommand ClickSaveCommand { get; set; }
+        public ICommand ClickRotateRightCommand { get; set; }
         //static ModelClassImage OpenedImage;
 
         public MainViewModel()
@@ -56,6 +58,7 @@ namespace PhotoEditor.ViewModel
             //fileDial = new FileDialogClass();
             ClickOpenCommand = new Command(arg => OpenFile());
             ClickSaveCommand = new Command(arg => SaveFile());
+            ClickRotateRightCommand = new Command(arg => RotateRight());
         }
 
         public void OpenFile()
@@ -104,6 +107,12 @@ namespace PhotoEditor.ViewModel
                 }
                 OpenedImage.IMG.Save(dlg.FileName, format);
             }
+        }
+
+
+        public void RotateRight()
+        {
+            OpenedImage.IMG.RotateFlip(RotateFlipType.Rotate90FlipNone);
         }
     }
 }
