@@ -30,6 +30,8 @@ namespace PhotoEditor.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        Bitmap img;
+        public Bitmap IMG { get; set; }
 
         private ModelClassImage _openedImage;
 
@@ -72,9 +74,9 @@ namespace PhotoEditor.ViewModel
             {
                 try
                 {
-                    var imageFormat = new Bitmap(dialog.FileName).RawFormat;
                     OpenedImage = new ModelClassImage(dialog.FileName, Path.GetExtension(dialog.FileName),
                         new Bitmap(dialog.FileName));
+                    IMG = new Bitmap(OpenedImage.ImageSource);
                 }
                 catch
                 {
@@ -91,20 +93,24 @@ namespace PhotoEditor.ViewModel
             dlg.FileName = "My image";
             dlg.Filter = "JPEG (*.jpg)|*.jpg|PNG(*.png)|*.png|BitMap(*.bmp)|*.bmp";
             bool? result = dlg.ShowDialog();
-            Bitmap img = new Bitmap(OpenedImage.ImageSource);
+            
+            //img.RotateFlip(RotateFlipType.Rotate90FlipNone);
             if (result == true)
             {
                 string ext = OpenedImage.Extension;
                 switch (ext)
                 {
                     case ".jpg":  
-                        img.Save(dlg.FileName, ImageFormat.Jpeg);
+                        //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Jpeg);
+                        IMG.Save(dlg.FileName, ImageFormat.Jpeg);
                         break;
                     case ".bmp":
-                        img.Save(dlg.FileName, ImageFormat.Bmp);
+                        //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Bmp);
+                        IMG.Save(dlg.FileName, ImageFormat.Bmp);
                         break;
                     case ".png":
-                        img.Save(dlg.FileName, ImageFormat.Png);
+                        //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Png);
+                        IMG.Save(dlg.FileName, ImageFormat.Png);
                         break;
                 }   
             }
@@ -114,6 +120,7 @@ namespace PhotoEditor.ViewModel
         public void RotateRight()
         {
             OpenedImage.Angle += 90;
+            IMG.RotateFlip(RotateFlipType.Rotate90FlipNone);
         }
     }
 }

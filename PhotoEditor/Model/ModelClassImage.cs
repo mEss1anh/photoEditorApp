@@ -33,6 +33,7 @@ namespace PhotoEditor.Model
             ImageSource = _imageSource;
             Extension = _extension;
             IMG = new Bitmap(_imageSource);
+            
         }
 
         private string _imageSource;
@@ -93,4 +94,6 @@ namespace PhotoEditor.Model
             }
         }
     }
+
+ 
 }
