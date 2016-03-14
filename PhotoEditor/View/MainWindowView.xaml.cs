@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotoEditor.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,12 @@ namespace PhotoEditor.View
     /// </summary>
     public partial class MainWindowView
     {
+
+        MainViewModel _viewModel = new MainViewModel();
         public MainWindowView()
         {
             InitializeComponent();
+            this.DataContext = _viewModel;
         }
     }
 }
