@@ -33,7 +33,11 @@
         </ribbon:Ribbon>
         <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" Margin="0,2,0,-2">
             <Grid ScrollViewer.CanContentScroll="True">
-                <Image x:Name="image" Source="{Binding OpenedImage.ImageSource}" Stretch="None" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True"/>
+                <Image x:Name="image" Source="{Binding OpenedImage.ImageSource}" Stretch="None" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True">
+                <Image.LayoutTransform>
+                        <RotateTransform Angle="{Binding OpenedImage.Angle, Mode=TwoWay}"/>
+                </Image.LayoutTransform>
+                </Image>
                 <!-- <TextBlock x:Name="textBlock" Height="25"  Text="{Binding OpenedImage.ImageSource}" Width="137" HorizontalAlignment="Left" VerticalAlignment="Top"/> -->
             </Grid>
         </ScrollViewer>

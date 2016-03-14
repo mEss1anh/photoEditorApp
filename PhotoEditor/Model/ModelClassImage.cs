@@ -18,6 +18,7 @@ namespace PhotoEditor.Model
             ImageSource = _imageSource;
             Extension = _extension;
             IMG = _img;
+            Angle = Angle;
         }
 
         public string ImageSource { get; set; }
