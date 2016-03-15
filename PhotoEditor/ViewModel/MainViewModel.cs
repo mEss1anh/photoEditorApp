@@ -30,7 +30,7 @@ namespace PhotoEditor.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        Bitmap img;
+
         public Bitmap IMG { get; set; }
 
         private ModelClassImage _openedImage;
@@ -52,6 +52,8 @@ namespace PhotoEditor.ViewModel
         public ICommand ClickOpenCommand { get; set; }
         public ICommand ClickSaveCommand { get; set; }
         public ICommand ClickRotateRightCommand { get; set; }
+        public ICommand ClickRotateLeftCommand { get; set; }
+
         //static ModelClassImage OpenedImage;
 
         public MainViewModel()
@@ -61,6 +63,7 @@ namespace PhotoEditor.ViewModel
             ClickOpenCommand = new Command(arg => OpenFile());
             ClickSaveCommand = new Command(arg => SaveFile());
             ClickRotateRightCommand = new Command(arg => RotateRight());
+            ClickRotateLeftCommand = new Command(arg => RotateLeft());
         }
 
         public void OpenFile()
@@ -121,6 +124,12 @@ namespace PhotoEditor.ViewModel
         {
             OpenedImage.Angle += 90;
             IMG.RotateFlip(RotateFlipType.Rotate90FlipNone);
+        }
+
+        public void RotateLeft()
+        {
+            OpenedImage.Angle -= 90;
+            IMG.RotateFlip(RotateFlipType.Rotate90FlipY);
         }
     }
 }
