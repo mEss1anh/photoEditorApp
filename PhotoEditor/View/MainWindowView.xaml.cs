@@ -30,23 +30,23 @@ namespace PhotoEditor.View
             DataContext = _viewModel;
         }
 
-        private void image_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ButtonState == e.LeftButton)
-            {
-                int ix = (int)(e.XButton1);
-                int iy = (int)(e.Y / _zoom);
-                //reset _pt2
-                _pt2 = new Point(0, 0);
-                _pt = new Point(ix, iy);
-                // pictureBox1.Invalidate();
-                picBoxImageProcessing.Invalidate();
-            }
-        }
+        //private void image_MouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (e.ButtonState == e.LeftButton)
+        //    {
+        //        int ix = (int)(e.XButton1);
+        //        int iy = (int)(e.Y / _zoom);
+        //        //reset _pt2
+        //        _pt2 = new Point(0, 0);
+        //        _pt = new Point(ix, iy);
+        //        // pictureBox1.Invalidate();
+        //        picBoxImageProcessing.Invalidate();
+        //    }
+        //}
 
-        private void image_MouseUp(object sender, MouseButtonEventArgs e)
-        {
+        //private void image_MouseUp(object sender, MouseButtonEventArgs e)
+        //{
 
-        }
+        //}
     }
 }

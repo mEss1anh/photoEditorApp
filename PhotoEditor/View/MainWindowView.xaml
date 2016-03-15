@@ -6,34 +6,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoEditor"
         mc:Ignorable="d"
-        Title="VDeditor" Height="550" Width="550" WindowState="Maximized">
-    <DockPanel>
-        <ribbon:Ribbon  DockPanel.Dock="Top" Background="Gainsboro">
+        Title="VDeditor" Height="600" Width="1000" WindowStyle ="None" AllowsTransparency ="True" >
+    <RibbonWindow.Foreground>
+        <SolidColorBrush/>
+    </RibbonWindow.Foreground>
+    <Window.Background>
+        <ImageBrush ImageSource="../Images/148.jpg" Stretch="UniformToFill"/>
+    </Window.Background>
+    <DockPanel HorizontalAlignment="Left">
+        <ribbon:Ribbon  DockPanel.Dock="Top" Background="Transparent" Height="116">
             <Ribbon.ApplicationMenu>
-                <RibbonApplicationMenu SmallImageSource="../Images/21735-NTFIQX.jpg" Background="Black">
-                    <RibbonApplicationMenuItem Name="Open" Header="Open"  Command="{Binding ClickOpenCommand}"/>
-                    <RibbonApplicationMenuItem Name="Save" Header="Save"  Command="{Binding ClickSaveCommand}"/>
-                    <RibbonApplicationMenuItem Name="Smth1" Header="Smth1"/>
-                    <RibbonApplicationMenuItem Name="Smth2" Header="Smth2"/>
-                    <RibbonApplicationMenuItem Name="Smth3" Header="Smth3"/>
+                <RibbonApplicationMenu SmallImageSource="../Images/main.png" Background="Black">
+                    <RibbonApplicationMenuItem Name="Open" ImageSource="../Images/open.png" Header="Open" Command="{Binding ClickOpenCommand}"/>
+                    <RibbonApplicationMenuItem Name="Save" ImageSource="../Images/save2.png" Header="Save"  Command="{Binding ClickSaveCommand}"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
-            <RibbonTab Name="Main" Header="Main">
-                <RibbonGroup Name="Group1" Header="Basic tools" Margin="0,1" Width="173">
-                    <RibbonButton Name="B1" Label="Rotate left" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}"/>
-                    <RibbonButton Name="B2" Label="Rotate right" Margin="50,20,-104,-38" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}"/>
-                    <RibbonButton Name="B3" Label="Do smth" Margin="106,20,-160,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <RibbonTab Name="Main" Header="Tools" BorderBrush="Black" Height="70" VerticalAlignment="Top">
+                <RibbonTab.Background>
+                    <SolidColorBrush/>
+                </RibbonTab.Background>
+                <RibbonGroup Name="Group1" Header="Basic" Margin="0,1" Width="173">
+                    <RibbonButton Name="B1" LargeImageSource="../Images/rotatel.png" Margin="4,10,-48,-42" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40"/>
+                    <RibbonButton Name="B2"   LargeImageSource="../Images/rotater.png" Margin="58,3,-98,-39" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40"/>
+                    <RibbonButton Name="B3"  LargeImageSource="../Images/crop.png" Margin="110,11,-154,-12" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
                 </RibbonGroup>
                 <RibbonGroup Name="Group2" Header="Special" Margin="0,1" Width="118">
                     <RibbonButton Name="B4" Label="Do smth" Margin="56,20,-110,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <RibbonButton Name="B5" Label="Do smth" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </RibbonGroup>
             </RibbonTab>
-            <RibbonTab Name="Extra" Header="Extra" Margin="0,10,0,-10"/>
         </ribbon:Ribbon>
-        <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" Margin="0,2,0,-2">
+        <ScrollViewer VerticalScrollBarVisibility="Hidden"  HorizontalScrollBarVisibility="Visible" Margin="0,2,0,-2" Width="994" HorizontalAlignment="Right">
             <Grid ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5">
-                <Image x:Name="image" Source="{Binding OpenedImage.ImageSource, Mode=TwoWay}" Stretch="None"  HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" MouseDown="image_MouseDown" MouseUp="image_MouseUp">
+                <Image x:Name="image" Source="{Binding OpenedImage.ImageSource, Mode=TwoWay}" Stretch="None"  HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" AllowDrop="True">
                     <Image.RenderTransform>
                         <RotateTransform Angle="{Binding OpenedImage.Angle}"/>
                     </Image.RenderTransform>
@@ -42,4 +47,6 @@
             </Grid>
         </ScrollViewer>
     </DockPanel>
+
+
 </ribbon:RibbonWindow>
