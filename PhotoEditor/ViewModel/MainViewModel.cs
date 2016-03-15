@@ -53,6 +53,7 @@ namespace PhotoEditor.ViewModel
         public ICommand ClickSaveCommand { get; set; }
         public ICommand ClickRotateRightCommand { get; set; }
         public ICommand ClickRotateLeftCommand { get; set; }
+        public ICommand ClickFilterCommand { get; set; }
 
         //static ModelClassImage OpenedImage;
 
@@ -64,7 +65,8 @@ namespace PhotoEditor.ViewModel
             ClickSaveCommand = new Command(arg => SaveFile());
             ClickRotateRightCommand = new Command(arg => RotateRight());
             ClickRotateLeftCommand = new Command(arg => RotateLeft());
-        }
+            ClickFilterCommand = new Command(arg => Filt());
+    }
 
         public void OpenFile()
         {
@@ -130,6 +132,56 @@ namespace PhotoEditor.ViewModel
         {
             OpenedImage.Angle -= 90;
             IMG.RotateFlip(RotateFlipType.Rotate90FlipY);
+        }
+
+        private static Bitmap ApplyColorMatrix(Bitmap img, ColorMatrix colorMatrix)
+        {
+            Bitmap bmpSource = GetArgbCopy(img);
+            Bitmap imageToApplyFilter = new Bitmap(bmpSource.Width, bmpSource.Height, PixelFormat.Format32bppArgb);
+            using (Graphics graphics = Graphics.FromImage(imageToApplyFilter))
+            {
+                ImageAttributes bmpAttributes = new ImageAttributes();
+                bmpAttributes.SetColorMatrix(colorMatrix);
+                graphics.DrawImage(bmpSource, new Rectangle(0, 0, bmpSource.Width, bmpSource.Height),
+                                    0, 0, bmpSource.Width, bmpSource.Height, GraphicsUnit.Pixel, bmpAttributes);
+
+            }
+            return imageToApplyFilter;
+        }
+
+        private static Bitmap GetArgbCopy(Bitmap img)
+        {
+            Bitmap bmpNew = new Bitmap(img.Width, img.Height, PixelFormat.Format32bppArgb);
+
+            using (Graphics graphics = Graphics.FromImage(bmpNew))
+            {
+                graphics.DrawImage(img, new Rectangle(0, 0, bmpNew.Width, bmpNew.Height), new Rectangle(0, 0, bmpNew.Width, bmpNew.Height), GraphicsUnit.Pixel);
+                graphics.Flush();
+            }
+
+            return bmpNew;
+        }
+
+
+        public static Bitmap DrawWithTransparency(Bitmap img)
+        {
+            ColorMatrix colorMatrix = new ColorMatrix(new float[][]
+                                {
+                            new float[]{1, 0, 0, 0, 0},
+                            new float[]{0, 1, 0, 0, 0},
+                            new float[]{0, 0, 1, 0, 0},
+                            new float[]{0, 0, 0, 0.3f, 0},
+                            new float[]{0, 0, 0, 0, 1}
+                                });
+
+
+            return ApplyColorMatrix(img, colorMatrix);
+        }
+
+        void Filt()
+        {
+            IMG = DrawWithTransparency(IMG);
+            OpenedImage.IMG = DrawWithTransparency(OpenedImage.IMG);
         }
     }
 }

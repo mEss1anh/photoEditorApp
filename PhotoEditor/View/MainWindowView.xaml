@@ -32,7 +32,7 @@
                 </RibbonGroup>
                 <RibbonGroup Name="Group2" Header="Special" Margin="0,1" Width="118">
                     <RibbonButton Name="B4" Label="Do smth" Margin="56,20,-110,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <RibbonButton Name="B5" Label="Do smth" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="B5" Label="Filter" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickFilterCommand}"/>
                 </RibbonGroup>
             </RibbonTab>
         </ribbon:Ribbon>
