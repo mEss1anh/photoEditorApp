@@ -80,8 +80,10 @@ namespace PhotoEditor.ViewModel
             {
                 try
                 {
+                    var converter = new ImageSourceConverter();
+                    ImageSource imgSrc = (ImageSource)converter.ConvertFromString(dialog.FileName);
                     OpenedImage = new ModelClassImage(dialog.FileName, Path.GetExtension(dialog.FileName),
-                        new ModelClassImage.LocalBitmap(new Bitmap(dialog.FileName), new ImageSource(dialog.FileName)));
+                        new ModelClassImage.LocalBitmap(new Bitmap(dialog.FileName), imgSrc));
                 }
                 catch
                 {
@@ -178,11 +180,33 @@ namespace PhotoEditor.ViewModel
             return ApplyColorMatrix(img, colorMatrix);
         }
 
+        private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
+        {
+            Bitmap bmp = new Bitmap(imToConvert);
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image.StreamSource = ms;
+            image.EndInit();
+
+            ImageSource sc = (ImageSource)image;
+
+            return sc;
+        }
+
         void Filt()
         {
             OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
+            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            //OpenedImage.Lb.Source = imgSrc;
+            //OpenedImage.Lb.Img = new ModelClassImage.LocalBitmap(new Bitmap(OpenedImage.Lb.Source), OpenedImage.Lb.Source);
             //OpenedImage.ImageSource = OpenedImage.Lb.Source;
         }
         #endregion
+
+        
     }
 }
