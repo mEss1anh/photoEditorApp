@@ -19,7 +19,7 @@ namespace PhotoEditor.View
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
+    /// </summary> 
     public partial class MainWindowView
     {
 

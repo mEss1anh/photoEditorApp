@@ -11,9 +11,9 @@
         <SolidColorBrush/>
     </RibbonWindow.Foreground>
     <Window.Background>
-        <ImageBrush ImageSource="../Images/148.jpg" Stretch="UniformToFill"/>
+        <ImageBrush ImageSource="../Images/148.jpg" Stretch="Fill"/>
     </Window.Background>
-    <DockPanel HorizontalAlignment="Left">
+    <DockPanel>
         <ribbon:Ribbon  DockPanel.Dock="Top" Background="Transparent" Height="116">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu SmallImageSource="../Images/main.png" Background="Black">
@@ -36,10 +36,10 @@
                 </RibbonGroup>
             </RibbonTab>
         </ribbon:Ribbon>
-        <ScrollViewer VerticalScrollBarVisibility="Hidden"  HorizontalScrollBarVisibility="Visible" Margin="0,2,0,-2" Width="994" HorizontalAlignment="Right">
+        <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Visible" Margin="0">
             <Grid ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5">
 
-                <Image x:Name="image" Source="{Binding OpenedImage.Lb.Source, Mode=TwoWay}" Stretch="None"  HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" AllowDrop="True" OpacityMask="Black">
+                <Image x:Name="image" Source="{Binding OpenedImage.Lb.Source, Mode=TwoWay}" Stretch="None" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" AllowDrop="True" OpacityMask="Black" HorizontalAlignment="Left">
                     <Image.RenderTransform>
                         <RotateTransform Angle="{Binding OpenedImage.Angle}"/>
                     </Image.RenderTransform>
