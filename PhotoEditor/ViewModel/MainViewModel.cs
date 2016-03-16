@@ -13,6 +13,7 @@ using System.Drawing;
 using System.IO;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace PhotoEditor.ViewModel
 {
@@ -31,7 +32,7 @@ namespace PhotoEditor.ViewModel
             }
         }
 
-        public Bitmap IMG { get; set; }
+        //public Bitmap IMG { get; set; }
 
         private ModelClassImage _openedImage;
 
@@ -80,8 +81,7 @@ namespace PhotoEditor.ViewModel
                 try
                 {
                     OpenedImage = new ModelClassImage(dialog.FileName, Path.GetExtension(dialog.FileName),
-                        new Bitmap(dialog.FileName));
-                    IMG = new Bitmap(OpenedImage.ImageSource);
+                        new ModelClassImage.LocalBitmap(new Bitmap(dialog.FileName), dialog.FileName));
                 }
                 catch
                 {
@@ -94,7 +94,6 @@ namespace PhotoEditor.ViewModel
         public void SaveFile()
         {
             SaveFileDialog dlg = new SaveFileDialog();
-            ImageFormat format = ImageFormat.Jpeg;
             dlg.FileName = "My image";
             dlg.Filter = "JPEG (*.jpg)|*.jpg|PNG(*.png)|*.png|BitMap(*.bmp)|*.bmp";
             bool? result = dlg.ShowDialog();
@@ -107,37 +106,39 @@ namespace PhotoEditor.ViewModel
                 {
                     case ".jpg":  
                         //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Jpeg);
-                        IMG.Save(dlg.FileName, ImageFormat.Jpeg);
+                        OpenedImage.Lb.Img.Save(dlg.FileName, ImageFormat.Jpeg);
                         break;
                     case ".bmp":
                         //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Bmp);
-                        IMG.Save(dlg.FileName, ImageFormat.Bmp);
+                        OpenedImage.Lb.Img.Save(dlg.FileName, ImageFormat.Bmp);
                         break;
                     case ".png":
                         //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Png);
-                        IMG.Save(dlg.FileName, ImageFormat.Png);
+                        OpenedImage.Lb.Img.Save(dlg.FileName, ImageFormat.Png);
                         break;
                 }   
             }
         }
 
-
+        #region rotation methods
         public void RotateRight()
         {
             OpenedImage.Angle += 90;
-            IMG.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
         }
 
         public void RotateLeft()
         {
             OpenedImage.Angle -= 90;
-            IMG.RotateFlip(RotateFlipType.Rotate90FlipY);
+            OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
         }
+        #endregion
 
+        #region filter methods
         private static Bitmap ApplyColorMatrix(Bitmap img, ColorMatrix colorMatrix)
         {
             Bitmap bmpSource = GetArgbCopy(img);
-            Bitmap imageToApplyFilter = new Bitmap(bmpSource.Width, bmpSource.Height, PixelFormat.Format32bppArgb);
+            Bitmap imageToApplyFilter = new Bitmap(bmpSource.Width, bmpSource.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using (Graphics graphics = Graphics.FromImage(imageToApplyFilter))
             {
                 ImageAttributes bmpAttributes = new ImageAttributes();
@@ -151,8 +152,7 @@ namespace PhotoEditor.ViewModel
 
         private static Bitmap GetArgbCopy(Bitmap img)
         {
-            Bitmap bmpNew = new Bitmap(img.Width, img.Height, PixelFormat.Format32bppArgb);
-
+            Bitmap bmpNew = new Bitmap((int)img.Width, (int)img.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using (Graphics graphics = Graphics.FromImage(bmpNew))
             {
                 graphics.DrawImage(img, new Rectangle(0, 0, bmpNew.Width, bmpNew.Height), new Rectangle(0, 0, bmpNew.Width, bmpNew.Height), GraphicsUnit.Pixel);
@@ -180,8 +180,9 @@ namespace PhotoEditor.ViewModel
 
         void Filt()
         {
-            IMG = DrawWithTransparency(IMG);
-            OpenedImage.IMG = DrawWithTransparency(OpenedImage.IMG);
+            OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
+            OpenedImage.ImageSource = OpenedImage.Lb.Source;
         }
+        #endregion
     }
 }

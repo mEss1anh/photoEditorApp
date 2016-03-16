@@ -38,7 +38,8 @@
         </ribbon:Ribbon>
         <ScrollViewer VerticalScrollBarVisibility="Hidden"  HorizontalScrollBarVisibility="Visible" Margin="0,2,0,-2" Width="994" HorizontalAlignment="Right">
             <Grid ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5">
-                <Image x:Name="image" Source="{Binding OpenedImage.ImageSource, Mode=TwoWay}" Stretch="None"  HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" AllowDrop="True">
+
+                <Image x:Name="image" Source="{Binding OpenedImage.Lb.Source, Mode=TwoWay}" Stretch="None"  HorizontalAlignment="Left" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" AllowDrop="True" OpacityMask="Black">
                     <Image.RenderTransform>
                         <RotateTransform Angle="{Binding OpenedImage.Angle}"/>
                     </Image.RenderTransform>

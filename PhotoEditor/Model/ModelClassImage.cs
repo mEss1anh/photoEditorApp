@@ -27,13 +27,26 @@ namespace PhotoEditor.Model
         }
 
         #endregion
+        private LocalBitmap lb;
+        public LocalBitmap Lb
+        {
+            get { return lb; }
+            set
+            {
+                if (lb != value)
+                {
+                    lb = value;
+                    OnPropertyChanged("Angle");
+                }
+            }
+        }
 
-        public ModelClassImage(string _imageSource, string _extension, Bitmap _img)
+
+        public ModelClassImage(string _imageSource, string _extension, LocalBitmap _bmp)
         {
             ImageSource = _imageSource;
             Extension = _extension;
-            IMG = new Bitmap(_imageSource);
-            
+            lb = _bmp;
         }
 
         private string _imageSource;
@@ -50,34 +63,7 @@ namespace PhotoEditor.Model
             }
         }
 
-        private Bitmap _img;
-        public Bitmap IMG
-        {
-            get { return _img; }
-            set
-            {
-                if (_img != value)
-                {
-                    _img = value;
-                    OnPropertyChanged("IMG");
-                }
-
-            }
-        }
-
         public string Extension { get; set; }
-
-        public double IMGWidth
-        {
-            get { return IMG.Width; }
-            set { }
-        }
-
-        public double IMGHeight
-        {
-            get { return IMG.Height; }
-            set { }
-        }
 
         private double _angle;
 
@@ -93,7 +79,53 @@ namespace PhotoEditor.Model
                 }
             }
         }
+        public class LocalBitmap : INotifyPropertyChanged
+        {
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected virtual void OnPropertyChanged(string propertyName)
+            {
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                }
+            }
+
+            string _source;
+            public string Source
+            {
+                get { return _source; }
+                set
+                {
+                    if (_source != value)
+                    {
+                        _source = value;
+                        OnPropertyChanged("Source");
+                    }
+                }
+            }
+
+            Bitmap _img;
+            public Bitmap Img
+            {
+                get { return _img; }
+                set
+                {
+                    if (_img != value)
+                    {
+                        _img = value;
+                        OnPropertyChanged("Angle");
+                    }
+                }
+            }
+
+            public LocalBitmap(Bitmap _img, string _source)
+            {
+                Img = _img;
+                Source = _source;
+            }
+        }
+
     }
 
- 
 }
