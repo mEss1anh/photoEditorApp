@@ -25,5 +25,17 @@ namespace PhotoEditor
                 bitmapImage.EndInit();
             }
         }
+
+        public static BitmapImage ConvertToSource(Bitmap src)
+        {
+            MemoryStream ms = new MemoryStream();
+            ((Bitmap)src).Save(ms, ImageFormat.Bmp);
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            ms.Seek(0, SeekOrigin.Begin);
+            image.StreamSource = ms;
+            image.EndInit();
+            return image;
+        }
     }
 }

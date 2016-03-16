@@ -81,7 +81,7 @@ namespace PhotoEditor.ViewModel
                 try
                 {
                     OpenedImage = new ModelClassImage(dialog.FileName, Path.GetExtension(dialog.FileName),
-                        new ModelClassImage.LocalBitmap(new Bitmap(dialog.FileName), dialog.FileName));
+                        new ModelClassImage.LocalBitmap(new Bitmap(dialog.FileName), new ImageSource(dialog.FileName)));
                 }
                 catch
                 {
@@ -181,7 +181,7 @@ namespace PhotoEditor.ViewModel
         void Filt()
         {
             OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
-            OpenedImage.ImageSource = OpenedImage.Lb.Source;
+            //OpenedImage.ImageSource = OpenedImage.Lb.Source;
         }
         #endregion
     }

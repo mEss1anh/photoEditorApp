@@ -9,6 +9,7 @@ using System.Drawing;
 using System.ComponentModel;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace PhotoEditor.Model
 {
@@ -36,12 +37,10 @@ namespace PhotoEditor.Model
                 if (lb != value)
                 {
                     lb = value;
-                    OnPropertyChanged("Angle");
+                    OnPropertyChanged("Lb");
                 }
             }
         }
-
-
         public ModelClassImage(string _imageSource, string _extension, LocalBitmap _bmp)
         {
             ImageSource = _imageSource;
@@ -91,8 +90,8 @@ namespace PhotoEditor.Model
                 }
             }
 
-            string _source;
-            public string Source
+            ImageSource _source;
+            public ImageSource Source
             {
                 get { return _source; }
                 set
@@ -114,12 +113,12 @@ namespace PhotoEditor.Model
                     if (_img != value)
                     {
                         _img = value;
-                        OnPropertyChanged("Angle");
+                        OnPropertyChanged("Img");
                     }
                 }
             }
 
-            public LocalBitmap(Bitmap _img, string _source)
+            public LocalBitmap(Bitmap _img, ImageSource _source)
             {
                 Img = _img;
                 Source = _source;
