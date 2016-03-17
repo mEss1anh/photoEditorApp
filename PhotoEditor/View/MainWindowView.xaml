@@ -31,8 +31,8 @@
                     <RibbonButton Name="B3"  LargeImageSource="../Images/crop.png" Margin="110,11,-154,-12" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
                 </RibbonGroup>
                 <RibbonGroup Name="Group2" Header="Filters" Margin="0,1" Width="448">
-                    <RibbonButton Name="B5" Label="Contrast" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickFilterCommand}"/>
-                    <RibbonButton Name="B4" Label="Do smth" Margin="52,20,-104,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="B5" Label="Contrast" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickTransparencyCommand}"/>
+                    <RibbonButton Name="B4" Label="Grayscale" Margin="52,20,-104,-38" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickGrayscaleCommand}"/>
                     <RibbonButton Name="B6" Label="Do smth" Margin="105,20,-157,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <RibbonButton Name="B7" Label="Do smth" Margin="161,20,-213,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                     <RibbonButton Name="B8" Label="Do smth" Margin="269,20,-321,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>

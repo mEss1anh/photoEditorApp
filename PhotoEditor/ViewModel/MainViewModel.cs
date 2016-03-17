@@ -49,13 +49,16 @@ namespace PhotoEditor.ViewModel
             }
         }
         //FileDialogClass fileDial;
+        #region commands
 
         public ICommand ClickOpenCommand { get; set; }
         public ICommand ClickSaveCommand { get; set; }
         public ICommand ClickRotateRightCommand { get; set; }
         public ICommand ClickRotateLeftCommand { get; set; }
-        public ICommand ClickFilterCommand { get; set; }
+        public ICommand ClickTransparencyCommand { get; set; }
+        public ICommand ClickGrayscaleCommand { get; set; }
 
+        #endregion
         //static ModelClassImage OpenedImage;
 
         public MainViewModel()
@@ -66,8 +69,9 @@ namespace PhotoEditor.ViewModel
             ClickSaveCommand = new Command(arg => SaveFile());
             ClickRotateRightCommand = new Command(arg => RotateRight());
             ClickRotateLeftCommand = new Command(arg => RotateLeft());
-            ClickFilterCommand = new Command(arg => Filt());
-    }
+            ClickTransparencyCommand = new Command(arg => TransparencyFilter());
+            ClickGrayscaleCommand = new Command(arg => GrayscaleFilter());
+        }
 
         public void OpenFile()
         {
@@ -99,14 +103,14 @@ namespace PhotoEditor.ViewModel
             dlg.FileName = "My image";
             dlg.Filter = "JPEG (*.jpg)|*.jpg|PNG(*.png)|*.png|BitMap(*.bmp)|*.bmp";
             bool? result = dlg.ShowDialog();
-            
+
             //img.RotateFlip(RotateFlipType.Rotate90FlipNone);
             if (result == true)
             {
                 string ext = OpenedImage.Extension;
                 switch (ext)
                 {
-                    case ".jpg":  
+                    case ".jpg":
                         //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Jpeg);
                         OpenedImage.Lb.Img.Save(dlg.FileName, ImageFormat.Jpeg);
                         break;
@@ -118,7 +122,7 @@ namespace PhotoEditor.ViewModel
                         //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Png);
                         OpenedImage.Lb.Img.Save(dlg.FileName, ImageFormat.Png);
                         break;
-                }   
+                }
             }
         }
 
@@ -182,11 +186,37 @@ namespace PhotoEditor.ViewModel
             return ApplyColorMatrix(img, colorMatrix);
         }
 
+        void TransparencyFilter()
+        {
+            OpenedImage.Lb = new ModelClassImage.LocalBitmap(DrawWithTransparency(OpenedImage.Lb.Img), ConvertBitmapToImageSource(OpenedImage.Lb.Img));
+        }
+
+        void GrayscaleFilter()
+        {
+            OpenedImage.Lb = new ModelClassImage.LocalBitmap(DrawAsGrayscale(OpenedImage.Lb.Img), ConvertBitmapToImageSource(OpenedImage.Lb.Img));
+        }
+
+        public static Bitmap DrawAsGrayscale(Bitmap sourceImage)
+        {
+            ColorMatrix colorMatrix = new ColorMatrix(new float[][]
+                                {
+                            new float[]{.3f, .3f, .3f, 0, 0},
+                            new float[]{.59f, .59f, .59f, 0, 0},
+                            new float[]{.11f, .11f, .11f, 0, 0},
+                            new float[]{0, 0, 0, 1, 0},
+                            new float[]{0, 0, 0, 0, 1}
+                                });
+
+
+            return ApplyColorMatrix(sourceImage, colorMatrix);
+        }
+        #endregion
+
         private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
         {
             Bitmap bmp = new Bitmap(imToConvert);
             MemoryStream ms = new MemoryStream();
-            bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            bmp.Save(ms, ImageFormat.Bmp);
 
             BitmapImage image = new BitmapImage();
             image.BeginInit();
@@ -194,22 +224,9 @@ namespace PhotoEditor.ViewModel
             image.StreamSource = ms;
             image.EndInit();
 
-            ImageSource sc = (ImageSource)image;
+            ImageSource sc = image;
 
             return sc;
         }
-
-        void Filt()
-        {
-            //OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
-            //OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
-            OpenedImage.Lb = new ModelClassImage.LocalBitmap(DrawWithTransparency(OpenedImage.Lb.Img), ConvertBitmapToImageSource(OpenedImage.Lb.Img));
-            //OpenedImage.Lb.Source = imgSrc;
-            //OpenedImage.Lb.Img = new ModelClassImage.LocalBitmap(new Bitmap(OpenedImage.Lb.Source), OpenedImage.Lb.Source);
-            //OpenedImage.ImageSource = OpenedImage.Lb.Source;
-        }
-        #endregion
-
-        
     }
 }
