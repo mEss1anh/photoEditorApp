@@ -58,11 +58,12 @@ namespace PhotoEditor.ViewModel
         public ICommand ClickTransparencyCommand { get; set; }
         public ICommand ClickGrayscaleCommand { get; set; }
         public ICommand ClickSepiaCommand { get; set; }
+        public ICommand ClickBlurCommand { get; set; }
 
-        #endregion
-        //static ModelClassImage OpenedImage;
+    #endregion
+    //static ModelClassImage OpenedImage;
 
-        public MainViewModel()
+    public MainViewModel()
         {
             //m = new ModelClassImage();
             //fileDial = new FileDialogClass();
@@ -73,6 +74,7 @@ namespace PhotoEditor.ViewModel
             ClickTransparencyCommand = new Command(arg => TransparencyFilter());
             ClickGrayscaleCommand = new Command(arg => GrayscaleFilter());
             ClickSepiaCommand = new Command(arg => SepiaFilter());
+            ClickBlurCommand = new Command(arg => BlurFilter());
         }
 
         public void OpenFile()
@@ -218,6 +220,19 @@ namespace PhotoEditor.ViewModel
             return ApplyColorMatrix(sourceImage, colorMatrix);
         }
 
+        public static Bitmap DrawBlur(Bitmap sourceImage)
+        {
+            ColorMatrix colorMatrix = new ColorMatrix(new float[][]
+                       {
+                        new float[]{(float)1/331, (float)4 /331, (float)7/331, (float)4/331, (float)1/331 },
+                        new float[]{ (float)4/331, (float)20 / 331, (float)33 / 331, (float)20 / 331, (float)4/331 },
+                        new float[]{ (float)7 / 331, (float)33 / 331, (float)55 / 331, (float)33 / 331, (float)7/331 },
+                        new float[]{ (float)4 / 331, (float)20 / 331, (float)33 / 331, (float)20 / 331, (float)4/331 },
+                        new float[]{ (float)1 / 331, (float)4 / 331, (float)7 / 331, (float)4 / 331, (float)1 / 331 }
+                       });
+            return ApplyColorMatrix(sourceImage, colorMatrix);
+        }
+
         void TransparencyFilter()
         {
             OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
@@ -236,6 +251,11 @@ namespace PhotoEditor.ViewModel
             OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
         }
 
+        void BlurFilter()
+        {
+            OpenedImage.Lb.Img = DrawBlur(OpenedImage.Lb.Img);
+            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+        }
 
         #endregion
 
