@@ -64,20 +64,20 @@ namespace PhotoEditor.Model
 
         public string Extension { get; set; }
 
-        private double _angle;
+        //private double _angle;
 
-        public double Angle
-        {
-            get { return _angle; }
-            set
-            {
-                if (_angle != value)
-                {
-                    _angle = value;
-                    OnPropertyChanged("Angle");
-                }
-            }
-        }
+        //public double Angle
+        //{
+        //    get { return _angle; }
+        //    set
+        //    {
+        //        if (_angle != value)
+        //        {
+        //            _angle = value;
+        //            OnPropertyChanged("Angle");
+        //        }
+        //    }
+        //}
         public class LocalBitmap : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;

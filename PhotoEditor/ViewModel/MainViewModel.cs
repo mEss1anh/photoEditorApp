@@ -14,7 +14,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
-test
+
 namespace PhotoEditor.ViewModel
 {
 
@@ -125,14 +125,16 @@ namespace PhotoEditor.ViewModel
         #region rotation methods
         public void RotateRight()
         {
-            OpenedImage.Angle += 90;
+            //OpenedImage.Angle += 90;
             OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
         }
 
         public void RotateLeft()
         {
-            OpenedImage.Angle -= 90;
-            OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            //OpenedImage.Angle -= 90;
+            OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
         }
         #endregion
 
@@ -199,8 +201,9 @@ namespace PhotoEditor.ViewModel
 
         void Filt()
         {
-            OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
-            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            //OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
+            //OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            OpenedImage.Lb = new ModelClassImage.LocalBitmap(DrawWithTransparency(OpenedImage.Lb.Img), ConvertBitmapToImageSource(OpenedImage.Lb.Img));
             //OpenedImage.Lb.Source = imgSrc;
             //OpenedImage.Lb.Img = new ModelClassImage.LocalBitmap(new Bitmap(OpenedImage.Lb.Source), OpenedImage.Lb.Source);
             //OpenedImage.ImageSource = OpenedImage.Lb.Source;

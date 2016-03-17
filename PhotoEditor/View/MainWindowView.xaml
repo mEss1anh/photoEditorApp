@@ -40,9 +40,6 @@
             <Grid ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5">
 
                 <Image x:Name="image" Source="{Binding OpenedImage.Lb.Source, Mode=TwoWay}" Stretch="None" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" AllowDrop="True" OpacityMask="Black" HorizontalAlignment="Left">
-                    <Image.RenderTransform>
-                        <RotateTransform Angle="{Binding OpenedImage.Angle}"/>
-                    </Image.RenderTransform>
                 </Image>
                 <!-- <TextBlock x:Name="textBlock" Height="25"  Text="{Binding OpenedImage.ImageSource}" Width="137" HorizontalAlignment="Left" VerticalAlignment="Top"/> -->
             </Grid>
