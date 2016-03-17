@@ -18,7 +18,7 @@
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu SmallImageSource="../Images/main.png" Background="Black">
                     <RibbonApplicationMenuItem Name="Open" ImageSource="../Images/open.png" Header="Open" Command="{Binding ClickOpenCommand}"/>
-                    <RibbonApplicationMenuItem Name="Save" ImageSource="../Images/save2.png" Header="Save"  Command="{Binding ClickSaveCommand}"/>
+                    <RibbonApplicationMenuItem Name="Save" ImageSource="../Images/save.png" Header="Save"  Command="{Binding ClickSaveCommand}"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Name="Main" Header="Tools" BorderBrush="Black" Height="70" VerticalAlignment="Top">
@@ -26,19 +26,16 @@
                     <SolidColorBrush/>
                 </RibbonTab.Background>
                 <RibbonGroup Name="Group1" Header="Basic" Margin="0,1" Width="173">
-                    <RibbonButton Name="B1" LargeImageSource="../Images/rotatel.png" Margin="4,10,-48,-42" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40"/>
-                    <RibbonButton Name="B2"   LargeImageSource="../Images/rotater.png" Margin="58,3,-98,-39" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40"/>
-                    <RibbonButton Name="B3"  LargeImageSource="../Images/crop.png" Margin="110,11,-154,-12" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
+                    <RibbonButton Name="RotateLeft" LargeImageSource="../Images/rotatel.png" ToolTip="Rotate left" Margin="4,10,-48,-42" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40"/>
+                    <RibbonButton Name="RotateRight" LargeImageSource="../Images/rotater.png" ToolTip="Rotate Right" Margin="58,3,-98,-39" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40"/>
+                    <RibbonButton Name="Crop"  LargeImageSource="../Images/crop.png" ToolTip="Crop" Margin="110,11,-154,-12" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
                 </RibbonGroup>
                 <RibbonGroup Name="Group2" Header="Filters" Margin="0,1" Width="448">
-                    <RibbonButton Name="B5" Label="Contrast" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickTransparencyCommand}"/>
-                    <RibbonButton Name="B4" Label="Grayscale" Margin="52,20,-104,-38" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickGrayscaleCommand}"/>
-                    <RibbonButton Name="B6" Label="Do smth" Margin="105,20,-157,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <RibbonButton Name="B7" Label="Do smth" Margin="161,20,-213,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <RibbonButton Name="B8" Label="Do smth" Margin="269,20,-321,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <RibbonButton Name="B9" Label="Do smth" Margin="324,20,-376,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <RibbonButton Name="B10" Label="Do smth" Margin="381,20,-433,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <RibbonButton Name="B11" Label="Do smth" Margin="215,20,-267,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="Contrast" LargeImageSource="../Images/contrast.png" ToolTip="Contrast" Margin="0,11,-44,-42" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickTransparencyCommand}" Height="40"/>
+                    <RibbonButton Name="BW" LargeImageSource="../Images/bw.png" ToolTip="Black/White" Margin="49,2,-93,-20" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickGrayscaleCommand}" Height="40"/>
+                    <RibbonButton Name="Sepia" LargeImageSource="../Images/sepia.png" ToolTip="Sepia" Margin="98,11,-142,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
+                    <RibbonButton Name="Blur"  LargeImageSource="../Images/blur.png" ToolTip="Blur" Margin="147,-11,-191,-7" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
+                    <RibbonButton Name="Sharpen"  LargeImageSource="../Images/sharpen.png" ToolTip="Sharpen" Margin="196,10,-240,-28" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
 
                 </RibbonGroup>
             </RibbonTab>
@@ -46,7 +43,7 @@
         <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Visible" Margin="0">
             <Grid ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5">
 
-                <Image x:Name="image" Source="{Binding OpenedImage.Lb.Source, Mode=TwoWay}" Stretch="None" VerticalAlignment="Top" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" AllowDrop="True" OpacityMask="Black" HorizontalAlignment="Center">
+                <Image x:Name="image" Source="{Binding OpenedImage.Lb.Source, Mode=TwoWay}" Stretch="None" VerticalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" AllowDrop="True" OpacityMask="Black" HorizontalAlignment="Center">
                 </Image>
                 <!-- <TextBlock x:Name="textBlock" Height="25"  Text="{Binding OpenedImage.ImageSource}" Width="137" HorizontalAlignment="Left" VerticalAlignment="Top"/> -->
             </Grid>

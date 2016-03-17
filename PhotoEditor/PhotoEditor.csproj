@@ -117,9 +117,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\4449.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\21735-NTFIQX.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -135,17 +132,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\gorod.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\116.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Moon.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\148.jpg" />
-    <Resource Include="Images\tochki_f.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\main.png" />
@@ -155,7 +142,18 @@
     <Resource Include="Images\open.png" />
     <Resource Include="Images\rotatel.png" />
     <Resource Include="Images\rotater.png" />
-    <Resource Include="Images\save2.png" />
+    <Resource Include="Images\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\blur.png" />
+    <Resource Include="Images\contrast.png" />
+    <Resource Include="Images\sepia.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\bw.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\sharpen.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
