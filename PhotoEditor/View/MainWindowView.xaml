@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoEditor"
         mc:Ignorable="d"
-        Title="VDeditor" Height="600" Width="1000" WindowStyle ="None" AllowsTransparency ="True" >
+        Title="VDeditor" Icon="../Images/Lagrange.jpg" ResizeMode="NoResize" Height="600" Width="1000" WindowStyle ="None" AllowsTransparency ="True" >
     <RibbonWindow.Foreground>
         <SolidColorBrush/>
     </RibbonWindow.Foreground>
@@ -14,29 +14,45 @@
         <ImageBrush ImageSource="../Images/148.jpg" Stretch="Fill"/>
     </Window.Background>
     <DockPanel>
-        <ribbon:Ribbon  DockPanel.Dock="Top" Background="Transparent" Height="116">
+        <ribbon:Ribbon  DockPanel.Dock="Top" Background="#FF214449" Height="116" BorderBrush="#FF5B8A9C">
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu SmallImageSource="../Images/main.png" Background="Black">
                     <RibbonApplicationMenuItem Name="Open" ImageSource="../Images/open.png" Header="Open" Command="{Binding ClickOpenCommand}"/>
                     <RibbonApplicationMenuItem Name="Save" ImageSource="../Images/save.png" Header="Save"  Command="{Binding ClickSaveCommand}"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
-            <RibbonTab Name="Main" Header="Tools" BorderBrush="Black" Height="70" VerticalAlignment="Top">
-                <RibbonTab.Background>
-                    <SolidColorBrush/>
-                </RibbonTab.Background>
-                <RibbonGroup Name="Group1" Header="Basic" Margin="0,1" Width="173">
+            <RibbonTab Name="Main" Header="Tools" BorderBrush="Black" Height="70" VerticalAlignment="Top" Background="#FF214449">
+                <RibbonGroup Name="Group1" Header="Basic" Margin="0,0,0,1" Width="173">
+                    <RibbonGroup.Background>
+                        <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
+                    </RibbonGroup.Background>
+                    <RibbonGroup.BorderBrush>
+                        <SolidColorBrush Color="#FF062632"/>
+                    </RibbonGroup.BorderBrush>
                     <RibbonButton Name="RotateLeft" LargeImageSource="../Images/rotatel.png" ToolTip="Rotate left" Margin="4,10,-48,-42" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40"/>
                     <RibbonButton Name="RotateRight" LargeImageSource="../Images/rotater.png" ToolTip="Rotate Right" Margin="58,3,-98,-39" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40"/>
                     <RibbonButton Name="Crop"  LargeImageSource="../Images/crop.png" ToolTip="Crop" Margin="110,11,-154,-12" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
                 </RibbonGroup>
-                <RibbonGroup Name="Group2" Header="Filters" Margin="0,1" Width="448">
+                <RibbonGroup Name="Group2" Header="Filters" Margin="0,0,0,1" Width="253">
+                    <RibbonGroup.Background>
+                        <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
+                    </RibbonGroup.Background>
+                    <RibbonGroup.BorderBrush>
+                        <SolidColorBrush Color="#FF062632"/>
+                    </RibbonGroup.BorderBrush>
                     <RibbonButton Name="Contrast" LargeImageSource="../Images/contrast.png" ToolTip="Contrast" Margin="0,11,-44,-42" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickTransparencyCommand}" Height="40"/>
-                    <RibbonButton Name="BW" LargeImageSource="../Images/bw.png" ToolTip="Black/White" Margin="49,2,-93,-20" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickGrayscaleCommand}" Height="40"/>
+                    <RibbonButton Name="BW" LargeImageSource="../Images/bw.png" ToolTip="Black&amp;White" Margin="49,2,-93,-20" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickGrayscaleCommand}" Height="40"/>
                     <RibbonButton Name="Sepia" LargeImageSource="../Images/sepia.png" ToolTip="Sepia" Margin="98,11,-142,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
                     <RibbonButton Name="Blur"  LargeImageSource="../Images/blur.png" ToolTip="Blur" Margin="147,-11,-191,-7" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
-                    <RibbonButton Name="Sharpen"  LargeImageSource="../Images/sharpen.png" ToolTip="Sharpen" Margin="196,10,-240,-28" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
-
+                    <RibbonButton Name="Sharpen"  LargeImageSource="../Images/sharpen.png" ToolTip="Sharpen" Margin="196,11,-240,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
+                </RibbonGroup>
+                <RibbonGroup Name="ForBackground" Margin="0,0" Width="562" HorizontalAlignment="Right">
+                    <RibbonGroup.Background>
+                        <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
+                    </RibbonGroup.Background>
+                    <RibbonGroup.BorderBrush>
+                        <SolidColorBrush Color="#FF062632"/>
+                    </RibbonGroup.BorderBrush>
                 </RibbonGroup>
             </RibbonTab>
         </ribbon:Ribbon>
