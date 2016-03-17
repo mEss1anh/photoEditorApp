@@ -160,10 +160,10 @@ namespace PhotoEditor.ViewModel
 
         private static Bitmap GetArgbCopy(Bitmap img)
         {
-            Bitmap bmpNew = new Bitmap((int)img.Width, (int)img.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            Bitmap bmpNew = new Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using (Graphics graphics = Graphics.FromImage(bmpNew))
             {
-                graphics.DrawImage(img, new Rectangle(0, 0, bmpNew.Width, bmpNew.Height), new Rectangle(0, 0, bmpNew.Width, bmpNew.Height), GraphicsUnit.Pixel);
+                graphics.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), new Rectangle(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
                 graphics.Flush();
             }
 
@@ -186,16 +186,6 @@ namespace PhotoEditor.ViewModel
             return ApplyColorMatrix(img, colorMatrix);
         }
 
-        void TransparencyFilter()
-        {
-            OpenedImage.Lb = new ModelClassImage.LocalBitmap(DrawWithTransparency(OpenedImage.Lb.Img), ConvertBitmapToImageSource(OpenedImage.Lb.Img));
-        }
-
-        void GrayscaleFilter()
-        {
-            OpenedImage.Lb = new ModelClassImage.LocalBitmap(DrawAsGrayscale(OpenedImage.Lb.Img), ConvertBitmapToImageSource(OpenedImage.Lb.Img));
-        }
-
         public static Bitmap DrawAsGrayscale(Bitmap sourceImage)
         {
             ColorMatrix colorMatrix = new ColorMatrix(new float[][]
@@ -210,6 +200,20 @@ namespace PhotoEditor.ViewModel
 
             return ApplyColorMatrix(sourceImage, colorMatrix);
         }
+
+        void TransparencyFilter()
+        {
+            OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
+            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+        }
+
+        void GrayscaleFilter()
+        {
+            OpenedImage.Lb.Img = DrawAsGrayscale(OpenedImage.Lb.Img);
+            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+        }
+
+        
         #endregion
 
         private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
