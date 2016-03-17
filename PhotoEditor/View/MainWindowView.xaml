@@ -42,7 +42,7 @@
                     </RibbonGroup.BorderBrush>
                     <RibbonButton Name="Contrast" LargeImageSource="../Images/contrast.png" ToolTip="Contrast" Margin="0,11,-44,-42" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickTransparencyCommand}" Height="40"/>
                     <RibbonButton Name="BW" LargeImageSource="../Images/bw.png" ToolTip="Black&amp;White" Margin="49,2,-93,-20" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickGrayscaleCommand}" Height="40"/>
-                    <RibbonButton Name="Sepia" LargeImageSource="../Images/sepia.png" ToolTip="Sepia" Margin="98,11,-142,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
+                    <RibbonButton Name="Sepia" LargeImageSource="../Images/sepia.png" ToolTip="Sepia" Margin="98,11,-142,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickSepiaCommand}"/>
                     <RibbonButton Name="Blur"  LargeImageSource="../Images/blur.png" ToolTip="Blur" Margin="147,-11,-191,-7" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
                     <RibbonButton Name="Sharpen"  LargeImageSource="../Images/sharpen.png" ToolTip="Sharpen" Margin="196,11,-240,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
                 </RibbonGroup>

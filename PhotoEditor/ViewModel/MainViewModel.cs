@@ -57,6 +57,7 @@ namespace PhotoEditor.ViewModel
         public ICommand ClickRotateLeftCommand { get; set; }
         public ICommand ClickTransparencyCommand { get; set; }
         public ICommand ClickGrayscaleCommand { get; set; }
+        public ICommand ClickSepiaCommand { get; set; }
 
         #endregion
         //static ModelClassImage OpenedImage;
@@ -71,6 +72,7 @@ namespace PhotoEditor.ViewModel
             ClickRotateLeftCommand = new Command(arg => RotateLeft());
             ClickTransparencyCommand = new Command(arg => TransparencyFilter());
             ClickGrayscaleCommand = new Command(arg => GrayscaleFilter());
+            ClickSepiaCommand = new Command(arg => SepiaFilter());
         }
 
         public void OpenFile()
@@ -201,6 +203,21 @@ namespace PhotoEditor.ViewModel
             return ApplyColorMatrix(sourceImage, colorMatrix);
         }
 
+        public static Bitmap DrawAsSepia(Bitmap sourceImage)
+        {
+            ColorMatrix colorMatrix = new ColorMatrix(new float[][]
+                       {
+                        new float[]{.393f, .349f, .272f, 0, 0},
+                        new float[]{.769f, .686f, .534f, 0, 0},
+                        new float[]{.189f, .168f, .131f, 0, 0},
+                        new float[]{0, 0, 0, 1, 0},
+                        new float[]{0, 0, 0, 0, 1}
+                       });
+
+
+            return ApplyColorMatrix(sourceImage, colorMatrix);
+        }
+
         void TransparencyFilter()
         {
             OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
@@ -213,7 +230,13 @@ namespace PhotoEditor.ViewModel
             OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
         }
 
-        
+        void SepiaFilter()
+        {
+            OpenedImage.Lb.Img = DrawAsSepia(OpenedImage.Lb.Img);
+            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+        }
+
+
         #endregion
 
         private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
