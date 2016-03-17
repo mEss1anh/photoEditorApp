@@ -30,9 +30,16 @@
                     <RibbonButton Name="B2"   LargeImageSource="../Images/rotater.png" Margin="58,3,-98,-39" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40"/>
                     <RibbonButton Name="B3"  LargeImageSource="../Images/crop.png" Margin="110,11,-154,-12" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
                 </RibbonGroup>
-                <RibbonGroup Name="Group2" Header="Special" Margin="0,1" Width="118">
-                    <RibbonButton Name="B4" Label="Do smth" Margin="56,20,-110,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                    <RibbonButton Name="B5" Label="Filter" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickFilterCommand}"/>
+                <RibbonGroup Name="Group2" Header="Filters" Margin="0,1" Width="448">
+                    <RibbonButton Name="B5" Label="Contrast" Margin="0,0,-54,-58" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickFilterCommand}"/>
+                    <RibbonButton Name="B4" Label="Do smth" Margin="52,20,-104,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="B6" Label="Do smth" Margin="105,20,-157,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="B7" Label="Do smth" Margin="161,20,-213,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="B8" Label="Do smth" Margin="269,20,-321,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="B9" Label="Do smth" Margin="324,20,-376,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="B10" Label="Do smth" Margin="381,20,-433,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <RibbonButton Name="B11" Label="Do smth" Margin="215,20,-267,-38" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
                 </RibbonGroup>
             </RibbonTab>
         </ribbon:Ribbon>
