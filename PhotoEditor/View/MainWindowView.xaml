@@ -22,18 +22,19 @@
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
             <RibbonTab Name="Main" Header="Tools" BorderBrush="Black" Height="70" VerticalAlignment="Top" Background="#FF214449">
-                <RibbonGroup Name="Group1" Header="Basic" Margin="0,0,0,1" Width="173">
+                <RibbonGroup Name="Group1" Header="Basic" Margin="0,0,0,1" Width="218">
                     <RibbonGroup.Background>
                         <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
                     </RibbonGroup.Background>
                     <RibbonGroup.BorderBrush>
                         <SolidColorBrush Color="#FF062632"/>
                     </RibbonGroup.BorderBrush>
-                    <RibbonButton Name="RotateLeft" LargeImageSource="../Images/rotatel.png" ToolTip="Rotate left" Margin="4,10,-48,-42" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40"/>
-                    <RibbonButton Name="RotateRight" LargeImageSource="../Images/rotater.png" ToolTip="Rotate Right" Margin="58,3,-98,-39" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40"/>
-                    <RibbonButton Name="Crop"  LargeImageSource="../Images/crop.png" ToolTip="Crop" Margin="110,11,-154,-12" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
+                    <RibbonButton Name="Resize" LargeImageSource="../Images/resize.png" ToolTip="Resize" Margin="0,12,-44,-44" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40"/>
+                    <RibbonButton Name="RotateLeft" LargeImageSource="../Images/rotatel.png" ToolTip="Rotate left" Margin="53,4,-97,-36" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40"/>
+                    <RibbonButton Name="RotateRight" LargeImageSource="../Images/rotater.png" ToolTip="Rotate Right" Margin="107,-4,-147,-32" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40"/>
+                    <RibbonButton Name="Crop"  LargeImageSource="../Images/crop.png" ToolTip="Crop" Margin="157,12,-201,-13" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
                 </RibbonGroup>
-                <RibbonGroup Name="Group2" Header="Filters" Margin="0,0,0,1" Width="253">
+                <RibbonGroup Name="Group2" Header="Filters" Margin="0,0,0,1" Width="308">
                     <RibbonGroup.Background>
                         <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
                     </RibbonGroup.Background>
@@ -44,15 +45,13 @@
                     <RibbonButton Name="BW" LargeImageSource="../Images/bw.png" ToolTip="Black&amp;White" Margin="49,2,-93,-20" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickGrayscaleCommand}" Height="40"/>
                     <RibbonButton Name="Sepia" LargeImageSource="../Images/sepia.png" ToolTip="Sepia" Margin="98,11,-142,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickSepiaCommand}"/>
                     <RibbonButton Name="Blur"  LargeImageSource="../Images/blur.png" ToolTip="Blur" Margin="147,-11,-191,-7" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickBlurCommand}"/>
-                    <RibbonButton Name="Sharpen"  LargeImageSource="../Images/sharpen.png" ToolTip="Sharpen" Margin="196,11,-240,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickSharpCommand}"/>
+                    <RibbonButton Name="Acutance"  LargeImageSource="../Images/sharpen.png" ToolTip="Acutance" Margin="196,11,-240,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickAcuteCommand}"/>
+                    <RibbonButton Name="Aqua"  LargeImageSource="../Images/aquarelle.png" ToolTip="Aquarelle" Margin="245,-11,-289,-7" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickMedianCommand}"/>
                 </RibbonGroup>
-                <RibbonGroup Name="ForBackground" Margin="0,0" Width="562" HorizontalAlignment="Right">
+                <RibbonGroup x:Name="ForBackground" Margin="0,0" Width="416" HorizontalAlignment="Right" BorderBrush="#FF062632">
                     <RibbonGroup.Background>
                         <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
                     </RibbonGroup.Background>
-                    <RibbonGroup.BorderBrush>
-                        <SolidColorBrush Color="#FF062632"/>
-                    </RibbonGroup.BorderBrush>
                 </RibbonGroup>
             </RibbonTab>
         </ribbon:Ribbon>

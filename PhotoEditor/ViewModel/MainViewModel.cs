@@ -20,8 +20,6 @@ namespace PhotoEditor.ViewModel
 
     class MainViewModel : INotifyPropertyChanged
     {
-        // static ModelClassImage m;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -58,7 +56,7 @@ namespace PhotoEditor.ViewModel
         public ICommand ClickTransparencyCommand { get; set; }
         public ICommand ClickGrayscaleCommand { get; set; }
         public ICommand ClickSepiaCommand { get; set; }
-        public ICommand ClickSharpCommand { get; set; }
+        public ICommand ClickAcuteCommand { get; set; }
         public ICommand ClickMedianCommand { get; set; }
         public ICommand ClickBlurCommand { get; set; }
 
@@ -75,8 +73,8 @@ namespace PhotoEditor.ViewModel
             ClickTransparencyCommand = new Command(arg => TransparencyFilter());
             ClickGrayscaleCommand = new Command(arg => GrayscaleFilter());
             ClickSepiaCommand = new Command(arg => SepiaFilter());
-            //ClickMedianCommand = new Command(arg => MedianFilter());
-            ClickSharpCommand = new Command(arg => SharpFilter());
+            ClickMedianCommand = new Command(arg => MedianFilter());
+            ClickAcuteCommand = new Command(arg => AcuteFilter());
             ClickBlurCommand = new Command(arg => BlurFilter());
         }
 
@@ -534,7 +532,7 @@ namespace PhotoEditor.ViewModel
             OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
         }
 
-        void SharpFilter()
+        void AcuteFilter()
         {
             OpenedImage.Lb.Img = DrawWithSharpness(OpenedImage.Lb.Img);
             OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
