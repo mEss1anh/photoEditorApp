@@ -20,6 +20,9 @@ namespace PhotoEditor.ViewModel
 
     class MainViewModel : INotifyPropertyChanged
     {
+
+        #region INotifyImplement
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
@@ -30,7 +33,7 @@ namespace PhotoEditor.ViewModel
             }
         }
 
-        //public Bitmap IMG { get; set; }
+        #endregion
 
         private ModelClassImage _openedImage;
 
@@ -46,8 +49,8 @@ namespace PhotoEditor.ViewModel
                 }
             }
         }
-        //FileDialogClass fileDial;
-        #region commands
+        
+        #region Commands
 
         public ICommand ClickOpenCommand { get; set; }
         public ICommand ClickSaveCommand { get; set; }
@@ -62,7 +65,7 @@ namespace PhotoEditor.ViewModel
 
         #endregion
 
-        #region ctor
+        #region ViewModelCtor
 
         public MainViewModel()
         {
@@ -80,6 +83,7 @@ namespace PhotoEditor.ViewModel
 
         #endregion
 
+        #region Open/Save Methods
         public void OpenFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -133,7 +137,9 @@ namespace PhotoEditor.ViewModel
             }
         }
 
-        #region rotation methods
+        #endregion
+        
+        #region Rotation methods
         public void RotateRight()
         {
             //OpenedImage.Angle += 90;
@@ -149,7 +155,7 @@ namespace PhotoEditor.ViewModel
         }
         #endregion
 
-        #region filter methods
+        #region SupportFilters methods
         private static Bitmap ApplyColorMatrix(Bitmap img, ColorMatrix colorMatrix)
         {
             Bitmap bmpSource = GetArgbCopy(img);
@@ -507,7 +513,7 @@ namespace PhotoEditor.ViewModel
         }
             #endregion
 
-            #region implementing filters
+        #region ImplementFilters methods
             void TransparencyFilter()
         {
             OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
@@ -545,6 +551,7 @@ namespace PhotoEditor.ViewModel
         }
         #endregion
 
+        #region Resize methods
         static Bitmap ResizingOfImage(Bitmap image, int width, int height)
         {
             var rectangleToImplement = new Rectangle(0, 0, width, height);
@@ -574,8 +581,9 @@ namespace PhotoEditor.ViewModel
             OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate270FlipNone);
             //OpenedImage.Lb.Source = ResizingOfImage(OpenedImage.Lb.Img, 900, 1400);
         }
+        #endregion
 
-        #region aux methods
+        #region Auxiliary methods
 
         private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
         {

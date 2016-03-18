@@ -15,7 +15,7 @@ namespace PhotoEditor.Model
 {
     class ModelClassImage : INotifyPropertyChanged
     {
-        #region Implement INotyfyPropertyChanged members
+        #region INotifyImplement
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -28,6 +28,7 @@ namespace PhotoEditor.Model
         }
 
         #endregion
+
         private LocalBitmap lb;
         public LocalBitmap Lb
         {
