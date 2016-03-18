@@ -81,6 +81,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions.cs" />
+    <Compile Include="Model\GaussianMatrixForBlur.cs" />
     <Compile Include="Model\ModelClassImage.cs" />
     <Compile Include="ViewModel\Command.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

@@ -58,15 +58,16 @@ namespace PhotoEditor.ViewModel
         public ICommand ClickTransparencyCommand { get; set; }
         public ICommand ClickGrayscaleCommand { get; set; }
         public ICommand ClickSepiaCommand { get; set; }
+        public ICommand ClickSharpCommand { get; set; }
+        public ICommand ClickMedianCommand { get; set; }
         public ICommand ClickBlurCommand { get; set; }
 
-    #endregion
-    //static ModelClassImage OpenedImage;
+        #endregion
 
-    public MainViewModel()
+        #region ctor
+
+        public MainViewModel()
         {
-            //m = new ModelClassImage();
-            //fileDial = new FileDialogClass();
             ClickOpenCommand = new Command(arg => OpenFile());
             ClickSaveCommand = new Command(arg => SaveFile());
             ClickRotateRightCommand = new Command(arg => RotateRight());
@@ -74,8 +75,12 @@ namespace PhotoEditor.ViewModel
             ClickTransparencyCommand = new Command(arg => TransparencyFilter());
             ClickGrayscaleCommand = new Command(arg => GrayscaleFilter());
             ClickSepiaCommand = new Command(arg => SepiaFilter());
+            //ClickMedianCommand = new Command(arg => MedianFilter());
+            ClickSharpCommand = new Command(arg => SharpFilter());
             ClickBlurCommand = new Command(arg => BlurFilter());
         }
+
+        #endregion
 
         public void OpenFile()
         {
@@ -220,20 +225,292 @@ namespace PhotoEditor.ViewModel
             return ApplyColorMatrix(sourceImage, colorMatrix);
         }
 
-        public static Bitmap DrawBlur(Bitmap sourceImage)
+        
+        public static Bitmap DrawWithSharpness(Bitmap image)
         {
-            ColorMatrix colorMatrix = new ColorMatrix(new float[][]
-                       {
-                        new float[]{(float)1/331, (float)4 /331, (float)7/331, (float)4/331, (float)1/331 },
-                        new float[]{ (float)4/331, (float)20 / 331, (float)33 / 331, (float)20 / 331, (float)4/331 },
-                        new float[]{ (float)7 / 331, (float)33 / 331, (float)55 / 331, (float)33 / 331, (float)7/331 },
-                        new float[]{ (float)4 / 331, (float)20 / 331, (float)33 / 331, (float)20 / 331, (float)4/331 },
-                        new float[]{ (float)1 / 331, (float)4 / 331, (float)7 / 331, (float)4 / 331, (float)1 / 331 }
-                       });
-            return ApplyColorMatrix(sourceImage, colorMatrix);
+            Bitmap sharpenImage = (Bitmap)image.Clone();
+
+            int filterWidth = 3;
+            int filterHeight = 3;
+            int width = image.Width;
+            int height = image.Height;
+
+            double[,] filter = new double[filterWidth, filterHeight];
+            filter[0, 0] = filter[0, 1] = filter[0, 2] = filter[1, 0] = filter[1, 2] = filter[2, 0] = filter[2, 1] = filter[2, 2] = -1;
+            filter[1, 1] = 9;
+
+            double factor = 1.0;
+            double bias = 0.0;
+
+            System.Drawing.Color[,] result = new System.Drawing.Color[image.Width, image.Height];
+
+
+            BitmapData pbits = sharpenImage.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+
+
+            int bytes = pbits.Stride * height;
+            byte[] rgbValues = new byte[bytes];
+
+
+            System.Runtime.InteropServices.Marshal.Copy(pbits.Scan0, rgbValues, 0, bytes);
+
+            int rgb;
+
+            for (int x = 0; x < width; ++x)
+            {
+                for (int y = 0; y < height; ++y)
+                {
+                    double red = 0.0, green = 0.0, blue = 0.0;
+
+                    for (int filterX = 0; filterX < filterWidth; filterX++)
+                    {
+                        for (int filterY = 0; filterY < filterHeight; filterY++)
+                        {
+                            int imageX = (x - filterWidth / 2 + filterX + width) % width;
+                            int imageY = (y - filterHeight / 2 + filterY + height) % height;
+
+                            rgb = imageY * pbits.Stride + 3 * imageX;
+
+                            red += rgbValues[rgb + 2] * filter[filterX, filterY];
+                            green += rgbValues[rgb + 1] * filter[filterX, filterY];
+                            blue += rgbValues[rgb + 0] * filter[filterX, filterY];
+                        }
+                        int r = Math.Min(Math.Max((int)(factor * red + bias), 0), 255);
+                        int g = Math.Min(Math.Max((int)(factor * green + bias), 0), 255);
+                        int b = Math.Min(Math.Max((int)(factor * blue + bias), 0), 255);
+
+                        result[x, y] = System.Drawing.Color.FromArgb(r, g, b);
+                    }
+                }
+            }
+
+            for (int x = 0; x < width; ++x)
+            {
+                for (int y = 0; y < height; ++y)
+                {
+                    rgb = y * pbits.Stride + 3 * x;
+
+                    rgbValues[rgb + 2] = result[x, y].R;
+                    rgbValues[rgb + 1] = result[x, y].G;
+                    rgbValues[rgb + 0] = result[x, y].B;
+                }
+            }
+
+
+            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, pbits.Scan0, bytes);
+
+            sharpenImage.UnlockBits(pbits);
+
+            return sharpenImage;
         }
 
-        void TransparencyFilter()
+        public static Bitmap DrawWithMedian(Bitmap sourceBitmap,
+                                  int matrixSize = 3)
+        {
+            BitmapData sourceData =
+                       sourceBitmap.LockBits(new Rectangle(0, 0,
+                       sourceBitmap.Width, sourceBitmap.Height),
+                       ImageLockMode.ReadOnly,
+                       System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+
+            byte[] pixelBuffer = new byte[sourceData.Stride *
+                                          sourceData.Height];
+
+
+            byte[] resultBuffer = new byte[sourceData.Stride *
+                                           sourceData.Height];
+
+
+            System.Runtime.InteropServices.Marshal.Copy(sourceData.Scan0, pixelBuffer, 0,
+                                       pixelBuffer.Length);
+
+
+            sourceBitmap.UnlockBits(sourceData);
+
+
+            int filterOffset = (matrixSize - 1) / 2;
+            int calcOffset = 0;
+
+
+            int byteOffset = 0;
+
+
+            List<int> neighbourPixels = new List<int>();
+            byte[] middlePixel;
+
+
+            for (int offsetY = filterOffset; offsetY <
+                sourceBitmap.Height - filterOffset; offsetY++)
+            {
+                for (int offsetX = filterOffset; offsetX <
+                    sourceBitmap.Width - filterOffset; offsetX++)
+                {
+                    byteOffset = offsetY *
+                                 sourceData.Stride +
+                                 offsetX * 4;
+
+
+                    neighbourPixels.Clear();
+
+
+                    for (int filterY = -filterOffset;
+                        filterY <= filterOffset; filterY++)
+                    {
+                        for (int filterX = -filterOffset;
+                            filterX <= filterOffset; filterX++)
+                        {
+
+
+                            calcOffset = byteOffset +
+                                         (filterX * 4) +
+                                         (filterY * sourceData.Stride);
+
+
+                            neighbourPixels.Add(BitConverter.ToInt32(
+                                             pixelBuffer, calcOffset));
+                        }
+                    }
+
+
+                    neighbourPixels.Sort();
+
+                    middlePixel = BitConverter.GetBytes(
+                                       neighbourPixels[filterOffset]);
+
+
+                    resultBuffer[byteOffset] = middlePixel[0];
+                    resultBuffer[byteOffset + 1] = middlePixel[1];
+                    resultBuffer[byteOffset + 2] = middlePixel[2];
+                    resultBuffer[byteOffset + 3] = middlePixel[3];
+                }
+            }
+
+
+            Bitmap resultBitmap = new Bitmap(sourceBitmap.Width,
+                                             sourceBitmap.Height);
+
+
+            BitmapData resultData =
+                       resultBitmap.LockBits(new Rectangle(0, 0,
+                       resultBitmap.Width, resultBitmap.Height),
+                       ImageLockMode.WriteOnly,
+                       System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+
+            System.Runtime.InteropServices.Marshal.Copy(resultBuffer, 0, resultData.Scan0,
+                                       resultBuffer.Length);
+
+
+            resultBitmap.UnlockBits(resultData);
+
+
+            return resultBitmap;
+        }
+
+        private static Bitmap ConvolutionFilter(Bitmap sourceBitmap, double[,] filterMatrix, double factor = 1, int bias = 0)
+        {
+            BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height),
+                                                       ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
+            byte[] resultBuffer = new byte[sourceData.Stride * sourceData.Height];
+
+            System.Runtime.InteropServices.Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+            sourceBitmap.UnlockBits(sourceData);
+
+            double blue = 0.0;
+            double green = 0.0;
+            double red = 0.0;
+
+            int filterWidth = filterMatrix.GetLength(1);
+            int filterHeight = filterMatrix.GetLength(0);
+
+            int filterOffset = (filterWidth - 1) / 2;
+            int calcOffset = 0;
+
+            int byteOffset = 0;
+
+            for (int offsetY = filterOffset; offsetY <
+                sourceBitmap.Height - filterOffset; offsetY++)
+            {
+                for (int offsetX = filterOffset; offsetX <
+                    sourceBitmap.Width - filterOffset; offsetX++)
+                {
+                    blue = 0;
+                    green = 0;
+                    red = 0;
+
+                    byteOffset = offsetY *
+                                 sourceData.Stride +
+                                 offsetX * 4;
+
+                    for (int filterY = -filterOffset;
+                        filterY <= filterOffset; filterY++)
+                    {
+                        for (int filterX = -filterOffset;
+                            filterX <= filterOffset; filterX++)
+                        {
+
+                            calcOffset = byteOffset +
+                                         (filterX * 4) +
+                                         (filterY * sourceData.Stride);
+
+                            blue += pixelBuffer[calcOffset] *
+                                    filterMatrix[filterY + filterOffset,
+                                                        filterX + filterOffset];
+
+                            green += (double)(pixelBuffer[calcOffset + 1]) *
+                                     filterMatrix[filterY + filterOffset,
+                                                        filterX + filterOffset];
+
+                            red += (double)(pixelBuffer[calcOffset + 2]) *
+                                   filterMatrix[filterY + filterOffset,
+                                                      filterX + filterOffset];
+                        }
+                    }
+
+                    blue = factor * blue + bias;
+                    green = factor * green + bias;
+                    red = factor * red + bias;
+
+                    blue = (blue > 255 ? 255 :
+                           (blue < 0 ? 0 :
+                            blue));
+
+                    green = (green > 255 ? 255 :
+                            (green < 0 ? 0 :
+                             green));
+
+                    red = (red > 255 ? 255 :
+                          (red < 0 ? 0 :
+                           red));
+
+                    resultBuffer[byteOffset] = (byte)(blue);
+                    resultBuffer[byteOffset + 1] = (byte)(green);
+                    resultBuffer[byteOffset + 2] = (byte)(red);
+                    resultBuffer[byteOffset + 3] = 255;
+                }
+            }
+
+
+            Bitmap resultBitmap = new Bitmap(sourceBitmap.Width, sourceBitmap.Height);
+
+
+            BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0,
+                                     resultBitmap.Width, resultBitmap.Height),
+                                                      ImageLockMode.WriteOnly,
+                                                 System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+            System.Runtime.InteropServices.Marshal.Copy(resultBuffer, 0, resultData.Scan0, resultBuffer.Length);
+            resultBitmap.UnlockBits(resultData);
+
+            return resultBitmap;
+        }
+            #endregion
+
+            #region implementing filters
+            void TransparencyFilter()
         {
             OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
             OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
@@ -251,13 +528,56 @@ namespace PhotoEditor.ViewModel
             OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
         }
 
-        void BlurFilter()
+        void MedianFilter()
         {
-            OpenedImage.Lb.Img = DrawBlur(OpenedImage.Lb.Img);
+            OpenedImage.Lb.Img = DrawWithMedian(OpenedImage.Lb.Img);
             OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
         }
 
+        void SharpFilter()
+        {
+            OpenedImage.Lb.Img = DrawWithSharpness(OpenedImage.Lb.Img);
+            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+        }
+
+        void BlurFilter()
+        {
+            OpenedImage.Lb.Img = ConvolutionFilter(OpenedImage.Lb.Img, GaussianMatrixForBlur.GaussianBlur3x3);
+            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+        }
         #endregion
+
+        static Bitmap ResizingOfImage(Bitmap image, int width, int height)
+        {
+            var rectangleToImplement = new Rectangle(0, 0, width, height);
+            var imageToImplement = new Bitmap(width, height);
+
+            imageToImplement.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(imageToImplement))
+            {
+                graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(System.Drawing.Drawing2D.WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, rectangleToImplement, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+            return imageToImplement;
+        }
+
+        void ResizeImage()
+        {
+            OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            //OpenedImage.Lb.Source = ResizingOfImage(OpenedImage.Lb.Img, 900, 1400);
+        }
+
+        #region aux methods
 
         private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
         {
@@ -275,5 +595,7 @@ namespace PhotoEditor.ViewModel
 
             return sc;
         }
+
+        #endregion
     }
 }
