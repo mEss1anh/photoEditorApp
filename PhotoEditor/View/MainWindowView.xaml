@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoEditor"
         mc:Ignorable="d"
-        Title="VDeditor" Icon="../Images/Lagrange.jpg" ResizeMode="NoResize" Height="600" Width="1000" WindowStyle ="None" AllowsTransparency ="True" >
+        Title="VDeditor" Icon="../Images/Lagrange.jpg"  ResizeMode="NoResize" Height="600" Width="1000" WindowStyle ="None" AllowsTransparency ="True" >
     <RibbonWindow.Foreground>
         <SolidColorBrush/>
     </RibbonWindow.Foreground>

@@ -165,20 +165,29 @@ namespace PhotoEditor.ViewModel
 
         public void SaveFile()
         {
+            try
+            { 
             SaveFileDialog dlg = new SaveFileDialog();
             dlg.FileName = "My image";
             dlg.Filter = "JPEG (*.jpg)|*.jpg|PNG(*.png)|*.png|BitMap(*.bmp)|*.bmp";
             bool? result = dlg.ShowDialog();
 
-            if (result == true)
+                if (result == true)
+                {
+                    ImageFormat format = OpenedImage.ImgFormat;
+                    if (format.Equals(ImageFormat.Jpeg))
+                        OpenedImage.Img.Save(dlg.FileName, ImageFormat.Jpeg);
+                    else if (format.Equals(ImageFormat.Bmp))
+                        OpenedImage.Img.Save(dlg.FileName, ImageFormat.Bmp);
+                    else if (format.Equals(ImageFormat.Png))
+                        OpenedImage.Img.Save(dlg.FileName, ImageFormat.Png);
+
+                }
+            }
+            catch
             {
-                ImageFormat format = OpenedImage.ImgFormat;
-                if (format.Equals(ImageFormat.Jpeg))
-                    OpenedImage.Img.Save(dlg.FileName, ImageFormat.Jpeg);
-                else if (format.Equals(ImageFormat.Bmp))
-                    OpenedImage.Img.Save(dlg.FileName, ImageFormat.Bmp);
-                else if (format.Equals(ImageFormat.Png))
-                    OpenedImage.Img.Save(dlg.FileName, ImageFormat.Png);
+                //окно чуть позже присоединю
+                MessageBox.Show("Ошибка сохранения данных");
             }
             }
 
@@ -203,34 +212,52 @@ namespace PhotoEditor.ViewModel
         #region SupportFilters methods
         private static Bitmap ApplyColorMatrix(Bitmap img, ColorMatrix colorMatrix)
         {
-            Bitmap bmpSource = GetArgbCopy(img);
-            Bitmap imageToApplyFilter = new Bitmap(bmpSource.Width, bmpSource.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            using (Graphics graphics = Graphics.FromImage(imageToApplyFilter))
-            {
-                ImageAttributes bmpAttributes = new ImageAttributes();
-                bmpAttributes.SetColorMatrix(colorMatrix);
-                graphics.DrawImage(bmpSource, new Rectangle(0, 0, bmpSource.Width, bmpSource.Height),
-                                    0, 0, bmpSource.Width, bmpSource.Height, GraphicsUnit.Pixel, bmpAttributes);
+            if ((img == null)||(colorMatrix == null))
+                throw new ArgumentNullException();
+            if ((img.GetType() != typeof(Bitmap))||(colorMatrix.GetType() != typeof(ColorMatrix)))
+                throw new ArgumentException();
 
-            }
-            return imageToApplyFilter;
+            Bitmap bmpSource = GetArgbCopy(img);
+                Bitmap imageToApplyFilter = new Bitmap(bmpSource.Width, bmpSource.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                using (Graphics graphics = Graphics.FromImage(imageToApplyFilter))
+                {
+                    ImageAttributes bmpAttributes = new ImageAttributes();
+                    bmpAttributes.SetColorMatrix(colorMatrix);
+                    graphics.DrawImage(bmpSource, new Rectangle(0, 0, bmpSource.Width, bmpSource.Height),
+                                        0, 0, bmpSource.Width, bmpSource.Height, GraphicsUnit.Pixel, bmpAttributes);
+                    return imageToApplyFilter;
+                }
+                
+            
+                       
         }
 
         private static Bitmap GetArgbCopy(Bitmap img)
         {
-            Bitmap bmpNew = new Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            using (Graphics graphics = Graphics.FromImage(bmpNew))
-            {
-                graphics.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), new Rectangle(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
-                graphics.Flush();
-            }
+            if (img == null)
+                throw new ArgumentNullException();
+            if (img.GetType() != typeof(Bitmap))
+                throw new ArgumentException();
 
-            return bmpNew;
+            Bitmap bmpNew = new Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                using (Graphics graphics = Graphics.FromImage(bmpNew))
+                {
+                    graphics.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), new Rectangle(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
+                    graphics.Flush();
+                }
+
+                return bmpNew;
+            
         }
 
 
         public static Bitmap DrawWithTransparency(Bitmap img)
         {
+            if (img == null)
+                throw new ArgumentNullException();
+            if (img.GetType() != typeof(Bitmap))
+                throw new ArgumentException();
+
             ColorMatrix colorMatrix = new ColorMatrix(new float[][]
                                 {
                             new float[]{1, 0, 0, 0, 0},
@@ -246,6 +273,11 @@ namespace PhotoEditor.ViewModel
 
         public static Bitmap DrawAsGrayscale(Bitmap sourceImage)
         {
+            if (sourceImage == null) 
+                throw new ArgumentNullException();
+            if (sourceImage.GetType() != typeof(Bitmap))
+                throw new ArgumentException();
+
             ColorMatrix colorMatrix = new ColorMatrix(new float[][]
                                 {
                             new float[]{.3f, .3f, .3f, 0, 0},
@@ -261,6 +293,11 @@ namespace PhotoEditor.ViewModel
 
         public static Bitmap DrawAsSepia(Bitmap sourceImage)
         {
+            if (sourceImage == null) 
+                throw new ArgumentNullException();
+            if (sourceImage.GetType() != typeof(Bitmap))
+                throw new ArgumentException();
+
             ColorMatrix colorMatrix = new ColorMatrix(new float[][]
                        {
                         new float[]{.393f, .349f, .272f, 0, 0},
@@ -274,88 +311,99 @@ namespace PhotoEditor.ViewModel
             return ApplyColorMatrix(sourceImage, colorMatrix);
         }
 
-        
+
         public static Bitmap DrawWithSharpness(Bitmap image)
         {
+            if (image == null) 
+                throw new ArgumentNullException();
+            if (image.GetType() != typeof(Bitmap))
+                throw new ArgumentException();
+
             Bitmap sharpenImage = (Bitmap)image.Clone();
 
-            int filterWidth = 3;
-            int filterHeight = 3;
-            int width = image.Width;
-            int height = image.Height;
+                int filterWidth = 3;
+                int filterHeight = 3;
+                int width = image.Width;
+                int height = image.Height;
 
-            double[,] filter = new double[filterWidth, filterHeight];
-            filter[0, 0] = filter[0, 1] = filter[0, 2] = filter[1, 0] = filter[1, 2] = filter[2, 0] = filter[2, 1] = filter[2, 2] = -1;
-            filter[1, 1] = 9;
+                double[,] filter = new double[filterWidth, filterHeight];
+                filter[0, 0] = filter[0, 1] = filter[0, 2] = filter[1, 0] = filter[1, 2] = filter[2, 0] = filter[2, 1] = filter[2, 2] = -1;
+                filter[1, 1] = 9;
 
-            double factor = 1.0;
-            double bias = 0.0;
+                double factor = 1.0;
+                double bias = 0.0;
 
-            System.Drawing.Color[,] result = new System.Drawing.Color[image.Width, image.Height];
-
-
-            BitmapData pbits = sharpenImage.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+                System.Drawing.Color[,] result = new System.Drawing.Color[image.Width, image.Height];
 
 
-            int bytes = pbits.Stride * height;
-            byte[] rgbValues = new byte[bytes];
+                BitmapData pbits = sharpenImage.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format24bppRgb);
 
 
-            System.Runtime.InteropServices.Marshal.Copy(pbits.Scan0, rgbValues, 0, bytes);
+                int bytes = pbits.Stride * height;
+                byte[] rgbValues = new byte[bytes];
 
-            int rgb;
 
-            for (int x = 0; x < width; ++x)
-            {
-                for (int y = 0; y < height; ++y)
+                System.Runtime.InteropServices.Marshal.Copy(pbits.Scan0, rgbValues, 0, bytes);
+
+                int rgb;
+
+                for (int x = 0; x < width; ++x)
                 {
-                    double red = 0.0, green = 0.0, blue = 0.0;
-
-                    for (int filterX = 0; filterX < filterWidth; filterX++)
+                    for (int y = 0; y < height; ++y)
                     {
-                        for (int filterY = 0; filterY < filterHeight; filterY++)
+                        double red = 0.0, green = 0.0, blue = 0.0;
+
+                        for (int filterX = 0; filterX < filterWidth; filterX++)
                         {
-                            int imageX = (x - filterWidth / 2 + filterX + width) % width;
-                            int imageY = (y - filterHeight / 2 + filterY + height) % height;
+                            for (int filterY = 0; filterY < filterHeight; filterY++)
+                            {
+                                int imageX = (x - filterWidth / 2 + filterX + width) % width;
+                                int imageY = (y - filterHeight / 2 + filterY + height) % height;
 
-                            rgb = imageY * pbits.Stride + 3 * imageX;
+                                rgb = imageY * pbits.Stride + 3 * imageX;
 
-                            red += rgbValues[rgb + 2] * filter[filterX, filterY];
-                            green += rgbValues[rgb + 1] * filter[filterX, filterY];
-                            blue += rgbValues[rgb + 0] * filter[filterX, filterY];
+                                red += rgbValues[rgb + 2] * filter[filterX, filterY];
+                                green += rgbValues[rgb + 1] * filter[filterX, filterY];
+                                blue += rgbValues[rgb + 0] * filter[filterX, filterY];
+                            }
+                            int r = Math.Min(Math.Max((int)(factor * red + bias), 0), 255);
+                            int g = Math.Min(Math.Max((int)(factor * green + bias), 0), 255);
+                            int b = Math.Min(Math.Max((int)(factor * blue + bias), 0), 255);
+
+                            result[x, y] = System.Drawing.Color.FromArgb(r, g, b);
                         }
-                        int r = Math.Min(Math.Max((int)(factor * red + bias), 0), 255);
-                        int g = Math.Min(Math.Max((int)(factor * green + bias), 0), 255);
-                        int b = Math.Min(Math.Max((int)(factor * blue + bias), 0), 255);
-
-                        result[x, y] = System.Drawing.Color.FromArgb(r, g, b);
                     }
                 }
-            }
 
-            for (int x = 0; x < width; ++x)
-            {
-                for (int y = 0; y < height; ++y)
+                for (int x = 0; x < width; ++x)
                 {
-                    rgb = y * pbits.Stride + 3 * x;
+                    for (int y = 0; y < height; ++y)
+                    {
+                        rgb = y * pbits.Stride + 3 * x;
 
-                    rgbValues[rgb + 2] = result[x, y].R;
-                    rgbValues[rgb + 1] = result[x, y].G;
-                    rgbValues[rgb + 0] = result[x, y].B;
+                        rgbValues[rgb + 2] = result[x, y].R;
+                        rgbValues[rgb + 1] = result[x, y].G;
+                        rgbValues[rgb + 0] = result[x, y].B;
+                    }
                 }
-            }
 
 
-            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, pbits.Scan0, bytes);
+                System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, pbits.Scan0, bytes);
 
-            sharpenImage.UnlockBits(pbits);
+                sharpenImage.UnlockBits(pbits);
 
-            return sharpenImage;
+                return sharpenImage;
+            
         }
 
         public static Bitmap DrawWithMedian(Bitmap sourceBitmap,
                                   int matrixSize = 3)
         {
+            if (sourceBitmap == null)
+                throw new ArgumentNullException();
+            if (sourceBitmap.GetType() != typeof(Bitmap))
+                throw new ArgumentException();
+
             BitmapData sourceData =
                        sourceBitmap.LockBits(new Rectangle(0, 0,
                        sourceBitmap.Width, sourceBitmap.Height),
@@ -459,6 +507,11 @@ namespace PhotoEditor.ViewModel
 
         private static Bitmap ConvolutionFilter(Bitmap sourceBitmap, double[,] filterMatrix, double factor = 1, int bias = 0)
         {
+            if ((sourceBitmap == null) || (filterMatrix == null))
+                throw new ArgumentNullException();
+            if ((sourceBitmap.GetType() != typeof(Bitmap)) || (filterMatrix.GetType() != typeof(double[,])))
+                throw new ArgumentException();
+
             BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height),
                                                        ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
@@ -599,6 +652,11 @@ namespace PhotoEditor.ViewModel
         #region Resize methods
         public Bitmap ResizingOfImage(Bitmap image, int width, int height)
         {
+            if (image == null)
+                throw new ArgumentNullException();
+            if ((image.GetType() != typeof(Bitmap)) || (width.GetType() != typeof(int)) || (height.GetType() != typeof(int)))
+                throw new ArgumentException();
+
             var rectangleToImplement = new Rectangle(0, 0, width, height);
             var imageToImplement = new Bitmap(width, height);
 
@@ -633,6 +691,11 @@ namespace PhotoEditor.ViewModel
 
         public ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
         {
+            if (imToConvert == null) 
+                throw new ArgumentNullException();
+            if (imToConvert.GetType() != typeof(Bitmap))
+                throw new ArgumentException();
+
             Bitmap bmp = new Bitmap(imToConvert);
             MemoryStream ms = new MemoryStream();
             bmp.Save(ms, ImageFormat.Bmp);
