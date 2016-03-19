@@ -1,0 +1,23 @@
+﻿<Window x:Class="PhotoEditor.View.ProblemsSolver"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PhotoEditor.View"
+        mc:Ignorable="d"
+        Title="Oops!" Icon="../Images/Lagrange.jpg" ResizeMode="NoResize" Height="270" Width="298.5">
+    <Window.Background>
+        <ImageBrush ImageSource="../Images/148.jpg" Stretch="Fill"/>
+    </Window.Background>
+    <Grid>
+        <Grid HorizontalAlignment="Left" Height="221" Margin="10,10,0,0" VerticalAlignment="Top" Width="272">
+            <Grid.Background>
+                <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
+            </Grid.Background>
+            <TextBlock x:Name="Text" HorizontalAlignment="Left" Margin="38,20,0,0" TextWrapping="Wrap" Text="It doesn't work?" VerticalAlignment="Top" Width="222" FontSize="26.667" Foreground="#FF1C9791"/>
+            <Button x:Name="Okay" Content="Okay..." HorizontalAlignment="Left" Margin="104,173,0,0" VerticalAlignment="Top" Width="75"/>
+            <Image x:Name="Mole" Source="../Images/mole.png" HorizontalAlignment="Left" Height="85" Margin="91,67,0,0" VerticalAlignment="Top" Width="100"/>
+        </Grid>
+
+    </Grid>
+</Window>
