@@ -36,12 +36,12 @@ namespace PhotoEditor.ViewModel
 
         #endregion
 
-        #region fields
+        #region Fields
         private LocalBitmap _openedImage;
         private ObservableCollection<string> _listOfActions;
         #endregion
 
-        #region properties
+        #region Properties
 
         public LocalBitmap OpenedImage
         {
@@ -110,7 +110,7 @@ namespace PhotoEditor.ViewModel
         public void OpenFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
-
+            
             dialog.InitialDirectory = Environment.CurrentDirectory;
 
             dialog.Filter = "Image files (*.jpg;*.png;*.bmp)| *.jpg;*.png;*.bmp";

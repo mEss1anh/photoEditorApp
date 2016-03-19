@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotoEditor.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,18 @@ namespace PhotoEditor.View
     /// <summary>
     /// Interaction logic for Parameters.xaml
     /// </summary>
-    public partial class Parameters : Window
+    public partial class Parameters
     {
+        MainViewModel _viewModel = new MainViewModel();
         public Parameters()
         {
             InitializeComponent();
+            DataContext = _viewModel;
+        }
+
+        private void Confirm_Click(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).Close();
         }
     }
 }

@@ -68,8 +68,21 @@ namespace PhotoEditor.Model
                     }
                 }
             }
+        private double _iHeight; 
 
-            public LocalBitmap(Bitmap _img, ImageSource _source)
+        public double IHeight
+        {
+            get { return Img.Height; }
+            set {
+                if (_iHeight != value)
+                {
+                    _iHeight = value;
+                    OnPropertyChanged("IHeight");
+                }
+            }
+        }
+
+        public LocalBitmap(Bitmap _img, ImageSource _source)
             {
                 Img = _img;
                 Source = _source;
