@@ -68,24 +68,26 @@ namespace PhotoEditor.Model
                     }
                 }
             }
-        private double _iHeight; 
 
-        public double IHeight
-        {
-            get { return Img.Height; }
-            set {
-                if (_iHeight != value)
-                {
-                    _iHeight = value;
-                    OnPropertyChanged("IHeight");
-                }
-            }
-        }
+        private int _height;
+
+        public int Height { get; set; } = 24665;
+        //{
+        //    get { return _height; }
+        //    set {
+        //        if (_height != value)
+        //        {
+        //            _height = value;
+        //            OnPropertyChanged("Height");
+        //        }
+        //    }
+        //}
 
         public LocalBitmap(Bitmap _img, ImageSource _source)
             {
                 Img = _img;
                 Source = _source;
+                Height = Img.Height; 
             }
         }
 }

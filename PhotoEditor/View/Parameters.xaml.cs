@@ -18,18 +18,19 @@ namespace PhotoEditor.View
     /// <summary>
     /// Interaction logic for Parameters.xaml
     /// </summary>
-    public partial class Parameters
+    public partial class Parameters : Window
     {
-        MainViewModel _viewModel = new MainViewModel();
+        MainViewModel _viewModel;
         public Parameters()
         {
             InitializeComponent();
+            _viewModel = new MainViewModel();
             DataContext = _viewModel;
         }
 
         private void Confirm_Click(object sender, RoutedEventArgs e)
         {
-            Window.GetWindow(this).Close();
+            GetWindow(this).Close();
         }
     }
 }
