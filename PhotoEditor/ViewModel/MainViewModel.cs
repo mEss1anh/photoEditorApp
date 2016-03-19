@@ -199,16 +199,40 @@ namespace PhotoEditor.ViewModel
         #region Rotation methods
         public void RotateRight()
         {
-            //OpenedImage.Angle += 90;
-            OpenedImage.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            try {
+                OpenedImage.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            }
+           catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+               
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+                
+            }
         }
 
         public void RotateLeft()
         {
-            //OpenedImage.Angle -= 90;
-            OpenedImage.Img.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            try
+            {
+                OpenedImage.Img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            }
+           
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+                
+            }
         }
         #endregion
 
@@ -256,73 +280,99 @@ namespace PhotoEditor.ViewModel
 
         public static Bitmap DrawWithTransparency(Bitmap img)
         {
-            if (img == null)
-                throw new ArgumentNullException();
-            if (img.GetType() != typeof(Bitmap))
-                throw new ArgumentException();
-
-            ColorMatrix colorMatrix = new ColorMatrix(new float[][]
-                                {
+            try {
+                ColorMatrix colorMatrix = new ColorMatrix(new float[][]
+                                    {
                             new float[]{1, 0, 0, 0, 0},
                             new float[]{0, 1, 0, 0, 0},
                             new float[]{0, 0, 1, 0, 0},
                             new float[]{0, 0, 0, 0.3f, 0},
                             new float[]{0, 0, 0, 0, 1}
-                                });
+                                    });
 
 
-            return ApplyColorMatrix(img, colorMatrix);
+                return ApplyColorMatrix(img, colorMatrix); }
+           
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
         }
 
         public static Bitmap DrawAsGrayscale(Bitmap sourceImage)
         {
-            if (sourceImage == null) 
-                throw new ArgumentNullException();
-            if (sourceImage.GetType() != typeof(Bitmap))
-                throw new ArgumentException();
-
-            ColorMatrix colorMatrix = new ColorMatrix(new float[][]
-                                {
+            try
+            {
+                ColorMatrix colorMatrix = new ColorMatrix(new float[][]
+                                    {
                             new float[]{.3f, .3f, .3f, 0, 0},
                             new float[]{.59f, .59f, .59f, 0, 0},
                             new float[]{.11f, .11f, .11f, 0, 0},
                             new float[]{0, 0, 0, 1, 0},
                             new float[]{0, 0, 0, 0, 1}
-                                });
+                                    });
 
 
-            return ApplyColorMatrix(sourceImage, colorMatrix);
+                return ApplyColorMatrix(sourceImage, colorMatrix);
+            }
+           
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
         }
 
         public static Bitmap DrawAsSepia(Bitmap sourceImage)
         {
-            if (sourceImage == null) 
-                throw new ArgumentNullException();
-            if (sourceImage.GetType() != typeof(Bitmap))
-                throw new ArgumentException();
-
-            ColorMatrix colorMatrix = new ColorMatrix(new float[][]
-                       {
+            try
+            {
+                ColorMatrix colorMatrix = new ColorMatrix(new float[][]
+                           {
                         new float[]{.393f, .349f, .272f, 0, 0},
                         new float[]{.769f, .686f, .534f, 0, 0},
                         new float[]{.189f, .168f, .131f, 0, 0},
                         new float[]{0, 0, 0, 1, 0},
                         new float[]{0, 0, 0, 0, 1}
-                       });
+                           });
 
 
-            return ApplyColorMatrix(sourceImage, colorMatrix);
+                return ApplyColorMatrix(sourceImage, colorMatrix);
+            }
+            
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
         }
 
 
         public static Bitmap DrawWithSharpness(Bitmap image)
         {
-            if (image == null) 
-                throw new ArgumentNullException();
-            if (image.GetType() != typeof(Bitmap))
-                throw new ArgumentException();
+            try {
+                if (image == null)
+                    throw new ArgumentNullException();
+                if (image.GetType() != typeof(Bitmap))
+                    throw new ArgumentException();
 
-            Bitmap sharpenImage = (Bitmap)image.Clone();
+                Bitmap sharpenImage = (Bitmap)image.Clone();
 
                 int filterWidth = 3;
                 int filterHeight = 3;
@@ -396,221 +446,251 @@ namespace PhotoEditor.ViewModel
                 sharpenImage.UnlockBits(pbits);
 
                 return sharpenImage;
+            }
             
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
         }
 
         public static Bitmap DrawWithMedian(Bitmap sourceBitmap,
                                   int matrixSize = 3)
         {
-            if (sourceBitmap == null)
-                throw new ArgumentNullException();
-            if (sourceBitmap.GetType() != typeof(Bitmap))
-                throw new ArgumentException();
+            try {
+                if (sourceBitmap == null)
+                    throw new ArgumentNullException();
+                if (sourceBitmap.GetType() != typeof(Bitmap))
+                    throw new ArgumentException();
 
-            BitmapData sourceData =
-                       sourceBitmap.LockBits(new Rectangle(0, 0,
-                       sourceBitmap.Width, sourceBitmap.Height),
-                       ImageLockMode.ReadOnly,
-                       System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-
-            byte[] pixelBuffer = new byte[sourceData.Stride *
-                                          sourceData.Height];
+                BitmapData sourceData =
+                           sourceBitmap.LockBits(new Rectangle(0, 0,
+                           sourceBitmap.Width, sourceBitmap.Height),
+                           ImageLockMode.ReadOnly,
+                           System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
 
-            byte[] resultBuffer = new byte[sourceData.Stride *
-                                           sourceData.Height];
+                byte[] pixelBuffer = new byte[sourceData.Stride *
+                                              sourceData.Height];
 
 
-            System.Runtime.InteropServices.Marshal.Copy(sourceData.Scan0, pixelBuffer, 0,
-                                       pixelBuffer.Length);
+                byte[] resultBuffer = new byte[sourceData.Stride *
+                                               sourceData.Height];
 
 
-            sourceBitmap.UnlockBits(sourceData);
+                System.Runtime.InteropServices.Marshal.Copy(sourceData.Scan0, pixelBuffer, 0,
+                                           pixelBuffer.Length);
 
 
-            int filterOffset = (matrixSize - 1) / 2;
-            int calcOffset = 0;
+                sourceBitmap.UnlockBits(sourceData);
 
 
-            int byteOffset = 0;
+                int filterOffset = (matrixSize - 1) / 2;
+                int calcOffset = 0;
 
 
-            List<int> neighbourPixels = new List<int>();
-            byte[] middlePixel;
+                int byteOffset = 0;
 
 
-            for (int offsetY = filterOffset; offsetY <
-                sourceBitmap.Height - filterOffset; offsetY++)
-            {
-                for (int offsetX = filterOffset; offsetX <
-                    sourceBitmap.Width - filterOffset; offsetX++)
+                List<int> neighbourPixels = new List<int>();
+                byte[] middlePixel;
+
+
+                for (int offsetY = filterOffset; offsetY <
+                    sourceBitmap.Height - filterOffset; offsetY++)
                 {
-                    byteOffset = offsetY *
-                                 sourceData.Stride +
-                                 offsetX * 4;
-
-
-                    neighbourPixels.Clear();
-
-
-                    for (int filterY = -filterOffset;
-                        filterY <= filterOffset; filterY++)
+                    for (int offsetX = filterOffset; offsetX <
+                        sourceBitmap.Width - filterOffset; offsetX++)
                     {
-                        for (int filterX = -filterOffset;
-                            filterX <= filterOffset; filterX++)
+                        byteOffset = offsetY *
+                                     sourceData.Stride +
+                                     offsetX * 4;
+
+
+                        neighbourPixels.Clear();
+
+
+                        for (int filterY = -filterOffset;
+                            filterY <= filterOffset; filterY++)
                         {
+                            for (int filterX = -filterOffset;
+                                filterX <= filterOffset; filterX++)
+                            {
 
 
-                            calcOffset = byteOffset +
-                                         (filterX * 4) +
-                                         (filterY * sourceData.Stride);
+                                calcOffset = byteOffset +
+                                             (filterX * 4) +
+                                             (filterY * sourceData.Stride);
 
 
-                            neighbourPixels.Add(BitConverter.ToInt32(
-                                             pixelBuffer, calcOffset));
+                                neighbourPixels.Add(BitConverter.ToInt32(
+                                                 pixelBuffer, calcOffset));
+                            }
                         }
+
+
+                        neighbourPixels.Sort();
+
+                        middlePixel = BitConverter.GetBytes(
+                                           neighbourPixels[filterOffset]);
+
+
+                        resultBuffer[byteOffset] = middlePixel[0];
+                        resultBuffer[byteOffset + 1] = middlePixel[1];
+                        resultBuffer[byteOffset + 2] = middlePixel[2];
+                        resultBuffer[byteOffset + 3] = middlePixel[3];
                     }
-
-
-                    neighbourPixels.Sort();
-
-                    middlePixel = BitConverter.GetBytes(
-                                       neighbourPixels[filterOffset]);
-
-
-                    resultBuffer[byteOffset] = middlePixel[0];
-                    resultBuffer[byteOffset + 1] = middlePixel[1];
-                    resultBuffer[byteOffset + 2] = middlePixel[2];
-                    resultBuffer[byteOffset + 3] = middlePixel[3];
                 }
+
+
+                Bitmap resultBitmap = new Bitmap(sourceBitmap.Width,
+                                                 sourceBitmap.Height);
+
+
+                BitmapData resultData =
+                           resultBitmap.LockBits(new Rectangle(0, 0,
+                           resultBitmap.Width, resultBitmap.Height),
+                           ImageLockMode.WriteOnly,
+                           System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+
+                System.Runtime.InteropServices.Marshal.Copy(resultBuffer, 0, resultData.Scan0,
+                                           resultBuffer.Length);
+
+
+                resultBitmap.UnlockBits(resultData);
+
+
+                return resultBitmap; }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
             }
-
-
-            Bitmap resultBitmap = new Bitmap(sourceBitmap.Width,
-                                             sourceBitmap.Height);
-
-
-            BitmapData resultData =
-                       resultBitmap.LockBits(new Rectangle(0, 0,
-                       resultBitmap.Width, resultBitmap.Height),
-                       ImageLockMode.WriteOnly,
-                       System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-
-            System.Runtime.InteropServices.Marshal.Copy(resultBuffer, 0, resultData.Scan0,
-                                       resultBuffer.Length);
-
-
-            resultBitmap.UnlockBits(resultData);
-
-
-            return resultBitmap;
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
         }
 
         private static Bitmap ConvolutionFilter(Bitmap sourceBitmap, double[,] filterMatrix, double factor = 1, int bias = 0)
         {
-            if ((sourceBitmap == null) || (filterMatrix == null))
-                throw new ArgumentNullException();
-            if ((sourceBitmap.GetType() != typeof(Bitmap)) || (filterMatrix.GetType() != typeof(double[,])))
-                throw new ArgumentException();
+            try {
 
-            BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height),
-                                                       ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height),
+                                                           ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
-            byte[] resultBuffer = new byte[sourceData.Stride * sourceData.Height];
+                byte[] pixelBuffer = new byte[sourceData.Stride * sourceData.Height];
+                byte[] resultBuffer = new byte[sourceData.Stride * sourceData.Height];
 
-            System.Runtime.InteropServices.Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
-            sourceBitmap.UnlockBits(sourceData);
+                System.Runtime.InteropServices.Marshal.Copy(sourceData.Scan0, pixelBuffer, 0, pixelBuffer.Length);
+                sourceBitmap.UnlockBits(sourceData);
 
-            double blue = 0.0;
-            double green = 0.0;
-            double red = 0.0;
+                double blue = 0.0;
+                double green = 0.0;
+                double red = 0.0;
 
-            int filterWidth = filterMatrix.GetLength(1);
-            int filterHeight = filterMatrix.GetLength(0);
+                int filterWidth = filterMatrix.GetLength(1);
+                int filterHeight = filterMatrix.GetLength(0);
 
-            int filterOffset = (filterWidth - 1) / 2;
-            int calcOffset = 0;
+                int filterOffset = (filterWidth - 1) / 2;
+                int calcOffset = 0;
 
-            int byteOffset = 0;
+                int byteOffset = 0;
 
-            for (int offsetY = filterOffset; offsetY <
-                sourceBitmap.Height - filterOffset; offsetY++)
-            {
-                for (int offsetX = filterOffset; offsetX <
-                    sourceBitmap.Width - filterOffset; offsetX++)
+                for (int offsetY = filterOffset; offsetY <
+                    sourceBitmap.Height - filterOffset; offsetY++)
                 {
-                    blue = 0;
-                    green = 0;
-                    red = 0;
-
-                    byteOffset = offsetY *
-                                 sourceData.Stride +
-                                 offsetX * 4;
-
-                    for (int filterY = -filterOffset;
-                        filterY <= filterOffset; filterY++)
+                    for (int offsetX = filterOffset; offsetX <
+                        sourceBitmap.Width - filterOffset; offsetX++)
                     {
-                        for (int filterX = -filterOffset;
-                            filterX <= filterOffset; filterX++)
+                        blue = 0;
+                        green = 0;
+                        red = 0;
+
+                        byteOffset = offsetY *
+                                     sourceData.Stride +
+                                     offsetX * 4;
+
+                        for (int filterY = -filterOffset;
+                            filterY <= filterOffset; filterY++)
                         {
+                            for (int filterX = -filterOffset;
+                                filterX <= filterOffset; filterX++)
+                            {
 
-                            calcOffset = byteOffset +
-                                         (filterX * 4) +
-                                         (filterY * sourceData.Stride);
+                                calcOffset = byteOffset +
+                                             (filterX * 4) +
+                                             (filterY * sourceData.Stride);
 
-                            blue += pixelBuffer[calcOffset] *
-                                    filterMatrix[filterY + filterOffset,
-                                                        filterX + filterOffset];
+                                blue += pixelBuffer[calcOffset] *
+                                        filterMatrix[filterY + filterOffset,
+                                                            filterX + filterOffset];
 
-                            green += (double)(pixelBuffer[calcOffset + 1]) *
-                                     filterMatrix[filterY + filterOffset,
-                                                        filterX + filterOffset];
+                                green += (double)(pixelBuffer[calcOffset + 1]) *
+                                         filterMatrix[filterY + filterOffset,
+                                                            filterX + filterOffset];
 
-                            red += (double)(pixelBuffer[calcOffset + 2]) *
-                                   filterMatrix[filterY + filterOffset,
-                                                      filterX + filterOffset];
+                                red += (double)(pixelBuffer[calcOffset + 2]) *
+                                       filterMatrix[filterY + filterOffset,
+                                                          filterX + filterOffset];
+                            }
                         }
+
+                        blue = factor * blue + bias;
+                        green = factor * green + bias;
+                        red = factor * red + bias;
+
+                        blue = (blue > 255 ? 255 :
+                               (blue < 0 ? 0 :
+                                blue));
+
+                        green = (green > 255 ? 255 :
+                                (green < 0 ? 0 :
+                                 green));
+
+                        red = (red > 255 ? 255 :
+                              (red < 0 ? 0 :
+                               red));
+
+                        resultBuffer[byteOffset] = (byte)(blue);
+                        resultBuffer[byteOffset + 1] = (byte)(green);
+                        resultBuffer[byteOffset + 2] = (byte)(red);
+                        resultBuffer[byteOffset + 3] = 255;
                     }
-
-                    blue = factor * blue + bias;
-                    green = factor * green + bias;
-                    red = factor * red + bias;
-
-                    blue = (blue > 255 ? 255 :
-                           (blue < 0 ? 0 :
-                            blue));
-
-                    green = (green > 255 ? 255 :
-                            (green < 0 ? 0 :
-                             green));
-
-                    red = (red > 255 ? 255 :
-                          (red < 0 ? 0 :
-                           red));
-
-                    resultBuffer[byteOffset] = (byte)(blue);
-                    resultBuffer[byteOffset + 1] = (byte)(green);
-                    resultBuffer[byteOffset + 2] = (byte)(red);
-                    resultBuffer[byteOffset + 3] = 255;
                 }
+
+
+                Bitmap resultBitmap = new Bitmap(sourceBitmap.Width, sourceBitmap.Height);
+
+
+                BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0,
+                                         resultBitmap.Width, resultBitmap.Height),
+                                                          ImageLockMode.WriteOnly,
+                                                     System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+
+                System.Runtime.InteropServices.Marshal.Copy(resultBuffer, 0, resultData.Scan0, resultBuffer.Length);
+                resultBitmap.UnlockBits(resultData);
+
+                return resultBitmap; }
+            
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
             }
-
-
-            Bitmap resultBitmap = new Bitmap(sourceBitmap.Width, sourceBitmap.Height);
-
-
-            BitmapData resultData = resultBitmap.LockBits(new Rectangle(0, 0,
-                                     resultBitmap.Width, resultBitmap.Height),
-                                                      ImageLockMode.WriteOnly,
-                                                 System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-            System.Runtime.InteropServices.Marshal.Copy(resultBuffer, 0, resultData.Scan0, resultBuffer.Length);
-            resultBitmap.UnlockBits(resultData);
-
-            return resultBitmap;
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
         }
             #endregion
 
@@ -737,8 +817,9 @@ namespace PhotoEditor.ViewModel
                 MessageBox.Show(ex.Message);
                 return null;
             }
-            catch(NullReferenceException)
+            catch(NullReferenceException ex)
             {
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }

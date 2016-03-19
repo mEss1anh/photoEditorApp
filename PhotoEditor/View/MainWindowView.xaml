@@ -21,7 +21,10 @@
                     <RibbonApplicationMenuItem Name="Save" ImageSource="../Images/save.png" Header="Save"  Command="{Binding ClickSaveCommand}" Visibility="Hidden"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
-            <RibbonTab Name="Main" Header="Tools" BorderBrush="Black" Height="70" VerticalAlignment="Top" Background="#FF214449">
+            <RibbonTab Name="Main" Header="Tools" BorderBrush="Black" Height="70" VerticalAlignment="Top" >
+                <RibbonTab.Background>
+                    <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
+                </RibbonTab.Background>
                 <RibbonGroup Name="Group1" Header="Basic" Margin="0,0,0,1" Width="218">
                     <RibbonGroup.Background>
                         <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
