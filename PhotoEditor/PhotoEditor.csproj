@@ -72,6 +72,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\MyDictionary.cs" />
     <Compile Include="View\Parameters.xaml.cs">
       <DependentUpon>Parameters.xaml</DependentUpon>
     </Compile>
@@ -88,7 +89,7 @@
     </Compile>
     <Compile Include="Extensions.cs" />
     <Compile Include="Model\GaussianMatrixForBlur.cs" />
-    <Compile Include="Model\ModelClassImage.cs" />
+    <Compile Include="Model\LocalBitmap.cs" />
     <Compile Include="ViewModel\Command.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\MainWindowView.xaml.cs">

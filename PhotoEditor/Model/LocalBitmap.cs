@@ -13,58 +13,6 @@ using System.Windows.Media;
 
 namespace PhotoEditor.Model
 {
-    class ModelClassImage : INotifyPropertyChanged
-    {
-        #region INotifyImplement
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion
-
-        private LocalBitmap lb;
-        public LocalBitmap Lb
-        {
-            get { return lb; }
-            set
-            {
-                if (lb != value)
-                {
-                    lb = value;
-                    OnPropertyChanged("Lb");
-                }
-            }
-        }
-        public ModelClassImage(string _imageSource, string _extension, LocalBitmap _bmp)
-        {
-            ImageSource = _imageSource;
-            Extension = _extension;
-            lb = _bmp;
-        }
-
-        private string _imageSource;
-        public string ImageSource
-        {
-            get { return _imageSource; }
-            set
-            {
-                if (_imageSource != value)
-                {
-                    _imageSource = value;
-                    OnPropertyChanged("ImageSource");
-                }
-            }
-        }
-
-        public string Extension { get; set; }
-
         public class LocalBitmap : INotifyPropertyChanged
         {
             public event PropertyChangedEventHandler PropertyChanged;
@@ -91,6 +39,22 @@ namespace PhotoEditor.Model
                 }
             }
 
+            private ImageFormat _imgFormat;
+
+            public ImageFormat ImgFormat
+            {
+                get { return _imgFormat; }
+                set
+                {
+                    if (_imgFormat != value)
+                    {
+                        _imgFormat = value;
+                        OnPropertyChanged("ImgFormat");
+                    }
+                }
+            }
+
+
             Bitmap _img;
             public Bitmap Img
             {
@@ -111,7 +75,4 @@ namespace PhotoEditor.Model
                 Source = _source;
             }
         }
-
-    }
-
 }

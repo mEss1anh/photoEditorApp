@@ -14,6 +14,7 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Collections.ObjectModel;
 
 namespace PhotoEditor.ViewModel
 {
@@ -35,9 +36,14 @@ namespace PhotoEditor.ViewModel
 
         #endregion
 
-        private ModelClassImage _openedImage;
+        #region fields
+        private LocalBitmap _openedImage;
+        private ObservableCollection<string> _listOfActions;
+        #endregion
 
-        public ModelClassImage OpenedImage
+        #region properties
+
+        public LocalBitmap OpenedImage
         {
             get { return _openedImage; }
             set
@@ -49,7 +55,22 @@ namespace PhotoEditor.ViewModel
                 }
             }
         }
-        
+
+        public ObservableCollection<string> ListOfActions
+        {
+            get { return _listOfActions; }
+            set
+            {
+                if (_listOfActions != value)
+                {
+                    _listOfActions = value;
+                    OnPropertyChanged("ListOfActions");
+                }
+            }
+        }
+
+        #endregion
+
         #region Commands
 
         public ICommand ClickOpenCommand { get; set; }
@@ -62,6 +83,7 @@ namespace PhotoEditor.ViewModel
         public ICommand ClickAcuteCommand { get; set; }
         public ICommand ClickMedianCommand { get; set; }
         public ICommand ClickBlurCommand { get; set; }
+        public ICommand ClickResizeCommand { get; set; }
 
         #endregion
 
@@ -79,6 +101,7 @@ namespace PhotoEditor.ViewModel
             ClickMedianCommand = new Command(arg => MedianFilter());
             ClickAcuteCommand = new Command(arg => AcuteFilter());
             ClickBlurCommand = new Command(arg => BlurFilter());
+            ClickResizeCommand = new Command(arg => ResizeImage());
         }
 
         #endregion
@@ -97,8 +120,8 @@ namespace PhotoEditor.ViewModel
                 {
                     var converter = new ImageSourceConverter();
                     ImageSource imgSrc = (ImageSource)converter.ConvertFromString(dialog.FileName);
-                    OpenedImage = new ModelClassImage(dialog.FileName, Path.GetExtension(dialog.FileName),
-                        new ModelClassImage.LocalBitmap(new Bitmap(dialog.FileName), imgSrc));
+                    OpenedImage = new LocalBitmap(new Bitmap(dialog.FileName), imgSrc);
+                    OpenedImage.ImgFormat = OpenedImage.Img.RawFormat;
                 }
                 catch
                 {
@@ -115,27 +138,17 @@ namespace PhotoEditor.ViewModel
             dlg.Filter = "JPEG (*.jpg)|*.jpg|PNG(*.png)|*.png|BitMap(*.bmp)|*.bmp";
             bool? result = dlg.ShowDialog();
 
-            //img.RotateFlip(RotateFlipType.Rotate90FlipNone);
             if (result == true)
             {
-                string ext = OpenedImage.Extension;
-                switch (ext)
-                {
-                    case ".jpg":
-                        //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Jpeg);
-                        OpenedImage.Lb.Img.Save(dlg.FileName, ImageFormat.Jpeg);
-                        break;
-                    case ".bmp":
-                        //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Bmp);
-                        OpenedImage.Lb.Img.Save(dlg.FileName, ImageFormat.Bmp);
-                        break;
-                    case ".png":
-                        //OpenedImage.IMG.Save(dlg.FileName, ImageFormat.Png);
-                        OpenedImage.Lb.Img.Save(dlg.FileName, ImageFormat.Png);
-                        break;
-                }
+                ImageFormat format = OpenedImage.ImgFormat;
+                if (format.Equals(ImageFormat.Jpeg))
+                    OpenedImage.Img.Save(dlg.FileName, ImageFormat.Jpeg);
+                else if (format.Equals(ImageFormat.Bmp))
+                    OpenedImage.Img.Save(dlg.FileName, ImageFormat.Bmp);
+                else if (format.Equals(ImageFormat.Png))
+                    OpenedImage.Img.Save(dlg.FileName, ImageFormat.Png);
             }
-        }
+            }
 
         #endregion
         
@@ -143,15 +156,15 @@ namespace PhotoEditor.ViewModel
         public void RotateRight()
         {
             //OpenedImage.Angle += 90;
-            OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            OpenedImage.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
 
         public void RotateLeft()
         {
             //OpenedImage.Angle -= 90;
-            OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            OpenedImage.Img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
         #endregion
 
@@ -516,38 +529,38 @@ namespace PhotoEditor.ViewModel
         #region ImplementFilters methods
             void TransparencyFilter()
         {
-            OpenedImage.Lb.Img = DrawWithTransparency(OpenedImage.Lb.Img);
-            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            OpenedImage.Img = DrawWithTransparency(OpenedImage.Img);
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
 
         void GrayscaleFilter()
         {
-            OpenedImage.Lb.Img = DrawAsGrayscale(OpenedImage.Lb.Img);
-            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            OpenedImage.Img = DrawAsGrayscale(OpenedImage.Img);
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
 
         void SepiaFilter()
         {
-            OpenedImage.Lb.Img = DrawAsSepia(OpenedImage.Lb.Img);
-            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            OpenedImage.Img = DrawAsSepia(OpenedImage.Img);
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
 
         void MedianFilter()
         {
-            OpenedImage.Lb.Img = DrawWithMedian(OpenedImage.Lb.Img);
-            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            OpenedImage.Img = DrawWithMedian(OpenedImage.Img);
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
 
         void AcuteFilter()
         {
-            OpenedImage.Lb.Img = DrawWithSharpness(OpenedImage.Lb.Img);
-            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            OpenedImage.Img = DrawWithSharpness(OpenedImage.Img);
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
 
         void BlurFilter()
         {
-            OpenedImage.Lb.Img = ConvolutionFilter(OpenedImage.Lb.Img, GaussianMatrixForBlur.GaussianBlur3x3);
-            OpenedImage.Lb.Source = ConvertBitmapToImageSource(OpenedImage.Lb.Img);
+            OpenedImage.Img = ConvolutionFilter(OpenedImage.Img, GaussianMatrixForBlur.GaussianBlur3x3);
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
         #endregion
 
@@ -578,8 +591,8 @@ namespace PhotoEditor.ViewModel
 
         void ResizeImage()
         {
-            OpenedImage.Lb.Img.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            //OpenedImage.Lb.Source = ResizingOfImage(OpenedImage.Lb.Img, 900, 1400);
+            OpenedImage.Img = ResizingOfImage(OpenedImage.Img, 200, 400);
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
         #endregion
 

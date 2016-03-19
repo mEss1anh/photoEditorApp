@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace PhotoEditor.Model
 {
+    //This class contains arrays of numbers from Gaussian(normal distribution)
+
     public class GaussianMatrixForBlur
     {
         public static double[,] GaussianBlur3x3
