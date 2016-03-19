@@ -39,5 +39,41 @@ namespace PhotoEditor.View
         {
             new Parameters().ShowDialog();
         }
+
+        
+
+        private void image_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Welcome.Visibility = Visibility.Hidden;
+            Resize.Visibility = Visibility.Visible;
+            RotateLeft.Visibility = Visibility.Visible;
+            RotateRight.Visibility = Visibility.Visible;
+            Crop.Visibility = Visibility.Visible;
+            Contrast.Visibility = Visibility.Visible;
+            BW.Visibility = Visibility.Visible;
+            Sepia.Visibility = Visibility.Visible;
+            Blur.Visibility = Visibility.Visible;
+            Acutance.Visibility = Visibility.Visible;
+            Aqua.Visibility = Visibility.Visible;
+            Save.Visibility = Visibility.Visible;
+        }
+
+        //пока запасной вариант
+        //private void Open_Click(object sender, RoutedEventArgs e)
+        //{
+        //    Welcome.Visibility = Visibility.Hidden;
+        //    Resize.Visibility = Visibility.Visible;
+        //    RotateLeft.Visibility = Visibility.Visible;
+        //    RotateRight.Visibility = Visibility.Visible;
+        //    Crop.Visibility = Visibility.Visible;
+        //    Contrast.Visibility = Visibility.Visible;
+        //    BW.Visibility = Visibility.Visible;
+        //    Sepia.Visibility = Visibility.Visible;
+        //    Blur.Visibility = Visibility.Visible;
+        //    Acutance.Visibility = Visibility.Visible;
+        //    Aqua.Visibility = Visibility.Visible;
+        //    Save.Visibility = Visibility.Visible;
+        //<!-- Click="Open_Click"-->
+        //}
     }
 }
