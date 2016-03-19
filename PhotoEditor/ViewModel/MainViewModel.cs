@@ -134,7 +134,8 @@ namespace PhotoEditor.ViewModel
             ClickBlurCommand = new Command(arg => BlurFilter());
             ClickResizePlusCommand = new Command(arg => ResizeImagePlus());
             ClickResizeMinusCommand = new Command(arg => ResizeImageMinus());
-    }
+            ListOfActions = new ObservableCollection<string>();
+        }
 
         #endregion
 
@@ -200,6 +201,7 @@ namespace PhotoEditor.ViewModel
         public void RotateRight()
         {
             try {
+                ListOfActions.Add(MyDictionary.ListOfActions["RotationRight"]);
                 OpenedImage.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
             }
@@ -822,6 +824,11 @@ namespace PhotoEditor.ViewModel
                 MessageBox.Show(ex.Message);
                 return null;
             }
+        }
+
+        public async void saveInfo()
+        {
+
         }
 
         #endregion

@@ -11,7 +11,7 @@ namespace PhotoEditor.Model
     class MyDictionary
     {
         public List<string> ActionDetails { get; set; }
-        public Dictionary<string, string> ListOfActions
+        public static Dictionary<string, string> ListOfActions
         {
             get
             {
