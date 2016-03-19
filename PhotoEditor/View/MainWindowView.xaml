@@ -29,8 +29,8 @@
                     <RibbonGroup.BorderBrush>
                         <SolidColorBrush Color="#FF062632"/>
                     </RibbonGroup.BorderBrush>
-                    <RibbonButton Name="ResizePlus" SmallImageSource="../Images/plus.png"  Margin="3,10,-26,-27" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{Binding }" Height="25" Visibility="Hidden" Width="24"/>
-                    <RibbonButton Name="ResizeMinus" SmallImageSource="../Images/minus.png"  Margin="20,19,-43,-36" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{Binding }" Height="25"  Visibility="Hidden" Width="24"/>
+                    <RibbonButton Name="ResizePlus" SmallImageSource="../Images/plus.png"  Margin="3,10,-26,-27" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{Binding ClickResizePlusCommand}" Height="25" Visibility="Hidden" Width="24"/>
+                    <RibbonButton Name="ResizeMinus" SmallImageSource="../Images/minus.png"  Margin="20,19,-43,-36" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{Binding ClickResizeMinusCommand}" Height="25"  Visibility="Hidden" Width="24"/>
                     <RibbonButton Name="RotateLeft" LargeImageSource="../Images/rotatel.png" ToolTip="Rotate left" Margin="53,-3,-97,-29" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40" Visibility="Hidden"/>
                     <RibbonButton Name="RotateRight" LargeImageSource="../Images/rotater.png" ToolTip="Rotate Right" Margin="107,-11,-147,-25" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40" Visibility="Hidden"/>
                     <RibbonButton Name="Crop"  LargeImageSource="../Images/crop.png" ToolTip="Crop" Margin="157,12,-201,-13" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Click="Crop_Click" Visibility="Hidden"/>

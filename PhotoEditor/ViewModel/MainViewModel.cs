@@ -15,6 +15,7 @@ using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
+using System.Runtime.InteropServices;
 
 namespace PhotoEditor.ViewModel
 {
@@ -112,7 +113,8 @@ namespace PhotoEditor.ViewModel
         public ICommand ClickAcuteCommand { get; set; }
         public ICommand ClickMedianCommand { get; set; }
         public ICommand ClickBlurCommand { get; set; }
-        public ICommand ClickResizeCommand { get; set; }
+        public ICommand ClickResizeMinusCommand { get; set; }
+        public ICommand ClickResizePlusCommand { get; set; }
 
         #endregion
 
@@ -130,8 +132,9 @@ namespace PhotoEditor.ViewModel
             ClickMedianCommand = new Command(arg => MedianFilter());
             ClickAcuteCommand = new Command(arg => AcuteFilter());
             ClickBlurCommand = new Command(arg => BlurFilter());
-            ClickResizeCommand = new Command(arg => ResizeImage());
-        }
+            ClickResizePlusCommand = new Command(arg => ResizeImagePlus());
+            ClickResizeMinusCommand = new Command(arg => ResizeImageMinus());
+    }
 
         #endregion
 
@@ -652,36 +655,50 @@ namespace PhotoEditor.ViewModel
         #region Resize methods
         public Bitmap ResizingOfImage(Bitmap image, int width, int height)
         {
-            if (image == null)
-                throw new ArgumentNullException();
-            if ((image.GetType() != typeof(Bitmap)) || (width.GetType() != typeof(int)) || (height.GetType() != typeof(int)))
-                throw new ArgumentException();
-
-            var rectangleToImplement = new Rectangle(0, 0, width, height);
-            var imageToImplement = new Bitmap(width, height);
-
-            imageToImplement.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            using (var graphics = Graphics.FromImage(imageToImplement))
+            Bitmap imageCopy = image;
+            try
             {
-                graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
-                graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
-                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-                graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                if (image == null)
+                    throw new ArgumentNullException();
+                //if ((image.GetType() != typeof(Bitmap)) || (width.GetType() != typeof(int)) || (height.GetType() != typeof(int)))
+                //    throw new ArgumentException();
+                var rectangleToImplement = new Rectangle(0, 0, width, height);
+                var imageToImplement = new Bitmap(width, height);
 
-                using (var wrapMode = new ImageAttributes())
+                imageToImplement.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+                using (var graphics = Graphics.FromImage(imageToImplement))
                 {
-                    wrapMode.SetWrapMode(System.Drawing.Drawing2D.WrapMode.TileFlipXY);
-                    graphics.DrawImage(image, rectangleToImplement, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                    graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+                    graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                    graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+
+                    using (var wrapMode = new ImageAttributes())
+                    {
+                        wrapMode.SetWrapMode(System.Drawing.Drawing2D.WrapMode.TileFlipXY);
+                        graphics.DrawImage(image, rectangleToImplement, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                    }
                 }
+                return imageToImplement;
             }
-            return imageToImplement;
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
         }
 
-        void ResizeImage()
+        void ResizeImagePlus()
         { 
-            OpenedImage.Img = ResizingOfImage(OpenedImage.Img, Width, Height);
+            OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width * 1.3), (int)(OpenedImage.Img.Height * 1.3));
+            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+        }
+
+        void ResizeImageMinus()
+        {
+            OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width / 1.3), (int)(OpenedImage.Img.Height / 1.3));
             OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
 
@@ -691,24 +708,39 @@ namespace PhotoEditor.ViewModel
 
         public ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
         {
-            if (imToConvert == null) 
-                throw new ArgumentNullException();
-            if (imToConvert.GetType() != typeof(Bitmap))
-                throw new ArgumentException();
+            try
+            {
+                Bitmap bmp = new Bitmap(imToConvert);
+                MemoryStream ms = new MemoryStream();
+                bmp.Save(ms, ImageFormat.Bmp);
 
-            Bitmap bmp = new Bitmap(imToConvert);
-            MemoryStream ms = new MemoryStream();
-            bmp.Save(ms, ImageFormat.Bmp);
-
-            BitmapImage image = new BitmapImage();
-            image.BeginInit();
-            ms.Seek(0, SeekOrigin.Begin);
-            image.StreamSource = ms;
-            image.EndInit();
-
-            ImageSource sc = image;
-
-            return sc;
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                ms.Seek(0, SeekOrigin.Begin);
+                image.StreamSource = ms;
+                image.EndInit();
+                ImageSource sc = image;
+                return sc;
+            }
+            catch (OutOfMemoryException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            catch(ExternalException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            catch(ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            catch(NullReferenceException)
+            {
+                return null;
+            }
         }
 
         #endregion
