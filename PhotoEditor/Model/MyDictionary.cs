@@ -10,14 +10,15 @@ namespace PhotoEditor.Model
 {
     class MyDictionary
     {
-        public static Dictionary<string, string> ListOfActions
+        public int MyProperty { get; set; }
+        public Dictionary<string, string> ListOfActions
         {
             get
             {
                 return new Dictionary<string, string>()
                 {
-                    { "Open", "User opened file"},
-                    { "Close", "User closed file" }
+                     ["Open"] = "User opened file:",
+                     ["Close"] = "User closed file" 
                 };
             }
         }
