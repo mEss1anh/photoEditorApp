@@ -45,6 +45,8 @@ namespace PhotoEditor.View
         private void image_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             Welcome.Visibility = Visibility.Hidden;
+            History.Visibility = Visibility.Visible;
+            ListOfChanges.Visibility = Visibility.Visible;
             Resize.Visibility = Visibility.Visible;
             RotateLeft.Visibility = Visibility.Visible;
             RotateRight.Visibility = Visibility.Visible;
@@ -59,9 +61,12 @@ namespace PhotoEditor.View
         }
 
         //пока запасной вариант
+
         //private void Open_Click(object sender, RoutedEventArgs e)
         //{
         //    Welcome.Visibility = Visibility.Hidden;
+        //    History.Visibility = Visibility.Visible;
+        //    ListOfChanges.Visibility = Visibility.Visible;
         //    Resize.Visibility = Visibility.Visible;
         //    RotateLeft.Visibility = Visibility.Visible;
         //    RotateRight.Visibility = Visibility.Visible;
