@@ -30,10 +30,10 @@ namespace PhotoEditor.View
             DataContext = _viewModel;
         }
 
-        private void Resize_Click(object sender, RoutedEventArgs e)
-        {
-            new Parameters().ShowDialog();
-        }
+        //private void Resize_Click(object sender, RoutedEventArgs e)
+        //{
+        //    new Parameters().ShowDialog();
+        //}
 
         private void Crop_Click(object sender, RoutedEventArgs e)
         {
@@ -47,7 +47,8 @@ namespace PhotoEditor.View
             Welcome.Visibility = Visibility.Hidden;
             History.Visibility = Visibility.Visible;
             ListOfChanges.Visibility = Visibility.Visible;
-            Resize.Visibility = Visibility.Visible;
+            ResizePlus.Visibility = Visibility.Visible;
+            ResizeMinus.Visibility = Visibility.Visible;
             RotateLeft.Visibility = Visibility.Visible;
             RotateRight.Visibility = Visibility.Visible;
             Crop.Visibility = Visibility.Visible;
