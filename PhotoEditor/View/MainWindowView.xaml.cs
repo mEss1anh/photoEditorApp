@@ -29,5 +29,15 @@ namespace PhotoEditor.View
             InitializeComponent();
             DataContext = _viewModel;
         }
+
+        private void Resize_Click(object sender, RoutedEventArgs e)
+        {
+            new Parameters().ShowDialog();
+        }
+
+        private void Crop_Click(object sender, RoutedEventArgs e)
+        {
+            new Parameters().ShowDialog();
+        }
     }
 }
