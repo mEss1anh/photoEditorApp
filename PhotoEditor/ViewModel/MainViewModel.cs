@@ -39,6 +39,8 @@ namespace PhotoEditor.ViewModel
         #region Fields
         private LocalBitmap _openedImage;
         private ObservableCollection<string> _listOfActions;
+        private int _height;
+        private int _width;
         #endregion
 
         #region Properties
@@ -65,6 +67,33 @@ namespace PhotoEditor.ViewModel
                 {
                     _listOfActions = value;
                     OnPropertyChanged("ListOfActions");
+                }
+            }
+        }
+
+        public int Width
+        {
+            get { return _width; }
+            set
+            {
+                if (_width != value)
+                {
+                    _width = value;
+                    OnPropertyChanged("Width");
+                }
+            }
+        }
+
+
+        public int Height
+        {
+            get { return _height; }
+            set
+            {
+                if (_height != value)
+                {
+                    _height = value;
+                    OnPropertyChanged("Height");
                 }
             }
         }
@@ -122,6 +151,8 @@ namespace PhotoEditor.ViewModel
                     ImageSource imgSrc = (ImageSource)converter.ConvertFromString(dialog.FileName);
                     OpenedImage = new LocalBitmap(new Bitmap(dialog.FileName), imgSrc);
                     OpenedImage.ImgFormat = OpenedImage.Img.RawFormat;
+                    Width = OpenedImage.Img.Width;
+                    Height = OpenedImage.Img.Height;
                 }
                 catch
                 {
@@ -565,7 +596,7 @@ namespace PhotoEditor.ViewModel
         #endregion
 
         #region Resize methods
-        static Bitmap ResizingOfImage(Bitmap image, int width, int height)
+        public Bitmap ResizingOfImage(Bitmap image, int width, int height)
         {
             var rectangleToImplement = new Rectangle(0, 0, width, height);
             var imageToImplement = new Bitmap(width, height);
@@ -590,15 +621,16 @@ namespace PhotoEditor.ViewModel
         }
 
         void ResizeImage()
-        {
-            OpenedImage.Img = ResizingOfImage(OpenedImage.Img, 200, 400);
+        { 
+            OpenedImage.Img = ResizingOfImage(OpenedImage.Img, Width, Height);
             OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
         }
+
         #endregion
 
         #region Auxiliary methods
 
-        private ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
+        public ImageSource ConvertBitmapToImageSource(Bitmap imToConvert)
         {
             Bitmap bmp = new Bitmap(imToConvert);
             MemoryStream ms = new MemoryStream();

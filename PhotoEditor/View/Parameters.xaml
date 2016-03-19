@@ -17,12 +17,10 @@
             <TextBlock x:Name="MainTextBlock" HorizontalAlignment="Left" Margin="104,20,0,0" TextWrapping="Wrap" Text="Enter parameters" VerticalAlignment="Top" Width="222" FontSize="26.667" FontWeight="Bold" Foreground="#FF1C9791"/>
             <TextBlock x:Name="WidthTextBlock" HorizontalAlignment="Left" Margin="277,76,0,0" TextWrapping="Wrap" Text="Width" VerticalAlignment="Top" FontSize="18.667" Foreground="#FF1C9791"/>
             <TextBlock x:Name="HeightTextBlock" HorizontalAlignment="Left" Margin="104,76,0,0" TextWrapping="Wrap" Text="Height" VerticalAlignment="Top" Width="64" FontSize="18.667" Foreground="#FF1C9791"/>
-            <TextBox x:Name="Width" Text="{Binding OpenedImage.ImageSource, Mode =TwoWay}"  HorizontalAlignment="Left" Height="23" Margin="256,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" Foreground="Black" IsUndoEnabled="False" DataContext="{Binding RelativeSource={RelativeSource Self}}"/>
-            <!--" DataContext="{Binding OpenedImage.Width, ElementName=Width, Mode=TwoWay}"-->
+            <TextBox x:Name="Width" Text="{Binding Width, Mode = TwoWay}"  HorizontalAlignment="Left" Height="23" Margin="256,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" Foreground="Black" IsUndoEnabled="False"/>
 
-            <TextBox x:Name="Height" Text="{Binding OpenedImage.Height, Mode =TwoWay}"  HorizontalAlignment="Left" Height="23" Margin="84,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" Foreground="Black" DataContext="{Binding RelativeSource={RelativeSource Self}}"/>
-            <!--DataContext="{Binding OpenedImage.Height, ElementName=Height, Mode=TwoWay}"-->
-            <Button x:Name="Confirm" Content="OK" HorizontalAlignment="Left" Margin="182,167,0,0" VerticalAlignment="Top" Width="75" Click="Confirm_Click"/>
+            <TextBox x:Name="Height" Text="{Binding Height, Mode = TwoWay}"  HorizontalAlignment="Left" Height="23" Margin="84,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" Foreground="Black"/>
+            <Button x:Name="Confirm" Content="OK" HorizontalAlignment="Left" Margin="182,167,0,0" VerticalAlignment="Top" Width="75" Click="Confirm_Click" Command="{Binding ClickResizeCommand}"/>
         </Grid>
 
     </Grid>

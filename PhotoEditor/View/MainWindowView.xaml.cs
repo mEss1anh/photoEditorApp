@@ -37,7 +37,7 @@ namespace PhotoEditor.View
 
         private void Crop_Click(object sender, RoutedEventArgs e)
         {
-            new Parameters().ShowDialog();
+            //new Parameters().ShowDialog();
         }
 
         
