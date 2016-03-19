@@ -29,7 +29,7 @@
                     <RibbonGroup.BorderBrush>
                         <SolidColorBrush Color="#FF062632"/>
                     </RibbonGroup.BorderBrush>
-                    <RibbonButton Name="Resize" LargeImageSource="../Images/resize.png" ToolTip="Resize" Margin="0,12,-44,-44" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Click="Resize_Click" Visibility="Hidden" Command="{Binding ClickResizeCommand}"/>
+                    <RibbonButton Name="Resize" LargeImageSource="../Images/resize.png" ToolTip="Resize" Margin="0,12,-44,-44" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Click="Resize_Click" Visibility="Hidden"/>
                     <RibbonButton Name="RotateLeft" LargeImageSource="../Images/rotatel.png" ToolTip="Rotate left" Margin="53,4,-97,-36" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40" Visibility="Hidden"/>
                     <RibbonButton Name="RotateRight" LargeImageSource="../Images/rotater.png" ToolTip="Rotate Right" Margin="107,-4,-147,-32" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40" Visibility="Hidden"/>
                     <RibbonButton Name="Crop"  LargeImageSource="../Images/crop.png" ToolTip="Crop" Margin="157,12,-201,-13" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Click="Crop_Click" Visibility="Hidden"/>

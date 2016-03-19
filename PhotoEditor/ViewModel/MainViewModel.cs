@@ -151,8 +151,9 @@ namespace PhotoEditor.ViewModel
                     ImageSource imgSrc = (ImageSource)converter.ConvertFromString(dialog.FileName);
                     OpenedImage = new LocalBitmap(new Bitmap(dialog.FileName), imgSrc);
                     OpenedImage.ImgFormat = OpenedImage.Img.RawFormat;
+                    Parameters p = new Parameters();
                     Width = OpenedImage.Img.Width;
-                    Height = OpenedImage.Img.Height;
+                    Height = OpenedImage.Img.Height;                    
                 }
                 catch
                 {

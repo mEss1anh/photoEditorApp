@@ -20,7 +20,7 @@
             <TextBox x:Name="Width" Text="{Binding Width, Mode = TwoWay}"  HorizontalAlignment="Left" Height="23" Margin="256,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" Foreground="Black" IsUndoEnabled="False"/>
 
             <TextBox x:Name="Height" Text="{Binding Height, Mode = TwoWay}"  HorizontalAlignment="Left" Height="23" Margin="84,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" Foreground="Black"/>
-            <Button x:Name="Confirm" Content="OK" HorizontalAlignment="Left" Margin="182,167,0,0" VerticalAlignment="Top" Width="75" Click="Confirm_Click" Command="{Binding ClickResizeCommand}"/>
+            <Button x:Name="Confirm" Content="OK" HorizontalAlignment="Left" Margin="182,167,0,0" VerticalAlignment="Top" Width="75" Click="Confirm_Click"/>
         </Grid>
 
     </Grid>

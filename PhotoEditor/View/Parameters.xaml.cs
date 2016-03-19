@@ -20,7 +20,7 @@ namespace PhotoEditor.View
     /// </summary>
     public partial class Parameters : Window
     {
-        MainViewModel _viewModel;
+        private MainViewModel _viewModel;
         public Parameters()
         {
             InitializeComponent();
