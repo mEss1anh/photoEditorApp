@@ -22,25 +22,18 @@ namespace PhotoEditor.View
     /// </summary> 
     public partial class MainWindowView
     {
-        //public static bool Availability = false;
 
         MainViewModel _viewModel = new MainViewModel();
         public MainWindowView()
         {
             InitializeComponent();
-            DataContext = _viewModel;
-                 
+            DataContext = _viewModel;        
         }
 
 
 
         private void image_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            //if (Availability)
-
-            //{
-           // Welcome.Visibility = Welcome.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
-
             Welcome.Visibility = Visibility.Hidden;
             History.Visibility = Visibility.Visible;
             ListOfChanges.Visibility = Visibility.Visible;
@@ -55,25 +48,6 @@ namespace PhotoEditor.View
             Acutance.Visibility = Visibility.Visible;
             Aqua.Visibility = Visibility.Visible;
             Save.Visibility = Visibility.Visible;
-            //}
-            //else
-            //{
-            //    Welcome.Visibility = Visibility.Visible;
-            //    History.Visibility = Visibility.Hidden;
-            //    ListOfChanges.Visibility = Visibility.Hidden;
-            //    ResizePlus.Visibility = Visibility.Hidden;
-            //    ResizeMinus.Visibility = Visibility.Hidden;
-            //    RotateLeft.Visibility = Visibility.Hidden;
-            //    RotateRight.Visibility = Visibility.Hidden;
-            //    Crop.Visibility = Visibility.Hidden;
-            //    Contrast.Visibility = Visibility.Hidden;
-            //    BW.Visibility = Visibility.Hidden;
-            //    Sepia.Visibility = Visibility.Hidden;
-            //    Blur.Visibility = Visibility.Hidden;
-            //    Acutance.Visibility = Visibility.Hidden;
-            //    Aqua.Visibility = Visibility.Hidden;
-            //    Save.Visibility = Visibility.Hidden;
-            //}
         }
 
        

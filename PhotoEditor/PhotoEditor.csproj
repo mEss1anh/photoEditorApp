@@ -73,9 +73,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\MyDictionary.cs" />
-    <Compile Include="View\Parameters.xaml.cs">
-      <DependentUpon>Parameters.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\ProblemsSolver.xaml.cs">
       <DependentUpon>ProblemsSolver.xaml</DependentUpon>
     </Compile>
@@ -96,10 +93,6 @@
       <DependentUpon>MainWindowView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\Parameters.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\ProblemsSolver.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -720,6 +720,7 @@ namespace PhotoEditor.ViewModel
             {
                 OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width * 1.3), (int)(OpenedImage.Img.Height * 1.3));
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+                saveInfo(MyDictionary.ListOfActions["Big"]);
             }
             catch (ArgumentException ex)
             {
@@ -739,6 +740,7 @@ namespace PhotoEditor.ViewModel
             {
                 OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width / 1.3), (int)(OpenedImage.Img.Height / 1.3));
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+                saveInfo(MyDictionary.ListOfActions["Small"]);
             }
             catch (ArgumentException ex)
             {

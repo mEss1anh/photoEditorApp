@@ -26,7 +26,7 @@ namespace PhotoEditor.View
 
         private void Okay_Click(object sender, RoutedEventArgs e)
         {
-            Window.GetWindow(this).Close();
+            GetWindow(this).Close();
         }
     }
 }
