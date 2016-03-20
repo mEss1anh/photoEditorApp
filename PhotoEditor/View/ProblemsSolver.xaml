@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PhotoEditor.View"
         mc:Ignorable="d"
-        Title="Oops!" Icon="../Images/Lagrange.jpg" ResizeMode="NoResize" Height="270" Width="298.5">
+        Title="Oops!" Icon="../Images/Lagrange.jpg" ResizeMode="NoResize" Height="500" Width="500">
     <Window.Background>
         <ImageBrush ImageSource="../Images/148.jpg" Stretch="Fill"/>
     </Window.Background>
     <Grid>
-        <Grid HorizontalAlignment="Left" Height="221" Margin="10,10,0,0" VerticalAlignment="Top" Width="272">
+        <Grid HorizontalAlignment="Left" Height="452" Margin="10,10,10,10" VerticalAlignment="Top" Width="474">
             <Grid.Background>
                 <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
             </Grid.Background>
-            <TextBlock x:Name="Text" HorizontalAlignment="Left" Margin="38,11,0,0" TextWrapping="Wrap" Text="It doesn't work?" VerticalAlignment="Top" Width="193" FontSize="26.667" Foreground="#FF1C9791"/>
-            <Button x:Name="Okay" Content="Okay..." HorizontalAlignment="Left" Margin="104,189,0,0" VerticalAlignment="Top" Width="75" Click="Okay_Click"/>
-            <Image x:Name="Mole" Source="../Images/DontWorry.jpg" HorizontalAlignment="Left" Height="125" Margin="52,51,0,0" VerticalAlignment="Top" Width="170"/>
+            <TextBlock x:Name="Text" HorizontalAlignment="Left" Margin="143,15,0,0" TextWrapping="Wrap" Text="It doesn't work?" VerticalAlignment="Top" Width="189" FontSize="26.667" Foreground="#FF1C9791"/>
+            <Button x:Name="Okay" Content="Okay..." HorizontalAlignment="Left" Margin="201,411,0,0" VerticalAlignment="Top" Width="75" Click="Okay_Click"/>
+            <Image x:Name="Mole" Source="../Images/DontWorry.jpg" HorizontalAlignment="Left" Height="309" Margin="28,70,0,0" VerticalAlignment="Top" Width="414"/>
         </Grid>
 
     </Grid>

@@ -4,8 +4,6 @@ using PhotoEditor.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -14,11 +12,8 @@ using System.IO;
 using System.Drawing.Imaging;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
-using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows.Threading;
-using System.Collections.Concurrent;
 
 namespace PhotoEditor.ViewModel
 {
@@ -165,7 +160,7 @@ namespace PhotoEditor.ViewModel
                 }
                 catch
                 {
-                    MessageBox.Show("Ошибка загрузки данных");
+                    new ProblemsSolver().Show();
                 }
             }
         }
@@ -194,8 +189,7 @@ namespace PhotoEditor.ViewModel
             }
             catch
             {
-                //окно чуть позже присоединю
-                MessageBox.Show("Ошибка сохранения данных");
+                new ProblemsSolver().Show();
             }
             }
 
@@ -210,16 +204,10 @@ namespace PhotoEditor.ViewModel
                 //ListOfActions.Add(MyDictionary.ListOfActions["RotationRight"]);
                 saveInfo(MyDictionary.ListOfActions["RotationRight"]);
             }
-           catch (ArgumentException ex)
+           catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
-               
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("Необходимо выбрать изображение");
-                
-            }
+                MessageBox.Show("It's high time You chose an image!");
+             }
         }
 
         public void RotateLeft()
@@ -230,14 +218,9 @@ namespace PhotoEditor.ViewModel
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
             }
            
-            catch (ArgumentException ex)
-            {
-                MessageBox.Show(ex.Message);
-                
-            }
             catch (NullReferenceException)
             {
-                MessageBox.Show("Необходимо выбрать изображение");
+                MessageBox.Show("It's high time You chose an image!");
 
             }
         }
@@ -246,12 +229,9 @@ namespace PhotoEditor.ViewModel
         #region SupportFilters methods
         private static Bitmap ApplyColorMatrix(Bitmap img, ColorMatrix colorMatrix)
         {
-            if ((img == null)||(colorMatrix == null))
-                throw new ArgumentNullException();
-            if ((img.GetType() != typeof(Bitmap))||(colorMatrix.GetType() != typeof(ColorMatrix)))
-                throw new ArgumentException();
-
-            Bitmap bmpSource = GetArgbCopy(img);
+            try
+            {
+                Bitmap bmpSource = GetArgbCopy(img);
                 Bitmap imageToApplyFilter = new Bitmap(bmpSource.Width, bmpSource.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 using (Graphics graphics = Graphics.FromImage(imageToApplyFilter))
                 {
@@ -261,9 +241,11 @@ namespace PhotoEditor.ViewModel
                                         0, 0, bmpSource.Width, bmpSource.Height, GraphicsUnit.Pixel, bmpAttributes);
                     return imageToApplyFilter;
                 }
-                
-            
-                       
+            }
+            catch (NullReferenceException)
+            {
+                return null;
+            }                    
         }
 
         private static Bitmap GetArgbCopy(Bitmap img)
@@ -278,14 +260,9 @@ namespace PhotoEditor.ViewModel
                 }
 
                 return bmpNew; }
-            catch (ArgumentException ex)
+             catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-            catch (NullReferenceException)
-            {
-                MessageBox.Show("It's high time to choose an image!");
+                MessageBox.Show("It's high time You chose an image!");
                 return null;
             }
 
@@ -307,14 +284,10 @@ namespace PhotoEditor.ViewModel
 
                 return ApplyColorMatrix(img, colorMatrix); }
            
-            catch (ArgumentException ex)
+            
+            catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-            catch (NullReferenceException ex)
-            {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("It's high time You chose an image!");
                 return null;
             }
         }
@@ -336,14 +309,9 @@ namespace PhotoEditor.ViewModel
                 return ApplyColorMatrix(sourceImage, colorMatrix);
             }
            
-            catch (ArgumentException ex)
+            catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-            catch (NullReferenceException ex)
-            {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("It's high time You chose an image!");
                 return null;
             }
         }
@@ -365,14 +333,9 @@ namespace PhotoEditor.ViewModel
                 return ApplyColorMatrix(sourceImage, colorMatrix);
             }
             
-            catch (ArgumentException ex)
+           catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-            catch (NullReferenceException ex)
-            {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("It's high time You chose an image!");
                 return null;
             }
         }
@@ -381,11 +344,6 @@ namespace PhotoEditor.ViewModel
         public static Bitmap DrawWithSharpness(Bitmap image)
         {
             try {
-                if (image == null)
-                    throw new ArgumentNullException();
-                if (image.GetType() != typeof(Bitmap))
-                    throw new ArgumentException();
-
                 Bitmap sharpenImage = (Bitmap)image.Clone();
 
                 int filterWidth = 3;
@@ -462,14 +420,9 @@ namespace PhotoEditor.ViewModel
                 return sharpenImage;
             }
             
-            catch (ArgumentException ex)
+            catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-            catch (NullReferenceException ex)
-            {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("It's high time You chose an image!");
                 return null;
             }
         }
@@ -478,11 +431,6 @@ namespace PhotoEditor.ViewModel
                                   int matrixSize = 3)
         {
             try {
-                if (sourceBitmap == null)
-                    throw new ArgumentNullException();
-                if (sourceBitmap.GetType() != typeof(Bitmap))
-                    throw new ArgumentException();
-
                 BitmapData sourceData =
                            sourceBitmap.LockBits(new Rectangle(0, 0,
                            sourceBitmap.Width, sourceBitmap.Height),
@@ -582,14 +530,9 @@ namespace PhotoEditor.ViewModel
 
 
                 return resultBitmap; }
-            catch (ArgumentException ex)
+            catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
-                return null;
-            }
-            catch (NullReferenceException ex)
-            {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("It's high time You chose an image!");
                 return null;
             }
         }
@@ -694,15 +637,15 @@ namespace PhotoEditor.ViewModel
                 resultBitmap.UnlockBits(resultData);
 
                 return resultBitmap; }
-            
+
             catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("It's high time You chose an image!");
                 return null;
             }
         }
@@ -752,10 +695,6 @@ namespace PhotoEditor.ViewModel
             Bitmap imageCopy = image;
             try
             {
-                if (image == null)
-                    throw new ArgumentNullException();
-                //if ((image.GetType() != typeof(Bitmap)) || (width.GetType() != typeof(int)) || (height.GetType() != typeof(int)))
-                //    throw new ArgumentException();
                 var rectangleToImplement = new Rectangle(0, 0, width, height);
                 var imageToImplement = new Bitmap(width, height);
 
@@ -782,18 +721,46 @@ namespace PhotoEditor.ViewModel
                 MessageBox.Show(ex.Message);
                 return null;
             }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("It's high time you chose an image!");
+                return null;
+            }
         }
 
         void ResizeImagePlus()
-        { 
-            OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width * 1.3), (int)(OpenedImage.Img.Height * 1.3));
-            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+        {
+            try {
+                OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width * 1.3), (int)(OpenedImage.Img.Height * 1.3));
+                OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img); }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("It's high time You chose an image!");
+                
+            }
         }
 
         void ResizeImageMinus()
         {
-            OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width / 1.3), (int)(OpenedImage.Img.Height / 1.3));
-            OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            try {
+                OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width / 1.3), (int)(OpenedImage.Img.Height / 1.3));
+                OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("It's high time You chose an image!");
+                
+            }
         }
 
         #endregion
@@ -831,13 +798,14 @@ namespace PhotoEditor.ViewModel
                 MessageBox.Show(ex.Message);
                 return null;
             }
-            catch(NullReferenceException ex)
+            catch(NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
                 return null;
             }
         }
+        #endregion
 
+        #region Async Methods
         public async void saveInfo(string str)
         {
             CancellationToken source = new CancellationToken();

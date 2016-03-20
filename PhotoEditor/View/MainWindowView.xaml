@@ -51,7 +51,7 @@
                     <RibbonButton Name="Blur"  LargeImageSource="../Images/blur.png" ToolTip="Blur" Margin="149,-26,-193,8" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickBlurCommand}" Visibility="Hidden"/>
                     <RibbonButton Name="Acutance"  LargeImageSource="../Images/sharpen.png" ToolTip="Acutance" Margin="198,26,-242,-44" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickAcuteCommand}" Visibility="Hidden"/>
                     <RibbonButton Name="Aqua"  LargeImageSource="../Images/aquarelle.png" ToolTip="Aquarelle" Margin="247,4,-291,-22" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickMedianCommand}" Visibility="Hidden"/>
-                    <TextBlock x:Name="Welcome" HorizontalAlignment="Left" Height="38" Margin="39,-11,-217,-11" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" TextAlignment="Center" Foreground="#FFD3ECF7" FontSize="13.333"><Run Text="Welcome to our fancy PhotoEditor!"/><LineBreak/><Run Text="If you would like to start, press &quot;Open&quot;"/></TextBlock>
+                    <TextBlock x:Name="Welcome" HorizontalAlignment="Left" Height="38" Margin="37,-16,-215,-6" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" TextAlignment="Center" Foreground="#FFD3ECF7" FontSize="13.333"><Run Text="Welcome to our fancy PhotoEditor!"/><LineBreak/><Run Text="If you would like to start, press &quot;Open&quot;"/></TextBlock>
                 </RibbonGroup>
                 <RibbonGroup x:Name="ForBackground" Header="Changes" Margin="0" Width="462" HorizontalAlignment="Right" BorderBrush="#FF062632">
                     <RibbonGroup.Background>

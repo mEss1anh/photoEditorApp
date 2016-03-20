@@ -29,9 +29,7 @@ namespace PhotoEditor.View
         {
             InitializeComponent();
             DataContext = _viewModel;
-
-           
-
+                 
         }
 
 
@@ -41,6 +39,8 @@ namespace PhotoEditor.View
             //if (Availability)
 
             //{
+           // Welcome.Visibility = Welcome.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+
             Welcome.Visibility = Visibility.Hidden;
             History.Visibility = Visibility.Visible;
             ListOfChanges.Visibility = Visibility.Visible;
@@ -77,5 +77,6 @@ namespace PhotoEditor.View
             //}
         }
 
+       
     }
 }

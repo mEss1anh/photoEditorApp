@@ -10,7 +10,7 @@ namespace PhotoEditor.ViewModel
 
     public class Command : ICommand
     {
-        #region Constructor
+        #region CommandCtor
 
         public Command(Action<object> action)
         {
