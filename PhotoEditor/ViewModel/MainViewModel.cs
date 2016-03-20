@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
+using System.Windows.Threading;
 
 namespace PhotoEditor.ViewModel
 {
@@ -37,7 +40,7 @@ namespace PhotoEditor.ViewModel
 
         #region Fields
         private LocalBitmap _openedImage;
-        private List<string> _listOfActions;
+        ObservableCollection<string> _listOfActions;
         private int _height;
         private int _width;
         private Task _addTask, _fileAddTask;
@@ -58,7 +61,7 @@ namespace PhotoEditor.ViewModel
             }
         }
 
-        public List<string> ListOfActions
+        public ObservableCollection<string> ListOfActions
         {
             get { return _listOfActions; }
             set
@@ -133,7 +136,7 @@ namespace PhotoEditor.ViewModel
             ClickBlurCommand = new Command(arg => BlurFilter());
             ClickResizePlusCommand = new Command(arg => ResizeImagePlus());
             ClickResizeMinusCommand = new Command(arg => ResizeImageMinus());
-            ListOfActions = new List<string>();
+            ListOfActions = new ObservableCollection<string>();
         }
 
         #endregion
@@ -202,7 +205,7 @@ namespace PhotoEditor.ViewModel
                 OpenedImage.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
                 //ListOfActions.Add(MyDictionary.ListOfActions["RotationRight"]);
-                saveInfo(MyDictionary.ListOfActions["RotationRight"]);
+                this.saveInfo(MyDictionary.ListOfActions["RotationRight"]);
             }
            catch (NullReferenceException)
             {
@@ -808,9 +811,8 @@ namespace PhotoEditor.ViewModel
         public async void saveInfo(string str)
         {
             CancellationToken source = new CancellationToken();
-            _addTask = Task.Factory.StartNew(() => displayInfo(str), source);
-            _fileAddTask = Task.Factory.StartNew(() => saveInfo(str), source);
-            await _fileAddTask;
+            await Task.Factory.StartNew(() => saveInfo(str), source);
+            Application.Current.Dispatcher.Invoke(() => displayInfo(str));
         }
 
         private void saveInfoToFile(string str)
@@ -821,7 +823,7 @@ namespace PhotoEditor.ViewModel
             }
         }
 
-        private void displayInfo(string str)
+        void displayInfo(string str)
         {
             ListOfActions.Add(str);
         }

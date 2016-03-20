@@ -57,7 +57,7 @@
                     <RibbonGroup.Background>
                         <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
                     </RibbonGroup.Background>
-                    <ListBox x:Name="ListOfChanges" HorizontalAlignment="Left" Height="55" Margin="0,22,-448,-73" VerticalAlignment="Top" Width="452" Visibility="Hidden" ItemsSource="{Binding ListOfActions, Mode=TwoWay}" Background="#FFDAF9F5" Foreground="#FF0B0C0F"/>
+                    <ListBox x:Name="ListOfChanges" HorizontalAlignment="Left" Height="55" Margin="0,22,-448,-73" VerticalAlignment="Top" Width="452" Visibility="Hidden" ItemsSource="{Binding ListOfActions}" Background="#FFDAF9F5" Foreground="#FF0B0C0F"/>
                     <TextBlock x:Name="History" HorizontalAlignment="Left" Height="17" Margin="4,-2,-99,-3" TextWrapping="Wrap" Text="History of changes" VerticalAlignment="Top" Width="145" Foreground="#FFA1E5EC" Visibility="Hidden"/>
                 </RibbonGroup>
             </RibbonTab>
