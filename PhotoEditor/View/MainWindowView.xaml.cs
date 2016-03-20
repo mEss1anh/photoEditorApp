@@ -22,7 +22,7 @@ namespace PhotoEditor.View
     /// </summary> 
     public partial class MainWindowView
     {
-        public static bool Availability = false;
+        //public static bool Availability = false;
 
         MainViewModel _viewModel = new MainViewModel();
         public MainWindowView()
@@ -30,43 +30,7 @@ namespace PhotoEditor.View
             InitializeComponent();
             DataContext = _viewModel;
 
-            if (Availability)
-
-            {
-                Welcome.Visibility = Visibility.Hidden;
-                History.Visibility = Visibility.Visible;
-                ListOfChanges.Visibility = Visibility.Visible;
-                ResizePlus.Visibility = Visibility.Visible;
-                ResizeMinus.Visibility = Visibility.Visible;
-                RotateLeft.Visibility = Visibility.Visible;
-                RotateRight.Visibility = Visibility.Visible;
-                Crop.Visibility = Visibility.Visible;
-                Contrast.Visibility = Visibility.Visible;
-                BW.Visibility = Visibility.Visible;
-                Sepia.Visibility = Visibility.Visible;
-                Blur.Visibility = Visibility.Visible;
-                Acutance.Visibility = Visibility.Visible;
-                Aqua.Visibility = Visibility.Visible;
-                Save.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                Welcome.Visibility = Visibility.Visible;
-                History.Visibility = Visibility.Hidden;
-                ListOfChanges.Visibility = Visibility.Hidden;
-                ResizePlus.Visibility = Visibility.Hidden;
-                ResizeMinus.Visibility = Visibility.Hidden;
-                RotateLeft.Visibility = Visibility.Hidden;
-                RotateRight.Visibility = Visibility.Hidden;
-                Crop.Visibility = Visibility.Hidden;
-                Contrast.Visibility = Visibility.Hidden;
-                BW.Visibility = Visibility.Hidden;
-                Sepia.Visibility = Visibility.Hidden;
-                Blur.Visibility = Visibility.Hidden;
-                Acutance.Visibility = Visibility.Hidden;
-                Aqua.Visibility = Visibility.Hidden;
-                Save.Visibility = Visibility.Hidden;
-            }
+           
 
         }
 
@@ -77,21 +41,21 @@ namespace PhotoEditor.View
             //if (Availability)
 
             //{
-            //    Welcome.Visibility = Visibility.Hidden;
-            //    History.Visibility = Visibility.Visible;
-            //    ListOfChanges.Visibility = Visibility.Visible;
-            //    ResizePlus.Visibility = Visibility.Visible;
-            //    ResizeMinus.Visibility = Visibility.Visible;
-            //    RotateLeft.Visibility = Visibility.Visible;
-            //    RotateRight.Visibility = Visibility.Visible;
-            //    Crop.Visibility = Visibility.Visible;
-            //    Contrast.Visibility = Visibility.Visible;
-            //    BW.Visibility = Visibility.Visible;
-            //    Sepia.Visibility = Visibility.Visible;
-            //    Blur.Visibility = Visibility.Visible;
-            //    Acutance.Visibility = Visibility.Visible;
-            //    Aqua.Visibility = Visibility.Visible;
-            //    Save.Visibility = Visibility.Visible;
+            Welcome.Visibility = Visibility.Hidden;
+            History.Visibility = Visibility.Visible;
+            ListOfChanges.Visibility = Visibility.Visible;
+            ResizePlus.Visibility = Visibility.Visible;
+            ResizeMinus.Visibility = Visibility.Visible;
+            RotateLeft.Visibility = Visibility.Visible;
+            RotateRight.Visibility = Visibility.Visible;
+            Crop.Visibility = Visibility.Visible;
+            Contrast.Visibility = Visibility.Visible;
+            BW.Visibility = Visibility.Visible;
+            Sepia.Visibility = Visibility.Visible;
+            Blur.Visibility = Visibility.Visible;
+            Acutance.Visibility = Visibility.Visible;
+            Aqua.Visibility = Visibility.Visible;
+            Save.Visibility = Visibility.Visible;
             //}
             //else
             //{

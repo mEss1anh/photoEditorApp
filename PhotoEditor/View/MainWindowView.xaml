@@ -32,11 +32,11 @@
                     <RibbonGroup.BorderBrush>
                         <SolidColorBrush Color="#FF062632"/>
                     </RibbonGroup.BorderBrush>
-                    <RibbonButton Name="ResizePlus" SmallImageSource="../Images/plus.png"  Margin="3,24,-26,-41" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{Binding ClickResizePlusCommand}" Height="25" Width="24"/>
-                    <RibbonButton Name="ResizeMinus" SmallImageSource="../Images/minus.png"  Margin="20,33,-43,-50" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{Binding ClickResizeMinusCommand}" Height="25" Width="24"/>
-                    <RibbonButton Name="RotateLeft" LargeImageSource="../Images/rotatel.png" ToolTip="Rotate left" Margin="53,11,-97,-43" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40"/>
-                    <RibbonButton Name="RotateRight" LargeImageSource="../Images/rotater.png" ToolTip="Rotate Right" Margin="107,3,-147,-39" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40"/>
-                    <RibbonButton Name="Crop"  LargeImageSource="../Images/crop.png" ToolTip="Crop" Margin="157,-1,-201,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40"/>
+                    <RibbonButton Name="ResizePlus" SmallImageSource="../Images/plus.png"  Margin="3,24,-26,-41" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{Binding ClickResizePlusCommand}" Height="25" Width="24" Visibility="Hidden"/>
+                    <RibbonButton Name="ResizeMinus" SmallImageSource="../Images/minus.png"  Margin="20,33,-43,-50" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{Binding ClickResizeMinusCommand}" Height="25" Width="24" Visibility="Hidden"/>
+                    <RibbonButton Name="RotateLeft" LargeImageSource="../Images/rotatel.png" ToolTip="Rotate left" Margin="53,11,-97,-43" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40" Visibility="Hidden"/>
+                    <RibbonButton Name="RotateRight" LargeImageSource="../Images/rotater.png" ToolTip="Rotate Right" Margin="107,3,-147,-39" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40" Visibility="Hidden"/>
+                    <RibbonButton Name="Crop"  LargeImageSource="../Images/crop.png" ToolTip="Crop" Margin="157,-1,-201,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Visibility="Hidden"/>
                 </RibbonGroup>
                 <RibbonGroup Name="Group2" Header="Filters"  Margin="0" Width="304">
                     <RibbonGroup.Background>
@@ -45,20 +45,20 @@
                     <RibbonGroup.BorderBrush>
                         <SolidColorBrush Color="#FF062632"/>
                     </RibbonGroup.BorderBrush>
-                    <RibbonButton Name="Contrast" LargeImageSource="../Images/contrast.png" ToolTip="Contrast" Margin="2,27,-46,-58" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickTransparencyCommand}" Height="40"/>
-                    <RibbonButton Name="BW" LargeImageSource="../Images/bw.png" ToolTip="Black&amp;White" Margin="51,18,-95,-36" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickGrayscaleCommand}" Height="40"/>
-                    <RibbonButton Name="Sepia" LargeImageSource="../Images/sepia.png" ToolTip="Sepia" Margin="100,-4,-144,-14" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickSepiaCommand}"/>
-                    <RibbonButton Name="Blur"  LargeImageSource="../Images/blur.png" ToolTip="Blur" Margin="149,-26,-193,8" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickBlurCommand}"/>
-                    <RibbonButton Name="Acutance"  LargeImageSource="../Images/sharpen.png" ToolTip="Acutance" Margin="198,26,-242,-44" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickAcuteCommand}"/>
-                    <RibbonButton Name="Aqua"  LargeImageSource="../Images/aquarelle.png" ToolTip="Aquarelle" Margin="247,4,-291,-22" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickMedianCommand}"/>
-                    <TextBlock x:Name="Welcome" HorizontalAlignment="Left" Height="38" Margin="39,-11,-217,-11" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" TextAlignment="Center" Foreground="#FFD3ECF7" FontSize="13.333" Visibility="Hidden"><Run Text="Welcome to our fancy PhotoEditor!"/><LineBreak/><Run Text="If you would like to start, press &quot;Open&quot;"/></TextBlock>
+                    <RibbonButton Name="Contrast" LargeImageSource="../Images/contrast.png" ToolTip="Contrast" Margin="2,27,-46,-58" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickTransparencyCommand}" Height="40" Visibility="Hidden"/>
+                    <RibbonButton Name="BW" LargeImageSource="../Images/bw.png" ToolTip="Black&amp;White" Margin="51,18,-95,-36" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickGrayscaleCommand}" Height="40" Visibility="Hidden"/>
+                    <RibbonButton Name="Sepia" LargeImageSource="../Images/sepia.png" ToolTip="Sepia" Margin="100,-4,-144,-14" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickSepiaCommand}" Visibility="Hidden"/>
+                    <RibbonButton Name="Blur"  LargeImageSource="../Images/blur.png" ToolTip="Blur" Margin="149,-26,-193,8" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickBlurCommand}" Visibility="Hidden"/>
+                    <RibbonButton Name="Acutance"  LargeImageSource="../Images/sharpen.png" ToolTip="Acutance" Margin="198,26,-242,-44" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickAcuteCommand}" Visibility="Hidden"/>
+                    <RibbonButton Name="Aqua"  LargeImageSource="../Images/aquarelle.png" ToolTip="Aquarelle" Margin="247,4,-291,-22" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickMedianCommand}" Visibility="Hidden"/>
+                    <TextBlock x:Name="Welcome" HorizontalAlignment="Left" Height="38" Margin="39,-11,-217,-11" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" TextAlignment="Center" Foreground="#FFD3ECF7" FontSize="13.333"><Run Text="Welcome to our fancy PhotoEditor!"/><LineBreak/><Run Text="If you would like to start, press &quot;Open&quot;"/></TextBlock>
                 </RibbonGroup>
                 <RibbonGroup x:Name="ForBackground" Header="Changes" Margin="0" Width="462" HorizontalAlignment="Right" BorderBrush="#FF062632">
                     <RibbonGroup.Background>
                         <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
                     </RibbonGroup.Background>
-                    <ListBox x:Name="ListOfChanges" HorizontalAlignment="Left" Height="55" Margin="0,22,-448,-73" VerticalAlignment="Top" Width="452" Visibility="Visible" ItemsSource="{Binding ListOfActions}" Background="#FFDAF9F5" Foreground="#FF0B0C0F"/>
-                    <TextBlock x:Name="History" HorizontalAlignment="Left" Height="17" Margin="4,-2,-99,-3" TextWrapping="Wrap" Text="History of changes" VerticalAlignment="Top" Width="145" Foreground="#FFA1E5EC"/>
+                    <ListBox x:Name="ListOfChanges" HorizontalAlignment="Left" Height="55" Margin="0,22,-448,-73" VerticalAlignment="Top" Width="452" Visibility="Hidden" ItemsSource="{Binding ListOfActions}" Background="#FFDAF9F5" Foreground="#FF0B0C0F"/>
+                    <TextBlock x:Name="History" HorizontalAlignment="Left" Height="17" Margin="4,-2,-99,-3" TextWrapping="Wrap" Text="History of changes" VerticalAlignment="Top" Width="145" Foreground="#FFA1E5EC" Visibility="Hidden"/>
                 </RibbonGroup>
             </RibbonTab>
         </ribbon:Ribbon>
