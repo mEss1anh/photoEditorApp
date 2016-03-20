@@ -538,7 +538,7 @@ namespace PhotoEditor.ViewModel
             }
         }
 
-        private static Bitmap ConvolutionFilter(Bitmap sourceBitmap, double[,] filterMatrix, double factor = 1, int bias = 0)
+        public static Bitmap ConvolutionFilter(Bitmap sourceBitmap, double[,] filterMatrix, double factor = 1, int bias = 0)
         {
             try {
 

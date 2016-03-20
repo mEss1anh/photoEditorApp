@@ -48,7 +48,6 @@ namespace PhotoEditor.View
             ResizeMinus.Visibility = Visibility.Visible;
             RotateLeft.Visibility = Visibility.Visible;
             RotateRight.Visibility = Visibility.Visible;
-            Crop.Visibility = Visibility.Visible;
             Contrast.Visibility = Visibility.Visible;
             BW.Visibility = Visibility.Visible;
             Sepia.Visibility = Visibility.Visible;

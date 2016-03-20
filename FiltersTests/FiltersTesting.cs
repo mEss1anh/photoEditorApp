@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PhotoEditor.ViewModel;
 using System.Drawing;
 
@@ -106,6 +105,36 @@ namespace FiltersTests
                 Assert.Fail();
             }
         }
+
+        [TestMethod]
+        //[ExpectedException(typeof(ArgumentNullException))]
+        public void Cannot_pass_null_to_ConvolutionFilter()
+        {
+            try
+            {
+                Bitmap testImage = MainViewModel.ConvolutionFilter(null, null);
+            }
+            catch
+            {
+                Assert.Fail();
+            }
+        }
+
+        [TestMethod]
+        //[ExpectedException(typeof(ArgumentNullException))]
+        public void Cannot_pass_null_to_ResizingOfImage()
+        {
+            MainViewModel mvm = new MainViewModel();
+            try
+            {
+                Bitmap testImage = mvm.ResizingOfImage(null, 1, 2);
+            }
+            catch
+            {
+                Assert.Fail();
+            }
+        }
+
 
     }
 }

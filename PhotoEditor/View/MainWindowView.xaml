@@ -25,7 +25,7 @@
                 <RibbonTab.Background>
                     <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
                 </RibbonTab.Background>
-                <RibbonGroup Name="Group1" Header="Basic" Margin="0" Width="217">
+                <RibbonGroup Name="Group1" Header="Basic" Margin="0" Width="166">
                     <RibbonGroup.Background>
                         <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
                     </RibbonGroup.Background>
@@ -36,8 +36,7 @@
                     <RibbonButton Name="ResizeMinus" SmallImageSource="../Images/minus.png"  Margin="20,33,-43,-50" VerticalAlignment="Center" HorizontalAlignment="Center"  Command="{Binding ClickResizeMinusCommand}" Height="25" Width="24" Visibility="Hidden"/>
                     <RibbonButton Name="RotateLeft" LargeImageSource="../Images/rotatel.png" ToolTip="Rotate left" Margin="53,11,-97,-43" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateLeftCommand}" Height="40" Visibility="Hidden"/>
                     <RibbonButton Name="RotateRight" LargeImageSource="../Images/rotater.png" ToolTip="Rotate Right" Margin="107,3,-147,-39" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding ClickRotateRightCommand}" Height="40" Width="40" Visibility="Hidden"/>
-                    <RibbonButton Name="Crop"  LargeImageSource="../Images/crop.png" ToolTip="Crop" Margin="157,-1,-201,0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Visibility="Hidden"/>
-                </RibbonGroup>
+                   </RibbonGroup>
                 <RibbonGroup Name="Group2" Header="Filters"  Margin="0" Width="304">
                     <RibbonGroup.Background>
                         <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
@@ -53,7 +52,7 @@
                     <RibbonButton Name="Aqua"  LargeImageSource="../Images/aquarelle.png" ToolTip="Aquarelle" Margin="247,4,-291,-22" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Command="{Binding ClickMedianCommand}" Visibility="Hidden"/>
                     <TextBlock x:Name="Welcome" HorizontalAlignment="Left" Height="38" Margin="37,-16,-215,-6" TextWrapping="Wrap" VerticalAlignment="Top" Width="228" TextAlignment="Center" Foreground="#FFD3ECF7" FontSize="13.333"><Run Text="Welcome to our fancy PhotoEditor!"/><LineBreak/><Run Text="If you would like to start, press &quot;Open&quot;"/></TextBlock>
                 </RibbonGroup>
-                <RibbonGroup x:Name="ForBackground" Header="Changes" Margin="0" Width="462" HorizontalAlignment="Right" BorderBrush="#FF062632">
+                <RibbonGroup x:Name="ForBackground" Header="Changes" Margin="0" Width="512" HorizontalAlignment="Right" BorderBrush="#FF062632">
                     <RibbonGroup.Background>
                         <SolidColorBrush Color="#FF214449" Opacity="0.7"/>
                     </RibbonGroup.Background>
