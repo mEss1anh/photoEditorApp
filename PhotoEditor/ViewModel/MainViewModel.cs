@@ -18,7 +18,7 @@ using System.Threading;
 namespace PhotoEditor.ViewModel
 {
 
-    class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
 
         #region INotifyImplement
@@ -227,7 +227,7 @@ namespace PhotoEditor.ViewModel
         #endregion
 
         #region SupportFilters methods
-        private static Bitmap ApplyColorMatrix(Bitmap img, ColorMatrix colorMatrix)
+        public static Bitmap ApplyColorMatrix(Bitmap img, ColorMatrix colorMatrix)
         {
             try
             {
@@ -248,7 +248,7 @@ namespace PhotoEditor.ViewModel
             }                    
         }
 
-        private static Bitmap GetArgbCopy(Bitmap img)
+        public static Bitmap GetArgbCopy(Bitmap img)
         {
             try {
 
@@ -267,8 +267,7 @@ namespace PhotoEditor.ViewModel
             }
 
         }
-
-
+        
         public static Bitmap DrawWithTransparency(Bitmap img)
         {
             try {
