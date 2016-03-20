@@ -40,9 +40,6 @@ namespace PhotoEditor.ViewModel
         #region Fields
         private LocalBitmap _openedImage;
         ObservableCollection<string> _listOfActions;
-        private int _height;
-        private int _width;
-        private Task _addTask, _fileAddTask;
         #endregion
 
         #region Properties
@@ -69,33 +66,6 @@ namespace PhotoEditor.ViewModel
                 {
                     _listOfActions = value;
                     OnPropertyChanged("ListOfActions");
-                }
-            }
-        }
-
-        public int Width
-        {
-            get { return _width; }
-            set
-            {
-                if (_width != value)
-                {
-                    _width = value;
-                    OnPropertyChanged("Width");
-                }
-            }
-        }
-
-
-        public int Height
-        {
-            get { return _height; }
-            set
-            {
-                if (_height != value)
-                {
-                    _height = value;
-                    OnPropertyChanged("Height");
                 }
             }
         }
@@ -144,7 +114,7 @@ namespace PhotoEditor.ViewModel
         public void OpenFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            
+
             dialog.InitialDirectory = Environment.CurrentDirectory;
 
             dialog.Filter = "Image files (*.jpg;*.png;*.bmp)| *.jpg;*.png;*.bmp";
@@ -152,13 +122,12 @@ namespace PhotoEditor.ViewModel
             {
                 try
                 {
+                    ClearFile();
                     var converter = new ImageSourceConverter();
                     ImageSource imgSrc = (ImageSource)converter.ConvertFromString(dialog.FileName);
                     OpenedImage = new LocalBitmap(new Bitmap(dialog.FileName), imgSrc);
                     OpenedImage.ImgFormat = OpenedImage.Img.RawFormat;
-                    Parameters p = new Parameters();
-                    Width = OpenedImage.Img.Width;
-                    Height = OpenedImage.Img.Height;                    
+                    saveInfo(MyDictionary.ListOfActions["Open"]);
                 }
                 catch
                 {
@@ -171,11 +140,11 @@ namespace PhotoEditor.ViewModel
         public void SaveFile()
         {
             try
-            { 
-            SaveFileDialog dlg = new SaveFileDialog();
-            dlg.FileName = "My image";
-            dlg.Filter = "JPEG (*.jpg)|*.jpg|PNG(*.png)|*.png|BitMap(*.bmp)|*.bmp";
-            bool? result = dlg.ShowDialog();
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.FileName = "My image";
+                dlg.Filter = "JPEG (*.jpg)|*.jpg|PNG(*.png)|*.png|BitMap(*.bmp)|*.bmp";
+                bool? result = dlg.ShowDialog();
 
                 if (result == true)
                 {
@@ -186,30 +155,30 @@ namespace PhotoEditor.ViewModel
                         OpenedImage.Img.Save(dlg.FileName, ImageFormat.Bmp);
                     else if (format.Equals(ImageFormat.Png))
                         OpenedImage.Img.Save(dlg.FileName, ImageFormat.Png);
-
+                    saveInfo(MyDictionary.ListOfActions["Save"]);
                 }
             }
             catch
             {
                 new ProblemsSolver().Show();
             }
-            }
+        }
 
         #endregion
-        
+
         #region Rotation methods
         public void RotateRight()
         {
-            try {
+            try
+            {
                 OpenedImage.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
-                //ListOfActions.Add(MyDictionary.ListOfActions["RotationRight"]);
                 saveInfo(MyDictionary.ListOfActions["RotationRight"]);
             }
-           catch (NullReferenceException)
+            catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
-             }
+            }
         }
 
         public void RotateLeft()
@@ -218,8 +187,9 @@ namespace PhotoEditor.ViewModel
             {
                 OpenedImage.Img.RotateFlip(RotateFlipType.Rotate270FlipNone);
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+                saveInfo(MyDictionary.ListOfActions["RotationLeft"]);
             }
-           
+
             catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
@@ -247,12 +217,13 @@ namespace PhotoEditor.ViewModel
             catch (NullReferenceException)
             {
                 return null;
-            }                    
+            }
         }
 
         public static Bitmap GetArgbCopy(Bitmap img)
         {
-            try {
+            try
+            {
 
                 Bitmap bmpNew = new Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 using (Graphics graphics = Graphics.FromImage(bmpNew))
@@ -261,18 +232,20 @@ namespace PhotoEditor.ViewModel
                     graphics.Flush();
                 }
 
-                return bmpNew; }
-             catch (NullReferenceException)
+                return bmpNew;
+            }
+            catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
                 return null;
             }
 
         }
-        
+
         public static Bitmap DrawWithTransparency(Bitmap img)
         {
-            try {
+            try
+            {
                 ColorMatrix colorMatrix = new ColorMatrix(new float[][]
                                     {
                             new float[]{1, 0, 0, 0, 0},
@@ -283,9 +256,10 @@ namespace PhotoEditor.ViewModel
                                     });
 
 
-                return ApplyColorMatrix(img, colorMatrix); }
-           
-            
+                return ApplyColorMatrix(img, colorMatrix);
+            }
+
+
             catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
@@ -309,7 +283,7 @@ namespace PhotoEditor.ViewModel
 
                 return ApplyColorMatrix(sourceImage, colorMatrix);
             }
-           
+
             catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
@@ -333,8 +307,8 @@ namespace PhotoEditor.ViewModel
 
                 return ApplyColorMatrix(sourceImage, colorMatrix);
             }
-            
-           catch (NullReferenceException)
+
+            catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
                 return null;
@@ -344,7 +318,8 @@ namespace PhotoEditor.ViewModel
 
         public static Bitmap DrawWithSharpness(Bitmap image)
         {
-            try {
+            try
+            {
                 Bitmap sharpenImage = (Bitmap)image.Clone();
 
                 int filterWidth = 3;
@@ -420,7 +395,7 @@ namespace PhotoEditor.ViewModel
 
                 return sharpenImage;
             }
-            
+
             catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
@@ -431,7 +406,8 @@ namespace PhotoEditor.ViewModel
         public static Bitmap DrawWithMedian(Bitmap sourceBitmap,
                                   int matrixSize = 3)
         {
-            try {
+            try
+            {
                 BitmapData sourceData =
                            sourceBitmap.LockBits(new Rectangle(0, 0,
                            sourceBitmap.Width, sourceBitmap.Height),
@@ -530,7 +506,8 @@ namespace PhotoEditor.ViewModel
                 resultBitmap.UnlockBits(resultData);
 
 
-                return resultBitmap; }
+                return resultBitmap;
+            }
             catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
@@ -540,7 +517,8 @@ namespace PhotoEditor.ViewModel
 
         public static Bitmap ConvolutionFilter(Bitmap sourceBitmap, double[,] filterMatrix, double factor = 1, int bias = 0)
         {
-            try {
+            try
+            {
 
                 BitmapData sourceData = sourceBitmap.LockBits(new Rectangle(0, 0, sourceBitmap.Width, sourceBitmap.Height),
                                                            ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -637,7 +615,8 @@ namespace PhotoEditor.ViewModel
                 System.Runtime.InteropServices.Marshal.Copy(resultBuffer, 0, resultData.Scan0, resultBuffer.Length);
                 resultBitmap.UnlockBits(resultData);
 
-                return resultBitmap; }
+                return resultBitmap;
+            }
 
             catch (ArgumentException ex)
             {
@@ -650,43 +629,49 @@ namespace PhotoEditor.ViewModel
                 return null;
             }
         }
-            #endregion
+        #endregion
 
         #region ImplementFilters methods
-            void TransparencyFilter()
+        void TransparencyFilter()
         {
             OpenedImage.Img = DrawWithTransparency(OpenedImage.Img);
             OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            saveInfo(MyDictionary.ListOfActions["Transparency"]);
         }
 
         void GrayscaleFilter()
         {
             OpenedImage.Img = DrawAsGrayscale(OpenedImage.Img);
             OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            saveInfo(MyDictionary.ListOfActions["Grayscale"]);
         }
 
         void SepiaFilter()
         {
             OpenedImage.Img = DrawAsSepia(OpenedImage.Img);
             OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            saveInfo(MyDictionary.ListOfActions["Sepia"]);
         }
 
         void MedianFilter()
         {
             OpenedImage.Img = DrawWithMedian(OpenedImage.Img);
             OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            saveInfo(MyDictionary.ListOfActions["Median"]);
         }
 
         void AcuteFilter()
         {
             OpenedImage.Img = DrawWithSharpness(OpenedImage.Img);
             OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            saveInfo(MyDictionary.ListOfActions["Acute"]);
         }
 
         void BlurFilter()
         {
             OpenedImage.Img = ConvolutionFilter(OpenedImage.Img, GaussianMatrixForBlur.GaussianBlur3x3);
             OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            saveInfo(MyDictionary.ListOfActions["Blur"]);
         }
         #endregion
 
@@ -731,36 +716,39 @@ namespace PhotoEditor.ViewModel
 
         void ResizeImagePlus()
         {
-            try {
+            try
+            {
                 OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width * 1.3), (int)(OpenedImage.Img.Height * 1.3));
-                OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img); }
+                OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+            }
             catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
-                
+
             }
             catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
-                
+
             }
         }
 
         void ResizeImageMinus()
         {
-            try {
+            try
+            {
                 OpenedImage.Img = ResizingOfImage(OpenedImage.Img, (int)(OpenedImage.Img.Width / 1.3), (int)(OpenedImage.Img.Height / 1.3));
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
             }
             catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
-                
+
             }
             catch (NullReferenceException)
             {
                 MessageBox.Show("It's high time You chose an image!");
-                
+
             }
         }
 
@@ -789,17 +777,17 @@ namespace PhotoEditor.ViewModel
                 MessageBox.Show(ex.Message);
                 return null;
             }
-            catch(ExternalException ex)
+            catch (ExternalException ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
             }
-            catch(ArgumentException ex)
+            catch (ArgumentException ex)
             {
                 MessageBox.Show(ex.Message);
                 return null;
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
                 return null;
             }
@@ -807,13 +795,11 @@ namespace PhotoEditor.ViewModel
         #endregion
 
         #region Async Methods
-        static CancellationTokenSource source;
+
         public async void saveInfo(string str)
         {
-            source = new CancellationTokenSource();
-            Application.Current.Dispatcher.Invoke(() => displayInfo(str, ListOfActions.Count), DispatcherPriority.Normal, source.Token);
-            _fileAddTask = new Task(() => saveInfo(str));
-            _fileAddTask.Start();
+            Application.Current.Dispatcher.Invoke(() => displayInfo(str, ListOfActions.Count), DispatcherPriority.Normal);
+            await Task.Factory.StartNew(() => saveInfoToFile(str));
         }
 
         private void saveInfoToFile(string str)
@@ -822,15 +808,19 @@ namespace PhotoEditor.ViewModel
             {
                 w.WriteLine(str);
             }
-            source.Cancel();
         }
 
         void displayInfo(string str, int len)
         {
             ListOfActions.Add(str);
-            source.Cancel();
+        }
+
+        void ClearFile()
+        {
+            File.Delete("FileOfActions");
         }
 
         #endregion
     }
 }
+

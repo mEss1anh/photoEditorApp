@@ -62,7 +62,7 @@
             </RibbonTab>
         </ribbon:Ribbon>
         <ScrollViewer VerticalScrollBarVisibility="Visible"  HorizontalScrollBarVisibility="Visible" Margin="0,-9,0,0">
-            <Grid ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" Height="410">
+            <Grid ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5">
 
                 <Image x:Name="image" Source="{Binding OpenedImage.Source, Mode=TwoWay}" Stretch="None" VerticalAlignment="Center" ScrollViewer.VerticalScrollBarVisibility="Hidden" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" AllowDrop="True" OpacityMask="Black" HorizontalAlignment="Center" SizeChanged="image_SizeChanged">
                 </Image>

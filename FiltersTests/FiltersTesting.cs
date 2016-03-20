@@ -15,7 +15,7 @@ namespace FiltersTests
             try
             {
                 Bitmap testImage = MainViewModel.ApplyColorMatrix(null, null);
-             }
+            }
             catch
             {
                 Assert.Fail();
