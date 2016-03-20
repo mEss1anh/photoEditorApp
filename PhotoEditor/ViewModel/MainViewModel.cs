@@ -20,7 +20,6 @@ using System.Windows.Threading;
 
 namespace PhotoEditor.ViewModel
 {
-
     public class MainViewModel : INotifyPropertyChanged
     {
 
@@ -205,7 +204,7 @@ namespace PhotoEditor.ViewModel
                 OpenedImage.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
                 //ListOfActions.Add(MyDictionary.ListOfActions["RotationRight"]);
-                this.saveInfo(MyDictionary.ListOfActions["RotationRight"]);
+                saveInfo(MyDictionary.ListOfActions["RotationRight"]);
             }
            catch (NullReferenceException)
             {
@@ -808,24 +807,28 @@ namespace PhotoEditor.ViewModel
         #endregion
 
         #region Async Methods
+        static CancellationTokenSource source;
         public async void saveInfo(string str)
         {
-            CancellationToken source = new CancellationToken();
-            await Task.Factory.StartNew(() => saveInfo(str), source);
-            Application.Current.Dispatcher.Invoke(() => displayInfo(str));
+            source = new CancellationTokenSource();
+            Application.Current.Dispatcher.Invoke(() => displayInfo(str, ListOfActions.Count), DispatcherPriority.Normal, source.Token);
+            _fileAddTask = new Task(() => saveInfo(str));
+            _fileAddTask.Start();
         }
 
         private void saveInfoToFile(string str)
         {
-            using (StreamWriter file = new StreamWriter(@"...\...\FileOfActions", true))
+            using (StreamWriter w = File.AppendText("FileOfActions"))
             {
-                file.WriteLine(str);
+                w.WriteLine(str);
             }
+            source.Cancel();
         }
 
-        void displayInfo(string str)
+        void displayInfo(string str, int len)
         {
             ListOfActions.Add(str);
+            source.Cancel();
         }
 
         #endregion
