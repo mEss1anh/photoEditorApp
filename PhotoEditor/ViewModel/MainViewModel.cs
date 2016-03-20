@@ -16,6 +16,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows.Threading;
+using System.Collections.Concurrent;
 
 namespace PhotoEditor.ViewModel
 {
@@ -39,9 +42,10 @@ namespace PhotoEditor.ViewModel
 
         #region Fields
         private LocalBitmap _openedImage;
-        private ObservableCollection<string> _listOfActions;
+        private List<string> _listOfActions;
         private int _height;
         private int _width;
+        private Task _addTask, _fileAddTask;
         #endregion
 
         #region Properties
@@ -59,7 +63,7 @@ namespace PhotoEditor.ViewModel
             }
         }
 
-        public ObservableCollection<string> ListOfActions
+        public List<string> ListOfActions
         {
             get { return _listOfActions; }
             set
@@ -134,7 +138,7 @@ namespace PhotoEditor.ViewModel
             ClickBlurCommand = new Command(arg => BlurFilter());
             ClickResizePlusCommand = new Command(arg => ResizeImagePlus());
             ClickResizeMinusCommand = new Command(arg => ResizeImageMinus());
-            ListOfActions = new ObservableCollection<string>();
+            ListOfActions = new List<string>();
         }
 
         #endregion
@@ -201,9 +205,10 @@ namespace PhotoEditor.ViewModel
         public void RotateRight()
         {
             try {
-                ListOfActions.Add(MyDictionary.ListOfActions["RotationRight"]);
                 OpenedImage.Img.RotateFlip(RotateFlipType.Rotate90FlipNone);
                 OpenedImage.Source = ConvertBitmapToImageSource(OpenedImage.Img);
+                //ListOfActions.Add(MyDictionary.ListOfActions["RotationRight"]);
+                saveInfo(MyDictionary.ListOfActions["RotationRight"]);
             }
            catch (ArgumentException ex)
             {
@@ -833,9 +838,25 @@ namespace PhotoEditor.ViewModel
             }
         }
 
-        public async void saveInfo()
+        public async void saveInfo(string str)
         {
+            CancellationToken source = new CancellationToken();
+            _addTask = Task.Factory.StartNew(() => displayInfo(str), source);
+            _fileAddTask = Task.Factory.StartNew(() => saveInfo(str), source);
+            await _fileAddTask;
+        }
 
+        private void saveInfoToFile(string str)
+        {
+            using (StreamWriter file = new StreamWriter(@"...\...\FileOfActions", true))
+            {
+                file.WriteLine(str);
+            }
+        }
+
+        private void displayInfo(string str)
+        {
+            ListOfActions.Add(str);
         }
 
         #endregion
