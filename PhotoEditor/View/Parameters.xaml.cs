@@ -20,17 +20,17 @@ namespace PhotoEditor.View
     /// </summary>
     public partial class Parameters : Window
     {
-        private MainViewModel _viewModel;
+       // private MainViewModel _viewModel;
         public Parameters()
         {
             InitializeComponent();
-            _viewModel = new MainViewModel();
-            DataContext = _viewModel;
+            //_viewModel = new MainViewModel();
+           // DataContext = _viewModel;
         }
 
-        private void Confirm_Click(object sender, RoutedEventArgs e)
-        {
-            GetWindow(this).Close();
-        }
+        //private void Confirm_Click(object sender, RoutedEventArgs e)
+        //{
+        //    GetWindow(this).Close();
+        //}
     }
 }

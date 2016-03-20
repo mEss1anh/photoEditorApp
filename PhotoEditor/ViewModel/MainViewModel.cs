@@ -210,9 +210,9 @@ namespace PhotoEditor.ViewModel
                 MessageBox.Show(ex.Message);
                
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Необходимо выбрать изображение");
                 
             }
         }
@@ -230,10 +230,10 @@ namespace PhotoEditor.ViewModel
                 MessageBox.Show(ex.Message);
                 
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
-                MessageBox.Show(ex.Message);
-                
+                MessageBox.Show("Необходимо выбрать изображение");
+
             }
         }
         #endregion
@@ -263,20 +263,27 @@ namespace PhotoEditor.ViewModel
 
         private static Bitmap GetArgbCopy(Bitmap img)
         {
-            if (img == null)
-                throw new ArgumentNullException();
-            if (img.GetType() != typeof(Bitmap))
-                throw new ArgumentException();
+            try {
 
-            Bitmap bmpNew = new Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                Bitmap bmpNew = new Bitmap(img.Width, img.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 using (Graphics graphics = Graphics.FromImage(bmpNew))
                 {
                     graphics.DrawImage(img, new Rectangle(0, 0, img.Width, img.Height), new Rectangle(0, 0, img.Width, img.Height), GraphicsUnit.Pixel);
                     graphics.Flush();
                 }
 
-                return bmpNew;
-            
+                return bmpNew; }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+            catch (NullReferenceException)
+            {
+                MessageBox.Show("It's high time to choose an image!");
+                return null;
+            }
+
         }
 
 
